@@ -1,5 +1,11 @@
-<?php declare(strict_types = 1);
+<?php
 
-require __DIR__ . '/acme/vendor/autoload.php';
+declare(strict_types=1);
 
-App\Bootstrap::runWeb();
+require __DIR__ . '/src/vendor/autoload.php';
+
+$configurator = App\Bootstrap::boot();
+$configurator->setDebugMode(true);
+$container = $configurator->createContainer();
+$application = $container->getByType(Nette\Application\Application::class);
+$application->run();
