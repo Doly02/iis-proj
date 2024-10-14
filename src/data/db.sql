@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Počítač: localhost
--- Vytvořeno: Úte 15. říj 2024, 00:25
+-- Vytvořeno: Úte 15. říj 2024, 01:01
 -- Verze serveru: 5.7.44
 -- Verze PHP: 8.1.30
 
@@ -36,7 +36,19 @@ CREATE TABLE `conferences` (
   `end_time` time NOT NULL,
   `end_date` date NOT NULL,
   `price` decimal(10,0) NOT NULL,
-  `capacity` int(11) NOT NULL
+  `capacity` int(11) NOT NULL,
+  `organiser_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabulky `conference_has_rooms`
+--
+
+CREATE TABLE `conference_has_rooms` (
+  `conference_id` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -70,8 +82,11 @@ INSERT INTO `posts` (`id`, `title`, `content`, `created_at`) VALUES
 CREATE TABLE `presentations` (
   `id` int(11) NOT NULL,
   `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `state` enum('approved','waiting','denied') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `state` enum('approved','waiting','denied') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `conference_id` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL,
+  `lecturer_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -84,7 +99,9 @@ CREATE TABLE `reservations` (
   `id` int(11) NOT NULL,
   `created_date` date NOT NULL,
   `created_time` time NOT NULL,
-  `price_to_pay` decimal(10,0) NOT NULL
+  `price_to_pay` decimal(10,0) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `conference_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -96,7 +113,8 @@ CREATE TABLE `reservations` (
 CREATE TABLE `rooms` (
   `id` int(11) NOT NULL,
   `name` varchar(30) NOT NULL,
-  `capacity` int(11) NOT NULL
+  `capacity` int(11) NOT NULL,
+  `creator_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -140,32 +158,47 @@ INSERT INTO `users` (`id`, `name`, `surname`, `email`) VALUES
 --
 ALTER TABLE `conferences`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`);
+  ADD UNIQUE KEY `name` (`name`),
+  ADD KEY `conference_organiser` (`organiser_id`);
+
+--
+-- Indexy pro tabulku `conference_has_rooms`
+--
+ALTER TABLE `conference_has_rooms`
+  ADD KEY `conference_room` (`conference_id`),
+  ADD KEY `room_conference` (`room_id`);
 
 --
 -- Indexy pro tabulku `presentations`
 --
 ALTER TABLE `presentations`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `presentation_contains` (`conference_id`),
+  ADD KEY `lecturer_submitted_presentation` (`lecturer_id`),
+  ADD KEY `presentation_takes_place_in` (`room_id`);
 
 --
 -- Indexy pro tabulku `reservations`
 --
 ALTER TABLE `reservations`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `customer_created_reservation` (`customer_id`),
+  ADD KEY `reservation_for_conference` (`conference_id`);
 
 --
 -- Indexy pro tabulku `rooms`
 --
 ALTER TABLE `rooms`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`);
+  ADD UNIQUE KEY `name` (`name`),
+  ADD KEY `room_created_by` (`creator_id`);
 
 --
 -- Indexy pro tabulku `tickets`
 --
 ALTER TABLE `tickets`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ticket_for_reservation` (`reservation_id`);
 
 --
 -- Indexy pro tabulku `users`
@@ -207,6 +240,50 @@ ALTER TABLE `tickets`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Omezení pro exportované tabulky
+--
+
+--
+-- Omezení pro tabulku `conferences`
+--
+ALTER TABLE `conferences`
+  ADD CONSTRAINT `conference_organiser` FOREIGN KEY (`organiser_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Omezení pro tabulku `conference_has_rooms`
+--
+ALTER TABLE `conference_has_rooms`
+  ADD CONSTRAINT `conference_room` FOREIGN KEY (`conference_id`) REFERENCES `conferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `room_conference` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Omezení pro tabulku `presentations`
+--
+ALTER TABLE `presentations`
+  ADD CONSTRAINT `lecturer_submitted_presentation` FOREIGN KEY (`lecturer_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `presentation_contains` FOREIGN KEY (`conference_id`) REFERENCES `conferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `presentation_takes_place_in` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Omezení pro tabulku `reservations`
+--
+ALTER TABLE `reservations`
+  ADD CONSTRAINT `customer_created_reservation` FOREIGN KEY (`customer_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `reservation_for_conference` FOREIGN KEY (`conference_id`) REFERENCES `conferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Omezení pro tabulku `rooms`
+--
+ALTER TABLE `rooms`
+  ADD CONSTRAINT `room_created_by` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`);
+
+--
+-- Omezení pro tabulku `tickets`
+--
+ALTER TABLE `tickets`
+  ADD CONSTRAINT `ticket_for_reservation` FOREIGN KEY (`reservation_id`) REFERENCES `reservations` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
