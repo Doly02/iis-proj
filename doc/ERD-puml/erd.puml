@@ -36,10 +36,10 @@ entity "Rezervace" {
 }
 
 entity "Vstupenka" {
-    <weak>
+    << weak >>
     ---
-    <<CK>> Id rezervace
-    <<CK>> Id vstupenky
+    <<PK>> Id vstupenky
+    <<CK>> Id konference
     ---
     - Cena vstupního
 }
@@ -69,13 +69,14 @@ entity "se koná v" {
 }
 
 "Konference" " 0..N " -- "se koná v"
-"se koná v" -- "  1..N     " "Místnost"
+"Konference" " 1" -- "0..N   " "Vstupenka" : " ponúka << identif >>"
+"se koná v" -- "  1   " "Místnost"
 "se koná v" -- " 1..N  " "Prezentace"
 "Prezentace" " 0..N   " -- " 1..N   " "Uživatel" : "navrhuje / přednáší "
 "Konference" " 0..N " -- "1          " "Uživatel" : " zakládá "
 "Rezervace" " 0..N " -- "             1 " "Uživatel" : " vytvoří "
-"Rezervace" " 0..N     " -- "    1" "Konference" : "  na"
-"Vstupenka" " 1..N " -- "1    " "Rezervace" : "  rezervuje"
+"Rezervace" " 0..N     " -- "    1" "Konference" : "na     "
+"Vstupenka" " 1..N " -- "0..1  " "Rezervace" : "  rezervuje"
 "Místnost" " 0..N  "  -- "1 " "Uživatel" : " admin přidá"
 
 
