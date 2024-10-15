@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Počítač: localhost
--- Vytvořeno: Úte 15. říj 2024, 01:01
+-- Vytvořeno: Úte 15. říj 2024, 14:49
 -- Verze serveru: 5.7.44
 -- Verze PHP: 8.1.30
 
@@ -54,28 +54,6 @@ CREATE TABLE `conference_has_rooms` (
 -- --------------------------------------------------------
 
 --
--- Struktura tabulky `posts`
---
-
-CREATE TABLE `posts` (
-  `id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `content` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Vypisuji data pro tabulku `posts`
---
-
-INSERT INTO `posts` (`id`, `title`, `content`, `created_at`) VALUES
-(1, 'Article One', 'Lorem ipusm dolor one', '2024-10-12 14:19:51'),
-(2, 'Article Two', 'Lorem ipsum dolor two', '2024-10-12 14:19:51'),
-(3, 'Article Three', 'Lorem ipsum dolor three', '2024-10-12 14:19:51');
-
--- --------------------------------------------------------
-
---
 -- Struktura tabulky `presentations`
 --
 
@@ -84,6 +62,7 @@ CREATE TABLE `presentations` (
   `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `state` enum('approved','waiting','denied') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `attachment` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `conference_id` int(11) NOT NULL,
   `room_id` int(11) NOT NULL,
   `lecturer_id` int(11) NOT NULL
@@ -126,7 +105,8 @@ CREATE TABLE `rooms` (
 CREATE TABLE `tickets` (
   `id` int(11) NOT NULL,
   `price` decimal(10,0) NOT NULL,
-  `reservation_id` int(11) NOT NULL
+  `conference_id` int(11) NOT NULL,
+  `reservation_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -139,15 +119,16 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `name` varchar(30) NOT NULL,
   `surname` varchar(30) NOT NULL,
-  `email` varchar(255) NOT NULL
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Vypisuji data pro tabulku `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `surname`, `email`) VALUES
-(1, 'Jan', 'Novák', 'nov@gmail.com');
+INSERT INTO `users` (`id`, `name`, `surname`, `email`, `password`) VALUES
+(1, 'Jan', 'Novák', 'nov@gmail.com', '');
 
 --
 -- Indexy pro exportované tabulky
@@ -158,7 +139,6 @@ INSERT INTO `users` (`id`, `name`, `surname`, `email`) VALUES
 --
 ALTER TABLE `conferences`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`),
   ADD KEY `conference_organiser` (`organiser_id`);
 
 --
@@ -198,7 +178,8 @@ ALTER TABLE `rooms`
 --
 ALTER TABLE `tickets`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `ticket_for_reservation` (`reservation_id`);
+  ADD KEY `conference_ticket` (`conference_id`),
+  ADD KEY `reservation_ticket` (`reservation_id`);
 
 --
 -- Indexy pro tabulku `users`
@@ -283,7 +264,8 @@ ALTER TABLE `rooms`
 -- Omezení pro tabulku `tickets`
 --
 ALTER TABLE `tickets`
-  ADD CONSTRAINT `ticket_for_reservation` FOREIGN KEY (`reservation_id`) REFERENCES `reservations` (`id`);
+  ADD CONSTRAINT `conference_ticket` FOREIGN KEY (`conference_id`) REFERENCES `conferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `reservation_ticket` FOREIGN KEY (`reservation_id`) REFERENCES `reservations` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
