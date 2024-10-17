@@ -9,38 +9,28 @@ use App\UserModule\Model\FakeAuthenticator;
 
 final class AuthenticationPresenter extends Presenter
 {
-    public function actionOut(): void
+    /**
+     * @var \App\UserModule\Controls\Login\ILoginControlFactory
+     */
+    private $loginControlFact;
+
+
+    public function __construct(\App\UserModule\Controls\Login\ILoginControlFactory $loginControlFactory)
     {
-        /* Logout of Client */
-        $this->getUser()->logout();
-        $this->flashMessage('You have been signed out.');
-        $this->redirect('Homepage:');
+        parent::__construct();
+        $this->loginControlFact = $loginControlFactory;
     }
 
-    protected function createComponentSignInForm(): Form
+    public function actionSignIn(): void
     {
-        $form = new Form;
-        $form->addText('username', 'Username:')
-            ->setRequired('Please enter your username.');
-        $form->addPassword('password', 'Password:')
-            ->setRequired('Please enter your password.');
-        $form->addSubmit('send', 'Sign in');
-
-        $form->onSuccess[] = [$this, 'signInFormSucceeded'];
-        return $form;
+        \Tracy\Debugger::log('SignIn action loaded');
+        if ($this->getUser()->isLoggedIn()) {
+            $this->redirect(':Core:Homepage:default');
+        }
     }
 
-    public function signInFormSucceeded(Form $form, \stdClass $values): void
+    protected function createComponentLogin(): \App\UserModule\Controls\Login\LoginControl
     {
-        try
-        {
-            $this->getUser()->login($values->username, $values->password);
-            $this->flashMessage('Login successful!');
-            $this->redirect('Homepage:');
-        }
-        catch (AuthenticationException $e)
-        {
-            $form->addError('Incorrect username or password.');
-        }
+        return $this->loginControlFact->create();
     }
 }

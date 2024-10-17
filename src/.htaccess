@@ -1,1 +1,9 @@
-Require all denied
+RewriteEngine On
+
+# Podmínky, které umožní načíst soubor nebo složku, pokud existují
+# If File or Direcotory Exists It Can Be Loaded In Browser (TODO: Shoud Be Updated, Probably Not Safe)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# All Requests Routed on index.php
+RewriteRule ^ index.php [L]

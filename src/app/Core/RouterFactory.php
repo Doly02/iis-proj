@@ -14,8 +14,8 @@ final class RouterFactory
 
     public static function createRouter(): RouteList
     {
-        $router = new RouteList;
-        $router->addRoute('', 'CommonModule:Home:default');
+        $router = new \Nette\Application\Routers\RouteList();
+        $router->addRoute('user/authentication/sign-in', ':UserModule:Authentication:signIn');
 
         $router[] = new \Nette\Application\Routers\Route('[<module>[/<presenter>[/<action>[/<id \d+>]]]]', [
             'module' => 'CommonModule',
