@@ -1,6 +1,6 @@
 services:
 	- App\Core\RouterFactory::createRouter
-	- App\User\Presenters\FakeAuthenticator
+	- App\UserModule\Model\FakeAuthenticator
 
 search:
 	-	in: %appDir%

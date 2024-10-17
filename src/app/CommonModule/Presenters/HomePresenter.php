@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Home;
+namespace App\CommonModule\Presenters;
 
 use Nette;
 

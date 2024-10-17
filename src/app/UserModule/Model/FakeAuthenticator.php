@@ -1,6 +1,6 @@
 <?php
 
-namespace App\User\Presenters;
+namespace App\UserModule\Model;
 
 use Nette\Security\Authenticator;
 use Nette\Security\SimpleIdentity;
