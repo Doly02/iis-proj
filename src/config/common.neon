@@ -1,4 +1,5 @@
 parameters:
+    basePath: '/dashboard/iis-proj'
 
 application:
 	errorPresenter:
