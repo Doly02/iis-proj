@@ -10,6 +10,9 @@ use Nette\Application\UI\Control;
 
 final class LoginControl extends Control
 {
+    /** @var User */
+    private $user;
+
     public function __construct(\Nette\Security\User $user)
     {
         $this->user = $user;
@@ -27,7 +30,11 @@ final class LoginControl extends Control
         $form->onSuccess[] = [$this, 'signInFormSucceeded'];
         return $form;
     }
-
+    public function render(): void
+    {
+        $this->template->setFile(__DIR__ . '/templates/LoginControl.latte');
+        $this->template->render();
+    }
     public function signInFormSucceeded(Form $form, \stdClass $values): void
     {
         try

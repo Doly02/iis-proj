@@ -9,18 +9,6 @@ use App\UserModule\Model\FakeAuthenticator;
 
 final class AuthenticationPresenter extends Presenter
 {
-    /**
-     * @var \App\UserModule\Controls\Login\ILoginControlFactory
-     */
-    private $loginControlFact;
-
-
-    public function __construct(\App\UserModule\Controls\Login\ILoginControlFactory $loginControlFactory)
-    {
-        parent::__construct();
-        $this->loginControlFact = $loginControlFactory;
-    }
-
     public function actionSignIn(): void
     {
         \Tracy\Debugger::log('SignIn action loaded');
@@ -29,8 +17,30 @@ final class AuthenticationPresenter extends Presenter
         }
     }
 
-    protected function createComponentLogin(): \App\UserModule\Controls\Login\LoginControl
+    // Creates Sign-In Form
+    protected function createComponentSignInForm(): Form
     {
-        return $this->loginControlFact->create();
+        $form = new Form;
+        $form->addText('username', 'Username:')
+            ->setRequired('Please enter your username.');
+
+        $form->addPassword('password', 'Password:')
+            ->setRequired('Please enter your password.');
+
+        $form->addSubmit('send', 'Sign in');
+
+        $form->onSuccess[] = [$this, 'signInFormSucceeded'];
+        return $form;
+    }
+
+    public function signInFormSucceeded(Form $form, \stdClass $values): void
+    {
+        try {
+            $this->getUser()->login($values->username, $values->password);
+            $this->flashMessage('Login successful!');
+            $this->redirect('Homepage:default');
+        } catch (AuthenticationException $e) {
+            $form->addError('Incorrect username or password.');
+        }
     }
 }
