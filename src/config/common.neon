@@ -1,6 +1,3 @@
-parameters:
-    basePath: '/dashboard/iis-proj'
-
 application:
 	errorPresenter:
 		4xx: Error:Error4xx
