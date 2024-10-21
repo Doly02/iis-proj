@@ -5,18 +5,17 @@ declare(strict_types=1);
 namespace App\CommonModule\Presenters;
 
 use Nette\Application\UI\Presenter;
-use Nette\Database\Explorer; // Importing the correct class
+use Nette\Database\Explorer;
 
 abstract class BasePresenter extends Presenter
 {
-    private Explorer $database;
+    protected Explorer $database;
 
     public function __construct(Explorer $database)
     {
         parent::__construct(); // Calling parent constructor
         $this->database = $database;
     }
-
 
     public function beforeRender(): void
     {
@@ -26,4 +25,3 @@ abstract class BasePresenter extends Presenter
         dump($this->getTemplate()->getFile()); // Listing of the current template
     }
 }
-
