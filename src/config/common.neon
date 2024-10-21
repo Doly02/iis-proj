@@ -5,6 +5,7 @@ application:
 	mapping:
 	    CommonModule: App\CommonModule\Presenters\*Presenter
 	    UserModule: App\UserModule\Presenters\*Presenter
+	    ConferenceModule: App\ConferenceModule\Presenters\*Presenter
 
 database:
 	dsn: 'mysql:host=127.0.0.1;dbname=iis'
