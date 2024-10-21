@@ -8,12 +8,19 @@ use Nette\Application\UI\Presenter;
 
 abstract class BasePresenter extends Presenter
 {
+    public function __construct(
+        private Nette\Database\Explorer $database
+    )
+    {
+        parent::__construct(); // Calling parent constructor
+    }
+
     public function beforeRender(): void
     {
         parent::beforeRender();
         $this->template->basePath = $this->getHttpRequest()->getUrl()->getBasePath();
         $this->setLayout(__DIR__ . '/../../../templates/@layout.latte');
-        dump($this->getTemplate()->getFile()); // Výpis aktuální šablony
-
+        dump($this->getTemplate()->getFile()); // Listing of the current template
     }
 }
+

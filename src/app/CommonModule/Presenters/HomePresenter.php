@@ -9,12 +9,6 @@ use Nette;
 
 final class HomePresenter extends BasePresenter
 {
-    public function __construct(
-        private Nette\Database\Explorer $database,
-    )
-    {
-    }
-
     public function renderDefault(): void
     {
         $this->template->users = $this->database
