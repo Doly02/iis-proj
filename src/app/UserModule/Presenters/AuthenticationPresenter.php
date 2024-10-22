@@ -2,41 +2,43 @@
 
 namespace App\UserModule\Presenters;
 
+use App\CommonModule\Presenters\BasePresenter;
+use App\CommonModule\Presenters\SecurePresenter;
 use Nette\Application\UI\Form;
 use Nette\Application\UI\Presenter;
 use Nette\Security\AuthenticationException;
-use App\UserModule\Model\FakeAuthenticator;
+use App\UserModule\Model\UserAuthenticator;
 
-final class AuthenticationPresenter extends Presenter
+final class AuthenticationPresenter extends BasePresenter
 {
+    private $loginControlFactory;
+    public function __construct(\App\UserModule\Controls\Login\ILoginControlFactory $loginControlFactory)
+    {
+        parent::__construct();
+        $this->loginControlFactory = $loginControlFactory;
+    }
     public function actionSignIn(): void
     {
         \Tracy\Debugger::log('SignIn action loaded');
         if ($this->getUser()->isLoggedIn()) {
-            $this->redirect(':Core:Homepage:default');
+            $this->redirect(':CommonModule:Home:default');
         }
     }
 
     // Creates Sign-In Form
-    protected function createComponentSignInForm(): Form
+    protected function createComponentSignInForm(): \App\UserModule\Controls\Login\LoginControl
     {
-        $form = new Form;
-        $form->addText('username', 'Username:')
-            ->setRequired('Please enter your username.');
-
-        $form->addPassword('password', 'Password:')
-            ->setRequired('Please enter your password.');
-
-        $form->addSubmit('send', 'Sign in');
-
-        $form->onSuccess[] = [$this, 'signInFormSucceeded'];
-        return $form;
+        return $this->loginControlFactory->create();
     }
 
     public function signInFormSucceeded(Form $form, \stdClass $values): void
     {
         try {
             $this->getUser()->login($values->username, $values->password);
+
+            $session = $this->getSession('user_activity');
+            $session->lastActivity = time();
+
             $this->flashMessage('Login successful!');
             $this->redirect('Homepage:default');
         } catch (AuthenticationException $e) {

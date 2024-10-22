@@ -7,7 +7,7 @@ namespace App\CommonModule\Presenters;
 use Nette;
 
 
-final class HomePresenter extends BasePresenter
+final class HomePresenter extends SecurePresenter
 {
     public function __construct(
         private Nette\Database\Explorer $database,

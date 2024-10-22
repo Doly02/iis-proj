@@ -1,6 +1,6 @@
 services:
 	- App\Core\RouterFactory::createRouter
-	- App\UserModule\Model\FakeAuthenticator
+	- App\UserModule\Model\UserAuthenticator
 	- App\UserModule\Controls\Login\ILoginControlFactory
 
 search:
