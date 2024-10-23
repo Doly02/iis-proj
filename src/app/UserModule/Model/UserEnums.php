@@ -9,3 +9,9 @@ enum Action: string
     case LIST = 'list';
     case DELETE = 'delete';
 }
+
+enum Role : string
+{
+    case ADMIN = 'admn';
+    case USER = 'user';
+}

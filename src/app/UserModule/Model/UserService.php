@@ -15,10 +15,6 @@ use Tracy\Debugger;
 
 final class UserService extends BaseService implements Authenticator
 {
-    public const ADMIN_ROLE = 'admin',
-        USER_ROLE = 'user';
-
-
     public function getTableName(): string
     {
         return 'users';
@@ -34,11 +30,13 @@ final class UserService extends BaseService implements Authenticator
 
         $errorMessage = 'Your Credentials Do Not Match Our Records. Please Try Again.';
 
-        if (!$user) {
+        if (!$user)
+        {
             throw new \Nette\Security\AuthenticationException($errorMessage);
         }
 
-        if (!$passwords->verify($password, $user->password)) {
+        if (!$passwords->verify($password, $user->password))
+        {
             throw new \Nette\Security\AuthenticationException($errorMessage);
         }
 
@@ -60,10 +58,6 @@ final class UserService extends BaseService implements Authenticator
 
     // TODO Maybe Implemented getAdminTable
 
-    /**
-     * @throws \Nette\InvalidArgumentException
-     * @throws Exception
-     */
     public function registrateUser(ArrayHash $data): void
     {
         $errorMessage = 'During Creation of An Account Was Error.';
@@ -81,7 +75,7 @@ final class UserService extends BaseService implements Authenticator
                 'name' => $data->name,
                 'surname' => $data->lastName,
                 'email' => $data->email,
-                'account_type' => self::USER_ROLE,
+                'account_type' => role::USER,
                 'password' => $passwords->hash($data->password)
             ]);
 
@@ -107,7 +101,7 @@ final class UserService extends BaseService implements Authenticator
             $passwords = new Passwords();
 
             $user = $this->getTable()->insert([
-                'account_type' => self::ADMIN_ROLE,
+                'account_type' => role::ADMIN,
                 'email' => $data->email,
                 'password' => $passwords->hash($data->password),
             ]);
@@ -135,9 +129,7 @@ final class UserService extends BaseService implements Authenticator
             'surname' => $data->lastName,
             'email' => $data->email,
         ]);
-
-
-        $this->updateUser($data, self::USER_ROLE);
+        $this->updateUser($data, role::USER);
 
         $this->database->commit();
     }
