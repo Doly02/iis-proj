@@ -30,7 +30,6 @@ final class UserService extends BaseService implements Authenticator
 
         $user = $this->getTable()
             ->where('email', $email)
-            ->where('active', true)
             ->fetch();
 
         $errorMessage = 'Your Credentials Do Not Match Our Records. Please Try Again.';
@@ -39,11 +38,11 @@ final class UserService extends BaseService implements Authenticator
             throw new \Nette\Security\AuthenticationException($errorMessage);
         }
 
-        if (!$passwords->verify($password, $user->heslo)) {
+        if (!$passwords->verify($password, $user->password)) {
             throw new \Nette\Security\AuthenticationException($errorMessage);
         }
 
-        if ($passwords->needsRehash($user->heslo)) {
+        if ($passwords->needsRehash($user->password)) {
             $user->update([
                 'password' => $passwords->hash($password),
             ]);
@@ -52,7 +51,7 @@ final class UserService extends BaseService implements Authenticator
         $userData = $user->toArray();
         unset($userData['password']); // Remove The Password Safely
 
-        return new SimpleIdentity($user->id, [$user->typ], $userData);
+        return new SimpleIdentity($user->id, [$user->account_type], $userData);
     }
     public function getUserTable(): Selection
     {

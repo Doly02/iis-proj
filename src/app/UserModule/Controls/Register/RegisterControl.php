@@ -32,7 +32,6 @@ final class RegisterControl extends Control
     {
         $form = $this->_userFormFactory->createUserForm();
         $form->onSuccess[] = [$this, 'onSuccessRegisterForm'];
-
         return $form;
     }
 
@@ -57,7 +56,7 @@ final class RegisterControl extends Control
         if (null !== $presenter)
         {
             $presenter->flashMessage('Registration Successfully Performed!', 'success');
-            $presenter->redirect(':UserModule:Authentication:signIn');
+            $presenter->redirect(':CommonModule:Home:default');
         }
     }
 
