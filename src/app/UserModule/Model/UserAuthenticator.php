@@ -7,6 +7,7 @@ use Nette\Security\SimpleIdentity;
 use Nette\Security\AuthenticationException;
 use Nette\Database\Explorer;
 use Nette\Security\Passwords;
+use Tracy\Debugger;
 
 class UserAuthenticator implements Authenticator
 {
@@ -29,6 +30,9 @@ class UserAuthenticator implements Authenticator
      */
     public function authenticate(string $user, string $password) : SimpleIdentity
     {
+        Debugger::barDump($user, 'User'); // Tracy Debugger výpis
+        Debugger::barDump($password, 'Password');
+
         // Retrieve user from database by email
         $userRow = $this->database->table('users')
             ->where('email', $user)
@@ -47,8 +51,10 @@ class UserAuthenticator implements Authenticator
             dump($password);
             throw new AuthenticationException('Invalid password.');
         }*/
+
         // Method For Hashed Password
-        if (!$this->passwords->verify($password, $userRow->password)) {
+        if (!$this->passwords->verify($password, $userRow->password))
+        {
             dump($userRow->password);
             dump($password);
             throw new AuthenticationException('Invalid password.');

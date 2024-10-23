@@ -21,7 +21,8 @@ abstract class BasePresenter extends Presenter
             $sessionSection->lastActivity = time(); //<! Time of Last Activity
         }
     }
-    /*
+
+    /* TODO: Use For CSS Style
     public function beforeRender() : void
     {
         parent::beforeRender();

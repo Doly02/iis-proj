@@ -20,7 +20,8 @@ final class AuthenticationPresenter extends BasePresenter
     public function actionSignIn(): void
     {
         \Tracy\Debugger::log('SignIn action loaded');
-        if ($this->getUser()->isLoggedIn()) {
+        if ($this->getUser()->isLoggedIn())
+        {
             $this->redirect(':CommonModule:Home:default');
         }
     }
@@ -33,7 +34,8 @@ final class AuthenticationPresenter extends BasePresenter
 
     public function signInFormSucceeded(Form $form, \stdClass $values): void
     {
-        try {
+        try
+        {
             $this->getUser()->login($values->username, $values->password);
 
             $session = $this->getSession('user_activity');
@@ -41,7 +43,9 @@ final class AuthenticationPresenter extends BasePresenter
 
             $this->flashMessage('Login successful!');
             $this->redirect('Homepage:default');
-        } catch (AuthenticationException $e) {
+        }
+        catch (AuthenticationException $e)
+        {
             $form->addError('Incorrect username or password.');
         }
     }

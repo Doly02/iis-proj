@@ -4,30 +4,26 @@ declare(strict_types=1);
 
 namespace App\UserModule\Controls\Login;
 
+use Tracy\Debugger;
+
 use Nette\Application\UI\Form;
 use Nette\Security\AuthenticationException;
 use Nette\Application\UI\Control;
 use Nette\Security\User;
 use Nette\Utils\Validators;
-use App\UserModule\Model\UserAuthenticator;
 
 final class LoginControl extends Control
 {
     /** @var User */
     private $user;
 
-    /** @var UserAuthenticator */
-    private $authenticator;
-
     public $backLink = '';
 
-    public function __construct(User $user, UserAuthenticator $authenticator)
+    public function __construct(User $user)
     {
         $this->user = $user;
-        $this->authenticator = $authenticator;
     }
-
-    protected function createComponentSignInForm(): Form
+    protected function createComponentSignInForm() : Form
     {
         $form = new Form;
         $form->addText('email', 'E-mail:')
@@ -53,25 +49,19 @@ final class LoginControl extends Control
     {
         try
         {
-            $this->user->setAuthenticator($this->authenticator);
             $this->user->login($values->email, $values->password);
 
             $this->flashMessage('Login successful!', 'success');
+
+            if ($this->backLink) {
+                $this->getPresenter()->restoreRequest($this->backLink);
+            }
+
             $this->getPresenter()->redirect(':CommonModule:Home:default');
         }
         catch (AuthenticationException $e)
         {
-            // Zobrazení detailní chybové zprávy
+            // Pokud dojde k chybě autentizace, přidáme chybu do formuláře
             $form->addError('Login failed: ' . $e->getMessage());
         }
-        catch (\Exception $e) // Zajištění zachycení i ostatních výjimek
-        {
-            $form->addError('An unexpected error occurred: ' . $e->getMessage());
-        }
-        /*
-        catch (AuthenticationException $e)
-        {
-            $form->addError('Incorrect e-mail or password.');
-        }*/
-    }
-}
+    }}
