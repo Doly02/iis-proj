@@ -32,10 +32,6 @@ final class ConferenceAddPresenter extends BasePresenter
             ->setRequired('Enter the price.')
             ->addRule($form::Float, 'Price must be a number.');
 
-        $form->addInteger('capacity', 'Capacity:')
-            ->setRequired('Enter the capacity.')
-            ->addRule($form::Min, 'Capacity must be at least 1.', 1);
-
         // Fetch rooms from the database
         $rooms = $this->database->table('rooms')->fetchAll(); // Adjust this line to match your database access method
         $roomOptions = [];
@@ -43,11 +39,26 @@ final class ConferenceAddPresenter extends BasePresenter
             $roomOptions[$room->id] = $room->name; // Assuming 'id' and 'name' are the column names
         }
 
-        // Add multi-select for room selection
+        // Multi-select for room selection
         $form->addMultiSelect('rooms', 'Select Rooms:', $roomOptions)
             ->setRequired('Please select at least one room.');
 
         $form->addSubmit('send', 'Add Conference');
+
+        // Validating time
+        $form->onValidate[] = function (Form $form) {
+            $values = $form->getValues();
+
+            // Ensure to use format to convert DateTimeImmutable to a string
+            $startDateTime = $values->start_time; // This is a DateTimeImmutable object
+            $endDateTime = $values->end_time; // This is a DateTimeImmutable object
+
+            // Check if start time is not before end time
+            if ($startDateTime >= $endDateTime) {
+                $form->addError('The end time must be after the start time.');
+            }
+        };
+
 
         $form->onSuccess[] = [$this, 'addConferenceFormSucceeded'];
         return $form;
@@ -56,6 +67,17 @@ final class ConferenceAddPresenter extends BasePresenter
     public function addConferenceFormSucceeded(Form $form, \stdClass $values): void
     {
         try {
+            // Sum capacity of rooms
+            $totalCapacity = 0;
+            if (!empty($values->rooms)) {
+                foreach ($values->rooms as $roomId) {
+                    $room = $this->database->table('rooms')->get($roomId);
+                    if ($room) {
+                        $totalCapacity += $room->capacity;
+                    }
+                }
+            }
+
             // Insert the conference data into the database
             $conferenceId = $this->database->table('conferences')->insert([
                 'name' => $values->name,
@@ -63,7 +85,7 @@ final class ConferenceAddPresenter extends BasePresenter
                 'start_time' => $values->start_time,
                 'end_time' => $values->end_time,
                 'price' => $values->price,
-                'capacity' => $values->capacity, // TODO: Add together capacity of rooms
+                'capacity' => $totalCapacity,
                 'organiser_id' => 1, // TODO: User id
             ])->id;
 
