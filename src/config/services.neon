@@ -2,6 +2,7 @@ services:
 	- App\Core\RouterFactory::createRouter
 	- App\UserModule\Model\FakeAuthenticator
 	- App\UserModule\Controls\Login\ILoginControlFactory
+	- App\ConferenceModule\Controls\AddConference\IAddConferenceControlFactory
 
 search:
 	-	in: %appDir%

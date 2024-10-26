@@ -20,6 +20,7 @@ abstract class BasePresenter extends Presenter
     public function beforeRender(): void
     {
         parent::beforeRender();
+        $this->template->title = $this->template->title ?? "Default Title";
         $this->template->basePath = $this->getHttpRequest()->getUrl()->getBasePath();
         $this->setLayout(__DIR__ . '/../../UI/@layout.latte');
         dump($this->getTemplate()->getFile()); // Listing of the current template
