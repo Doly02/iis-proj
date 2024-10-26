@@ -22,17 +22,11 @@ final class ConferenceAddPresenter extends BasePresenter
             ->setRequired('Enter a description for the conference.');
 
         // User-friendly selection of date and time
-        $form->addDate('start_date', 'Start Date:')
+        $form->addDateTime('start_time', 'Conference start:')
             ->setRequired('Enter the start date.');
 
-        $form->addTime('start_time', 'Start Time:')
-            ->setRequired('Enter the start time.');
-
-        $form->addDate('end_date', 'End Date:')
+        $form->addDateTime('end_time', 'Conference end:')
             ->setRequired('Enter the end date.');
-
-        $form->addTime('end_time', 'End Time:')
-            ->setRequired('Enter the end time.');
 
         $form->addText('price', 'Price:')
             ->setRequired('Enter the price.')
@@ -41,6 +35,17 @@ final class ConferenceAddPresenter extends BasePresenter
         $form->addInteger('capacity', 'Capacity:')
             ->setRequired('Enter the capacity.')
             ->addRule($form::Min, 'Capacity must be at least 1.', 1);
+
+        // Fetch rooms from the database
+        $rooms = $this->database->table('rooms')->fetchAll(); // Adjust this line to match your database access method
+        $roomOptions = [];
+        foreach ($rooms as $room) {
+            $roomOptions[$room->id] = $room->name; // Assuming 'id' and 'name' are the column names
+        }
+
+        // Add multi-select for room selection
+        $form->addMultiSelect('rooms', 'Select Rooms:', $roomOptions)
+            ->setRequired('Please select at least one room.');
 
         $form->addSubmit('send', 'Add Conference');
 
@@ -52,17 +57,25 @@ final class ConferenceAddPresenter extends BasePresenter
     {
         try {
             // Insert the conference data into the database
-            $this->database->table('conferences')->insert([
+            $conferenceId = $this->database->table('conferences')->insert([
                 'name' => $values->name,
                 'description' => $values->description,
                 'start_time' => $values->start_time,
                 'end_time' => $values->end_time,
-                'start_date' => $values->start_date,
-                'end_date' => $values->end_date,
                 'price' => $values->price,
                 'capacity' => $values->capacity, // TODO: Add together capacity of rooms
                 'organiser_id' => 1, // TODO: User id
-            ]);
+            ])->id;
+
+            // Insert selected rooms into conference_has_rooms
+            if (!empty($values->rooms)) {
+                foreach ($values->rooms as $roomId) {
+                    $this->database->table('conference_has_rooms')->insert([
+                        'conference_id' => $conferenceId,
+                        'room_id' => $roomId,
+                    ]);
+                }
+            }
 
             $this->flashMessage('Conference added successfully.', 'success');
 
