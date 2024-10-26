@@ -4,6 +4,7 @@ services:
 	- App\UserModule\Controls\Login\ILoginControlFactory
 	- App\ConferenceModule\Controls\AddConference\IAddConferenceControlFactory
 	- App\RoomModule\Controls\AddRoom\IAddRoomControlFactory
+	- App\PresentationModule\Controls\AddPresentation\IAddPresentationControlFactory
 
 search:
 	-	in: %appDir%

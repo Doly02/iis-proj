@@ -8,8 +8,6 @@ use Nette\Application\AbortException;
 
 final class RoomAddPresenter extends BasePresenter
 {
-
-    // Creates Add Conference Form
     protected function createComponentAddRoomForm(): Form
     {
         $form = new Form;

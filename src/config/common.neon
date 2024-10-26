@@ -7,6 +7,7 @@ application:
 	    UserModule: App\UserModule\Presenters\*Presenter
 	    ConferenceModule: App\ConferenceModule\Presenters\*Presenter
 	    RoomModule: App\RoomModule\Presenters\*Presenter
+	    PresentationModule: App\PresentationModule\Presenters\*Presenter
 
 database:
 	dsn: 'mysql:host=127.0.0.1;dbname=iis'
