@@ -3,6 +3,7 @@ services:
 	- App\UserModule\Model\FakeAuthenticator
 	- App\UserModule\Controls\Login\ILoginControlFactory
 	- App\ConferenceModule\Controls\AddConference\IAddConferenceControlFactory
+	- App\RoomModule\Controls\AddRoom\IAddRoomControlFactory
 
 search:
 	-	in: %appDir%

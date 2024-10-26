@@ -65,9 +65,8 @@ final class ConferenceAddPresenter extends BasePresenter
             ]);
 
             $this->flashMessage('Conference added successfully.', 'success');
-            // Wrap the redirection in a try-catch to catch any exceptions
 
-            $this->redirect(destination: ':CommonModule:Home:default');
+            $this->redirect(destination: ':CommonModule:Home:default'); // needs a fix
 
 
         } catch (AbortException $e) {

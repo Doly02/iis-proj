@@ -20,6 +20,8 @@ final class RouterFactory
 
         $router->addRoute('conference/conference-add/add', ':ConferenceModule:ConferenceAdd:add');
 
+        $router->addRoute('room/room-add/add', ':RoomModule:RoomAdd:add');
+
         $router->addRoute('user/authentication/sign-in', ':UserModule:Authentication:signIn');
 
         $router[] = new \Nette\Application\Routers\Route('[<module>[/<presenter>[/<action>[/<id \d+>]]]]', [
