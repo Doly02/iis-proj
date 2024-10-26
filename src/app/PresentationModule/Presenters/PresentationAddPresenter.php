@@ -36,7 +36,6 @@ final class PresentationAddPresenter extends BasePresenter
                 'description' => $values->description,
                 'attachment' => $values->attachment,
                 'conference_id' => 1, // TODO: passed from conference detail
-                'room_id' => 1, // TODO: Drop FK, set to null as default
                 'lecturer_id' => 1, // TODO: User id
             ]);
 

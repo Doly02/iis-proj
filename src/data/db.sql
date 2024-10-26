@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 17, 2024 at 12:35 PM
+-- Generation Time: Oct 27, 2024 at 12:49 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,9 +32,7 @@ CREATE TABLE `conferences` (
   `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `start_time` datetime NOT NULL,
-  `start_date` date NOT NULL,
-  `end_time` time NOT NULL,
-  `end_date` date NOT NULL,
+  `end_time` datetime NOT NULL,
   `price` decimal(10,0) NOT NULL,
   `capacity` int(11) NOT NULL,
   `organiser_id` int(11) NOT NULL
@@ -64,7 +62,7 @@ CREATE TABLE `presentations` (
   `state` enum('approved','waiting','denied') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `attachment` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `conference_id` int(11) NOT NULL,
-  `room_id` int(11) NOT NULL,
+  `room_id` int(11) DEFAULT NULL,
   `lecturer_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
@@ -156,8 +154,7 @@ ALTER TABLE `conference_has_rooms`
 ALTER TABLE `presentations`
   ADD PRIMARY KEY (`id`),
   ADD KEY `presentation_contains` (`conference_id`),
-  ADD KEY `lecturer_submitted_presentation` (`lecturer_id`),
-  ADD KEY `presentation_takes_place_in` (`room_id`);
+  ADD KEY `lecturer_submitted_presentation` (`lecturer_id`);
 
 --
 -- Indexes for table `reservations`
@@ -246,8 +243,7 @@ ALTER TABLE `conference_has_rooms`
 --
 ALTER TABLE `presentations`
   ADD CONSTRAINT `lecturer_submitted_presentation` FOREIGN KEY (`lecturer_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `presentation_contains` FOREIGN KEY (`conference_id`) REFERENCES `conferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `presentation_takes_place_in` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `presentation_contains` FOREIGN KEY (`conference_id`) REFERENCES `conferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `reservations`
