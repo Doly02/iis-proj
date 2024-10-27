@@ -5,24 +5,37 @@ declare(strict_types=1);
 namespace App\CommonModule\Presenters;
 
 use Nette\Application\UI\Presenter;
-use Nette\Database\Explorer;
 
 abstract class BasePresenter extends Presenter
 {
-    protected Explorer $database;
-
-    public function __construct(Explorer $database)
+    public function startup(): void
     {
-        parent::__construct(); // Calling parent constructor
-        $this->database = $database;
+        parent::startup();
+        /* Launch Session */
+        $this->getSession()->start();
+
+        /* Setup of Session */
+        $sessionSection = $this->getSession('user_activity');
+        if (!isset($sessionSection->lastActivity))
+        {
+            $sessionSection->lastActivity = time(); //<! Time of Last Activity
+        }
     }
 
-    public function beforeRender(): void
+    /* TODO: Use For CSS Style
+    public function beforeRender() : void
     {
         parent::beforeRender();
-        $this->template->title = $this->template->title ?? "Default Title";
         $this->template->basePath = $this->getHttpRequest()->getUrl()->getBasePath();
-        $this->setLayout(__DIR__ . '/../../UI/@layout.latte');
-        dump($this->getTemplate()->getFile()); // Listing of the current template
+        $this->setLayout(__DIR__ . '/../../../templates/@layout.latte');
+        dump($this->getTemplate()->getFile()); // Log of Actual Template
+
+    }*/
+
+    public function handleSignOut(?string $redirect = ':UserModule:Authentication:signIn') : void
+    {
+        $this->getUser()->logout(true);
+        $this->flashMessage('You Have Been Logged Out.', 'info');
+        $this->redirect($redirect);
     }
 }

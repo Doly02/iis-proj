@@ -14,7 +14,7 @@ final class RouterFactory
 
     public static function createRouter(): RouteList
     {
-        $router = new RouteList();
+        $router = new \Nette\Application\Routers\RouteList();
 
         $router->addRoute('conference/conference-list/list', ':ConferenceModule:ConferenceList:list');
 
@@ -25,6 +25,9 @@ final class RouterFactory
         $router->addRoute('room/room-add/add', ':PresentationModule:PresentationAdd:add');
 
         $router->addRoute('user/authentication/sign-in', ':UserModule:Authentication:signIn');
+
+        $router->addRoute('user/register/default', ':UserModule:Register:default');
+
 
         $router[] = new \Nette\Application\Routers\Route('[<module>[/<presenter>[/<action>[/<id \d+>]]]]', [
             'module' => 'CommonModule',

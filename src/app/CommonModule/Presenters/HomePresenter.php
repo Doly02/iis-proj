@@ -6,7 +6,6 @@ namespace App\CommonModule\Presenters;
 
 use Nette;
 
-
 final class HomePresenter extends BasePresenter
 {
     public function renderDefault(): void

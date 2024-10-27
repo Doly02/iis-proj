@@ -1,13 +1,18 @@
 services:
 	- App\Core\RouterFactory::createRouter
-	- App\UserModule\Model\FakeAuthenticator
+	- App\UserModule\Model\UserService
+	- App\UserModule\Controls\Register\IRegisterControlFactory
 	- App\UserModule\Controls\Login\ILoginControlFactory
 	- App\ConferenceModule\Controls\AddConference\IAddConferenceControlFactory
 	- App\RoomModule\Controls\AddRoom\IAddRoomControlFactory
 	- App\PresentationModule\Controls\AddPresentation\IAddPresentationControlFactory
+
+	# Forms
+	- App\UserModule\Model\UserFormFactory
 
 search:
 	-	in: %appDir%
 		classes:
 			- *Factory
 			- *Facade
+
