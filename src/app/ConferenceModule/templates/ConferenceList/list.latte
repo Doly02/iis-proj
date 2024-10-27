@@ -1,13 +1,20 @@
-{block content}
-    <h1>Conference List</h1>
-    <ul>
-        {foreach $conferences as $conference}
-            <li>
-                <strong>{$conference->name}</strong><br>
-                Price: {$conference->price} €<br>
-                Start date: {$conference->start_date|date:'d.m.Y'}
-            </li>
-            <br>
-        {/foreach}
-    </ul>
-{/block}
+{default $title = 'Conference list'}
+
+    {block content}
+        <h1>Conference list</h1>
+        <table>
+            <thead>
+            <tr>
+                <th>Conference name</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $conferences as $conference}
+                <tr>
+                    <td>{$conference->name}</td>
+                </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    {/block}
+

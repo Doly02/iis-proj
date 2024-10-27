@@ -22,15 +22,14 @@ abstract class BasePresenter extends Presenter
         }
     }
 
-    /* TODO: Use For CSS Style
-    public function beforeRender() : void
+    public function beforeRender(): void
     {
         parent::beforeRender();
         $this->template->basePath = $this->getHttpRequest()->getUrl()->getBasePath();
-        $this->setLayout(__DIR__ . '/../../../templates/@layout.latte');
+        $this->setLayout(__DIR__ . '/../../UI/@layout.latte');
         dump($this->getTemplate()->getFile()); // Log of Actual Template
+    }
 
-    }*/
 
     public function handleSignOut(?string $redirect = ':UserModule:Authentication:signIn') : void
     {

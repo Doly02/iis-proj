@@ -4,17 +4,20 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{$title|escape}</title>
-
-	<link rel="stylesheet" href="{$basePath}/css/styles.css">
+	<link rel="stylesheet" href="{$basePath}css/styles.css">
 </head>
 
 <body>
-	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
+<!-- Obalový div pre block content -->
+<div class="content-wrapper">
 	{include content}
+</div>
 
-	{block scripts}
+{block scripts}
 	<script src="https://unpkg.com/nette-forms@3"></script>
-	{/block}
+{/block}
 </body>
 </html>
+
