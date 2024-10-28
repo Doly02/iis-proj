@@ -22,7 +22,7 @@ final class RouterFactory
 
         $router->addRoute('room/room-add/add', ':RoomModule:RoomAdd:add');
 
-        $router->addRoute('room/room-add/add', ':PresentationModule:PresentationAdd:add');
+        $router->addRoute('presentation/presentation-add/add', ':PresentationModule:PresentationAdd:add');
 
         $router->addRoute('user/authentication/sign-in', ':UserModule:Authentication:signIn');
 
