@@ -2,6 +2,8 @@ services:
 	- App\Core\RouterFactory::createRouter
 	- App\UserModule\Model\UserService
 	- App\ConferenceModule\Model\ConferenceService
+	- App\RoomModule\Model\RoomService
+	- App\PresentationModule\Model\PresentationService
 	- App\UserModule\Controls\Register\IRegisterControlFactory
 	- App\UserModule\Controls\Login\ILoginControlFactory
 	- App\ConferenceModule\Controls\AddConference\IAddConferenceControlFactory

@@ -3,11 +3,20 @@
 namespace App\PresentationModule\Presenters;
 
 use App\CommonModule\Presenters\BasePresenter;
+use App\PresentationModule\Model\PresentationService;
 use Nette\Application\UI\Form;
 use Nette\Application\AbortException;
 
 final class PresentationAddPresenter extends BasePresenter
 {
+
+    private PresentationService $presentationService;
+
+    public function __construct(PresentationService $presentationService)
+    {
+        parent::__construct();
+        $this->presentationService = $presentationService;
+    }
 
     protected function createComponentAddPresentationForm(): Form
     {
@@ -31,7 +40,7 @@ final class PresentationAddPresenter extends BasePresenter
     {
         try {
             // Insert the room data into the database
-            $this->database->table('presentations')->insert([
+            $this->presentationService->addPresentation([
                 'name' => $values->name,
                 'description' => $values->description,
                 'attachment' => $values->attachment,
