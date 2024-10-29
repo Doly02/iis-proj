@@ -25,12 +25,12 @@ h2, h3 {
 }
 
 a {
-    color: #2d4bad;
+    color: #021e78;
     text-decoration: none;
 }
 
 a:hover {
-    color: #acbffc;
+    color: #2d4bad;
     text-decoration: underline;
 }
 
@@ -99,7 +99,7 @@ table, th, td {
 }
 
 th {
-    background-color: #acbffc; /* Tmavomodré pozadie pre hlavičku */
+    background-color: #acbffc;
     color: #000000; /* Čierna farba pre text */
     font-weight: bold;
     border-radius: 0; /* Vynecháva extra zaoblenie pre hlavičku */

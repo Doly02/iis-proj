@@ -3,21 +3,21 @@
 namespace App\ConferenceModule\Presenters;
 
 use App\CommonModule\Presenters\BasePresenter;
-use App\ConferenceModule\Model\ConferenceService;
+use App\ConferenceModule\Controls\ListConference\IListConferenceControlFactory;
+use App\ConferenceModule\Controls\ListConference\ListConferenceControl;
 
 final class ConferenceListPresenter extends BasePresenter
 {
+    private IListConferenceControlFactory $listConferenceControlFactory;
 
-    private ConferenceService $conferenceService;
-
-    public function __construct(ConferenceService $conferenceService)
+    public function __construct(IListConferenceControlFactory $listConferenceControlFactory)
     {
         parent::__construct();
-        $this->conferenceService = $conferenceService;
+        $this->listConferenceControlFactory = $listConferenceControlFactory;
     }
 
-    public function renderList(): void
+    protected function createComponentConferenceGrid(): ListConferenceControl
     {
-        $this->template->conferences = $this->conferenceService->getConferenceTable();
+        return $this->listConferenceControlFactory->create();
     }
 }

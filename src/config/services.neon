@@ -7,6 +7,7 @@ services:
 	- App\UserModule\Controls\Register\IRegisterControlFactory
 	- App\UserModule\Controls\Login\ILoginControlFactory
 	- App\ConferenceModule\Controls\AddConference\IAddConferenceControlFactory
+	- App\ConferenceModule\Controls\ListConference\IListConferenceControlFactory
 	- App\RoomModule\Controls\AddRoom\IAddRoomControlFactory
 	- App\PresentationModule\Controls\AddPresentation\IAddPresentationControlFactory
 
