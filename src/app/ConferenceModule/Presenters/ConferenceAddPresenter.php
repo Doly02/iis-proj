@@ -5,9 +5,21 @@ namespace App\ConferenceModule\Presenters;
 use App\CommonModule\Presenters\BasePresenter;
 use Nette\Application\UI\Form;
 use Nette\Application\AbortException;
+use App\ConferenceModule\Model\ConferenceService;
+use App\RoomModule\Model\RoomService;
+
 
 final class ConferenceAddPresenter extends BasePresenter
 {
+
+    private ConferenceService $conferenceService;
+
+
+    public function __construct(ConferenceService $conferenceService)
+    {
+        parent::__construct();
+        $this->conferenceService = $conferenceService;
+    }
 
     // Creates Add Conference Form
     protected function createComponentAddConferenceForm(): Form
@@ -33,7 +45,7 @@ final class ConferenceAddPresenter extends BasePresenter
             ->addRule($form::Float, 'Price must be a number.');
 
         // Fetch rooms from the database
-        $rooms = $this->database->table('rooms')->fetchAll(); // Adjust this line to match your database access method
+        $rooms = $this->conferenceService->roomService->fetchAll(); // Adjust this line to match your database access method
         $roomOptions = [];
         foreach ($rooms as $room) {
             $roomOptions[$room->id] = $room->name; // Assuming 'id' and 'name' are the column names
@@ -66,6 +78,7 @@ final class ConferenceAddPresenter extends BasePresenter
 
     public function addConferenceFormSucceeded(Form $form, \stdClass $values): void
     {
+        /*
         try {
             // Sum capacity of rooms
             $totalCapacity = 0;
@@ -108,6 +121,6 @@ final class ConferenceAddPresenter extends BasePresenter
             // Allow AbortException silently (no action needed)
         } catch (\Exception $e) {
             $form->addError('An error occurred while adding the conference: ' . $e->getMessage());
-        }
+        }*/
     }
 }
