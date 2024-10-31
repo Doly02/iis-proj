@@ -9,12 +9,9 @@ use App\RoomModule\Model\RoomService;
 
 final class ConferenceService extends BaseService
 {
-    public RoomService $roomService;
-
-    public function __construct(Explorer $database, RoomService $roomService)
+    public function __construct(Explorer $database)
     {
         parent::__construct($database);
-        $this->roomService = $roomService;
     }
 
     public function getTableName(): string

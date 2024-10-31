@@ -4,6 +4,7 @@ services:
 	- App\ConferenceModule\Model\ConferenceService
 	- App\RoomModule\Model\RoomService
 	- App\PresentationModule\Model\PresentationService
+	- App\ConferenceHasRoomsModule\Model\ConferenceHasRoomsService
 	- App\UserModule\Controls\Register\IRegisterControlFactory
 	- App\UserModule\Controls\Login\ILoginControlFactory
 	- App\ConferenceModule\Controls\AddConference\IAddConferenceControlFactory

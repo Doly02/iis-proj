@@ -7,18 +7,22 @@ use Nette\Application\UI\Form;
 use Nette\Application\AbortException;
 use App\ConferenceModule\Model\ConferenceService;
 use App\RoomModule\Model\RoomService;
-
+use App\ConferenceHasRoomsModule\Model\ConferenceHasRoomsService;
 
 final class ConferenceAddPresenter extends BasePresenter
 {
 
     private ConferenceService $conferenceService;
+    private RoomService $roomService;
+    private ConferenceHasRoomsService $conferenceHasRoomsService;
 
 
-    public function __construct(ConferenceService $conferenceService)
+    public function __construct(ConferenceService $conferenceService, RoomService $roomService, ConferenceHasRoomsService $conferenceHasRoomsService)
     {
         parent::__construct();
         $this->conferenceService = $conferenceService;
+        $this->roomService = $roomService;
+        $this->conferenceHasRoomsService = $conferenceHasRoomsService;
     }
 
     // Creates Add Conference Form
@@ -45,7 +49,7 @@ final class ConferenceAddPresenter extends BasePresenter
             ->addRule($form::Float, 'Price must be a number.');
 
         // Fetch rooms from the database
-        $rooms = $this->conferenceService->roomService->fetchAll(); // Adjust this line to match your database access method
+        $rooms = $this->roomService->fetchAll(); // Adjust this line to match your database access method
         $roomOptions = [];
         foreach ($rooms as $room) {
             $roomOptions[$room->id] = $room->name; // Assuming 'id' and 'name' are the column names
@@ -78,13 +82,12 @@ final class ConferenceAddPresenter extends BasePresenter
 
     public function addConferenceFormSucceeded(Form $form, \stdClass $values): void
     {
-        /*
         try {
             // Sum capacity of rooms
             $totalCapacity = 0;
             if (!empty($values->rooms)) {
                 foreach ($values->rooms as $roomId) {
-                    $room = $this->database->table('rooms')->get($roomId);
+                    $room = $this->roomService->fetchById($roomId);
                     if ($room) {
                         $totalCapacity += $room->capacity;
                     }
@@ -92,7 +95,7 @@ final class ConferenceAddPresenter extends BasePresenter
             }
 
             // Insert the conference data into the database
-            $conferenceId = $this->database->table('conferences')->insert([
+            $conferenceId = $this->conferenceService->addConference([
                 'name' => $values->name,
                 'description' => $values->description,
                 'start_time' => $values->start_time,
@@ -105,13 +108,13 @@ final class ConferenceAddPresenter extends BasePresenter
             // Insert selected rooms into conference_has_rooms
             if (!empty($values->rooms)) {
                 foreach ($values->rooms as $roomId) {
-                    $this->database->table('conference_has_rooms')->insert([
+                    $this->conferenceHasRoomsService->addConferenceHasRooms([
                         'conference_id' => $conferenceId,
                         'room_id' => $roomId,
                     ]);
                 }
             }
-
+            // TODO commit changes after successful add of both conference and conferenceHasRooms
             $this->flashMessage('Conference added successfully.', 'success');
 
             $this->redirect(destination: ':CommonModule:Home:default'); // needs a fix
@@ -121,6 +124,6 @@ final class ConferenceAddPresenter extends BasePresenter
             // Allow AbortException silently (no action needed)
         } catch (\Exception $e) {
             $form->addError('An error occurred while adding the conference: ' . $e->getMessage());
-        }*/
+        }
     }
 }
