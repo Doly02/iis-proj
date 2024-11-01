@@ -13,7 +13,7 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    border-radius: 5px; /* Zaoblené hrany */
+    border-radius: 5px; 
 }
 
 h1 {
@@ -36,11 +36,11 @@ a:hover {
 
 /* Header */
 header {
-    background-color: #2d4bad; /* Tmavomodré pozadie */
-    color: #ffffff; /* Biela pre text */
+    background-color: #2d4bad;
+    color: #ffffff;
     padding: 15px 0;
     text-align: center;
-    border-radius: 5px; /* Zaoblené hrany */
+    border-radius: 5px; 
 }
 
 header h1 {
@@ -52,35 +52,35 @@ header h1 {
 nav {
     display: flex;
     justify-content: center;
-    background-color: #acbffc; /* Svetlomodrá pre navigáciu */
-    border-radius: 5px; /* Zaoblené hrany */
+    background-color: #acbffc;
+    border-radius: 5px; 
 }
 
 nav a {
     color: #ffffff;
     padding: 10px 20px;
     font-weight: bold;
-    border-radius: 5px; /* Zaoblené hrany pre odkazy */
+    border-radius: 5px;
 }
 
 nav a:hover {
-    background-color: #2d4bad; /* Odtieň tmavšej modrej pre hover */
+    background-color: #2d4bad;
 }
 
 /* Button Styles */
 button, .btn {
-    background-color: #2d4bad; /* Svetlomodrá farba tlačidiel */
+    background-color: #2d4bad;
     color: #ffffff;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
-    border-radius: 5px; /* Zaoblené hrany */
+    border-radius: 5px; 
     font-size: 16px;
     transition: background-color 0.3s;
 }
 
 button:hover, .btn:hover {
-    background-color: #021e78; /* Tmavšia modrá pre hover */
+    background-color: #021e78;
 }
 
 /* Table Styles */
@@ -88,8 +88,8 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
-    border-radius: 5px; /* Zaoblené hrany pre tabuľky */
-    overflow: hidden; /* Odstráni pretekanie zaoblených hrán */
+    border-radius: 5px;
+    overflow: hidden;
 }
 
 table, th, td {
@@ -100,33 +100,33 @@ table, th, td {
 
 th {
     background-color: #acbffc;
-    color: #000000; /* Čierna farba pre text */
+    color: #000000;
     font-weight: bold;
-    border-radius: 0; /* Vynecháva extra zaoblenie pre hlavičku */
+    border-radius: 0;
 }
 
 tr:nth-child(even) {
-    background-color: #f2f2f2; /* Svetlosivá pre párne riadky */
+    background-color: #f2f2f2;
 }
 
 tr:hover {
-    background-color: #e6f2ff; /* Svetlomodrá pre hover */
+    background-color: #e6f2ff;
 }
 
 /* Form Styles */
 form {
     margin: 20px 0;
     padding: 20px;
-    background-color: #f9f9f9; /* Svetlosivé pozadie pre formuláre */
+    background-color: #f9f9f9;
     border: 1px solid #dddddd;
-    border-radius: 5px; /* Zaoblené hrany */
+    border-radius: 5px; 
 }
 
 form label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
-    color: #000000; /* Čierna pre labely */
+    color: #000000;
 }
 
 form input[type="text"],
@@ -139,7 +139,7 @@ form textarea {
     padding: 10px;
     margin: 8px 0;
     border: 1px solid #cccccc;
-    border-radius: 5px; /* Zaoblené hrany */
+    border-radius: 5px; 
     font-size: 16px;
 }
 
@@ -151,7 +151,7 @@ form button {
     border: none;
     padding: 10px 20px;
     cursor: pointer;
-    border-radius: 5px; /* Zaoblené hrany */
+    border-radius: 5px; 
     font-size: 16px;
     transition: background-color 0.3s;
 }
@@ -165,7 +165,7 @@ form button:hover {
 /* Card Styles */
 .card {
     border: 1px solid #dddddd;
-    border-radius: 5px; /* Zaoblené hrany */
+    border-radius: 5px; 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     padding: 20px;
     margin: 15px 0;
@@ -181,7 +181,7 @@ form button:hover {
 .flash {
     padding: 15px;
     margin: 15px 0;
-    border-radius: 5px; /* Zaoblené hrany */
+    border-radius: 5px; 
     font-weight: bold;
 }
 
@@ -210,7 +210,7 @@ footer {
     padding: 15px;
     text-align: center;
     font-size: 14px;
-    border-radius: 5px; /* Zaoblené hrany */
+    border-radius: 5px; 
 }
 
 footer a {
@@ -222,18 +222,18 @@ footer a:hover {
 }
 
 .content-wrapper {
-    max-width: 600px; /* Nastaví maximálnu šírku obsahu */
+    max-width: 1000px; /* Nastaví maximálnu šírku obsahu */
     margin: 0 auto;    /* Centrovanie obsahu */
     padding: 20px;     /* Vnútorné odsadenie */
     background-color: #f9f9f9; /* Svetlé pozadie */
-    border: 1px solid #dddddd; /* Rám */
     border-radius: 5px; /* Zaoblené rohy */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Jemný tieň */
 }
 
 .datagrid th:last-child {
-    display: none; /* Skryje posledný stĺpec hlavičky */
+    color: #acbffc;
 }
 
-
-
+.datagrid th a[title="Reset filter"],
+.datagrid th .fa-times {
+    display: none;
+}
