@@ -7,6 +7,7 @@ namespace App\ConferenceModule\Controls\AddConference;
 use App\ConferenceHasRoomsModule\Model\ConferenceHasRoomsService;
 use App\ConferenceModule\Model\ConferenceService;
 use App\RoomModule\Model\RoomService;
+use App\ConferenceModule\Model\ConferenceFormFactory;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
 use Nette\Security\AuthenticationException;
@@ -18,15 +19,18 @@ final class AddConferenceControl extends Control
     private ConferenceService $conferenceService;
     private RoomService $roomService;
     private ConferenceHasRoomsService $conferenceHasRoomsService;
+    private ConferenceFormFactory $conferenceFormFactory;
 
 
     public function __construct(\Nette\Security\User $user, ConferenceService $conferenceService,
-                                RoomService $roomService, ConferenceHasRoomsService $conferenceHasRoomsService)
+                                RoomService $roomService, ConferenceHasRoomsService $conferenceHasRoomsService,
+                                ConferenceFormFactory $conferenceFormFactory)
     {
         $this->user = $user;
         $this->conferenceService = $conferenceService;
         $this->roomService = $roomService;
         $this->conferenceHasRoomsService = $conferenceHasRoomsService;
+        $this->conferenceFormFactory = $conferenceFormFactory;
     }
 
     public function render(): void
@@ -36,61 +40,17 @@ final class AddConferenceControl extends Control
     }
 
     // Creates Add Conference Form
-    protected function createComponentAddConferenceForm(): Form
+    protected function createComponentAddConferenceForm() : \Nette\Application\UI\Form
     {
-        $form = new Form;
-
-        $form->addText('name', 'Name:')
-            ->setRequired('Enter the conference name.')
-            ->addRule($form::MaxLength, 'Name can be at most 30 characters long.', 30);
-
-        $form->addTextArea('description', 'Description:')
-            ->setRequired('Enter a description for the conference.');
-
-        // User-friendly selection of date and time
-        $form->addDateTime('start_time', 'Conference start:')
-            ->setRequired('Enter the start date.');
-
-        $form->addDateTime('end_time', 'Conference end:')
-            ->setRequired('Enter the end date.');
-
-        $form->addText('price', 'Price:')
-            ->setRequired('Enter the price.')
-            ->addRule($form::Float, 'Price must be a number.');
-
-        // Fetch rooms from the database
-        $rooms = $this->roomService->fetchAll(); // Adjust this line to match your database access method
-        $roomOptions = [];
-        foreach ($rooms as $room) {
-            $roomOptions[$room->id] = $room->name; // Assuming 'id' and 'name' are the column names
-        }
-
-        // Multi-select for room selection
-        $form->addMultiSelect('rooms', 'Select Rooms:', $roomOptions)
-            ->setRequired('Please select at least one room.');
-
-        $form->addSubmit('send', 'Add Conference');
-
-        // Validating time
-        $form->onValidate[] = function (Form $form) {
-            $values = $form->getValues();
-
-            // Ensure to use format to convert DateTimeImmutable to a string
-            $startDateTime = $values->start_time; // This is a DateTimeImmutable object
-            $endDateTime = $values->end_time; // This is a DateTimeImmutable object
-
-            // Check if start time is not before end time
-            if ($startDateTime >= $endDateTime) {
-                $form->addError('The end time must be after the start time.');
-            }
-        };
-
+        $form = $this->conferenceFormFactory->createConferenceForm();
         $form->onSuccess[] = [$this, 'addConferenceFormSucceeded'];
         return $form;
     }
 
     public function addConferenceFormSucceeded(Form $form, \stdClass $values): void
     {
+        $err = 0;
+        $presenter = $this->getPresenter();
         try {
             // Sum capacity of rooms
             $totalCapacity = 0;
@@ -123,16 +83,17 @@ final class AddConferenceControl extends Control
                     ]);
                 }
             }
-            // TODO commit changes after successful add of both conference and conferenceHasRooms
-            $this->flashMessage('Conference added successfully.', 'success');
-
-            $this->getPresenter()->redirect(':CommonModule:Home:default');
-
-
-        } catch (AbortException $e) {
-            // Allow AbortException silently (no action needed)
         } catch (\Exception $e) {
+            $err = 1;
             $form->addError('An error occurred while adding the conference: ' . $e->getMessage());
         }
+        // TODO commit changes after successful add of both conference and conferenceHasRooms
+
+        if (null !== $presenter && $err !== 1)
+        {
+            $this->flashMessage('Conference added successfully.', 'success');
+            $presenter->redirect(':CommonModule:Home:default');
+        }
+
     }
 }
