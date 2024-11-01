@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 29, 2024 at 07:15 PM
+-- Generation Time: Nov 01, 2024 at 09:52 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -78,7 +78,10 @@ CREATE TABLE `reservations` (
   `created_time` time NOT NULL,
   `price_to_pay` decimal(10,0) NOT NULL,
   `customer_id` int(11) NOT NULL,
-  `conference_id` int(11) NOT NULL
+  `conference_id` int(11) NOT NULL,
+  `first_nam` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `last_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
