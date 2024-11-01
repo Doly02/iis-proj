@@ -6,10 +6,8 @@ entity "Konference" {
     + Název
     + Popis
     + Oblast zájmu
-    + Datum začátku
-    + Čas začátku
-    + Datum konce
-    + Čas konce
+    + Datum a čas začátku
+    + Datum a čas konce
     + Cena vstupního
     - Celkova kapacita
     - Voľná kapacita
@@ -27,11 +25,13 @@ entity "Prezentace" {
 entity "Rezervace" {
     <<PK>> Id rezervace
     ---
-    - Dátum vzniku
-    - Čas vzniku
+    - Dátum a čas vzniku
     + Stav - provedená/zaplacená/
              zamítnutá
     + Cena na úhradu
+    + Jméno
+    + Příjmení
+    + E-mail
 
 }
 
@@ -54,6 +54,7 @@ entity "Uživatel" {
     + Jméno
     + Příjmení
     + E-mail
+    + Heslo
 }
 
 entity "Místnost" {

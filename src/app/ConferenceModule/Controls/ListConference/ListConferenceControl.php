@@ -8,6 +8,7 @@ use Nette\Application\UI\Control;
 use Nette\Security\User;
 use Ublaboo\DataGrid\DataGrid;
 use App\ConferenceModule\Model\ConferenceService;
+use Ublaboo\DataGrid\Exception\DataGridException;
 
 final class ListConferenceControl extends Control
 {
@@ -21,6 +22,9 @@ final class ListConferenceControl extends Control
         $this->conferenceService = $conferenceService;
     }
 
+    /**
+     * @throws DataGridException
+     */
     protected function createComponentConferenceGrid(): DataGrid
     {
         $grid = new DataGrid;
@@ -38,8 +42,14 @@ final class ListConferenceControl extends Control
         $grid->addColumnText('capacity', 'Capacity')
             ->setSortable();
 
+        $grid->addAction('detail', '', 'ConferenceDetail:default')
+            ->setTitle('Show detail')
+            ->setclass('')
+            ->setIcon('eye');
+
         return $grid;
     }
+
 
     public function render(): void
     {

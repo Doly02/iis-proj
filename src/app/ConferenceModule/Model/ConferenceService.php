@@ -1,4 +1,5 @@
 <?php
+
 namespace App\ConferenceModule\Model;
 
 use Nette\Database\Explorer;
@@ -21,7 +22,7 @@ final class ConferenceService extends BaseService
 
     public function getConferenceTable(): Selection
     {
-        return $this->database->table('conferences');
+        return $this->database->table($this->getTableName());
     }
 
     public function addConference(array $data): ?ActiveRow
@@ -31,4 +32,8 @@ final class ConferenceService extends BaseService
         return $insertedRow instanceof ActiveRow ? $insertedRow : null;
     }
 
+    public function getConferenceById(int $conferenceId): ?ActiveRow
+    {
+        return $this->getConferenceTable()->get($conferenceId);
+    }
 }
