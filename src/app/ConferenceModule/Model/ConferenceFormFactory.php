@@ -91,11 +91,22 @@ final class ConferenceFormFactory
         return $form;
     }
 
-    public function createAddRoomsToConferenceForm(\DateTimeImmutable $allowedStartTime, \DateTimeImmutable $allowedEndTime, int $conferenceId = null) : Form
+    public function createAddRoomsToConferenceForm(\DateTimeImmutable $allowedStartTime, \DateTimeImmutable $allowedEndTime) : Form
     {
         $form = new Form;
 
+        $availableRooms = $this->roomService->fetchAvailableRooms($allowedStartTime, $allowedEndTime);
 
+        $roomOptions = [];
+        foreach ($availableRooms as $room) {
+            $roomOptions[$room->id] = $room->name; // Assuming your fetch method returns objects with id and name properties
+        }
+
+        // Add multiselect field to the form
+        $form->addMultiSelect('rooms', 'Select Rooms:', $roomOptions)
+            ->setRequired('Please select at least one room.');
+
+        // TODO Display after a room is selected
         $form->addDateTime('booking_start', 'Booking Start:')
             ->setRequired('Select a start time.')
             ->setHtmlAttribute('class', 'form-control')

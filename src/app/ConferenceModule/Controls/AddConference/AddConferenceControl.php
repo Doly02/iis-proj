@@ -51,6 +51,7 @@ final class AddConferenceControl extends Control
     {
         $err = 0;
         $presenter = $this->getPresenter();
+        $conferenceId = null;
         try {
             // Insert the conference data into the database
             $conferenceId = $this->conferenceService->addConference([
@@ -81,7 +82,7 @@ final class AddConferenceControl extends Control
         if (null !== $presenter && $err !== 1)
         {
             $this->flashMessage('Conference added successfully.', 'success');
-            $presenter->redirect(':ConferenceModule:AddRoomToConference:add');
+            $presenter->redirect(':ConferenceModule:AddRoomToConference:add', ['id' => $conferenceId]);
         }
 
     }
