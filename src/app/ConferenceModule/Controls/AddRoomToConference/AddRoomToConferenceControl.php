@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ConferenceModule\Controls\AddConference;
+namespace App\ConferenceModule\Controls\AddRoomToConference;
 
 use App\ConferenceHasRoomsModule\Model\ConferenceHasRoomsService;
 use App\ConferenceModule\Model\ConferenceService;
@@ -13,7 +13,7 @@ use Nette\Application\UI\Form;
 use Nette\Security\AuthenticationException;
 use Nette\Application\UI\Control;
 
-final class AddConferenceControl extends Control
+final class AddRoomToConferenceControl extends Control
 {
     private $user;
     private ConferenceService $conferenceService;
@@ -35,14 +35,15 @@ final class AddConferenceControl extends Control
 
     public function render(): void
     {
-        $this->template->setFile(__DIR__ . '/../../templates/ConferenceAdd/add.latte');
+        $this->template->setFile(__DIR__ . '/../../templates/AddRoomToConference/add.latte');
         $this->template->render();
     }
 
-    // Creates Add Conference Form
-    protected function createComponentAddConferenceForm() : \Nette\Application\UI\Form
+    // Form for adding rooms
+    protected function createComponentAddRoomToConferenceForm(\DateTimeImmutable $allowedStartTime,
+                                                              \DateTimeImmutable $allowedEndTime) : \Nette\Application\UI\Form
     {
-        $form = $this->conferenceFormFactory->createConferenceForm();
+        $form = $this->conferenceFormFactory->createAddRoomsToConferenceForm($allowedStartTime, $allowedEndTime);
         $form->onSuccess[] = [$this, 'addConferenceFormSucceeded'];
         return $form;
     }
@@ -51,38 +52,35 @@ final class AddConferenceControl extends Control
     {
         $err = 0;
         $presenter = $this->getPresenter();
-        try {
-            // Insert the conference data into the database
-            $conferenceId = $this->conferenceService->addConference([
-                'name' => $values->name,
-                'description' => $values->description,
-                'start_time' => $values->start_time,
-                'end_time' => $values->end_time,
-                'price' => $values->price,
-                'capacity' => 0,
-                'organiser_id' => 1, // TODO: User id
-            ])->id;
 
-            // Insert selected rooms into conference_has_rooms
-            if (!empty($values->rooms)) {
-                foreach ($values->rooms as $roomId) {
-                    $this->conferenceHasRoomsService->addConferenceHasRooms([
-                        'conference_id' => $conferenceId,
-                        'room_id' => $roomId,
-                    ]);
+
+        $rooms = $this->roomService->fetchAvailableRooms($values->startDate, $values->endDate);
+
+        // Sum capacity of rooms
+        $totalCapacity = 0;
+        if (!empty($values->rooms)) {
+            foreach ($values->rooms as $roomId) {
+                $room = $this->roomService->fetchById($roomId);
+                if ($room) {
+                    $totalCapacity += $room->capacity;
                 }
             }
+        }
+
+        try {
+            // update conference capacity, add rooms
         } catch (\Exception $e) {
             $err = 1;
             $form->addError('An error occurred while adding the conference: ' . $e->getMessage());
         }
-        // TODO commit changes after successful add of both conference and conferenceHasRooms
 
         if (null !== $presenter && $err !== 1)
         {
             $this->flashMessage('Conference added successfully.', 'success');
-            $presenter->redirect(':ConferenceModule:AddRoomToConference:add');
+            $presenter->redirect(':CommonModule:Home:default');
         }
 
     }
 }
+
+
