@@ -36,4 +36,12 @@ final class ConferenceService extends BaseService
     {
         return $this->getConferenceTable()->get($conferenceId);
     }
+
+    public function updateConferenceCapacity(int $conferenceId, int $newCapacity): void
+    {
+
+        $this->getTable()
+            ->where('id = ?', $conferenceId)
+            ->update(['capacity' => $newCapacity]);
+    }
 }

@@ -24,6 +24,7 @@ final class AddRoomToConferenceControl extends Control
     private int $conferenceId;
 
 
+
     public function __construct(\Nette\Security\User $user, ConferenceService $conferenceService,
                                 RoomService $roomService, ConferenceHasRoomsService $conferenceHasRoomsService,
                                 ConferenceFormFactory $conferenceFormFactory)
@@ -37,6 +38,10 @@ final class AddRoomToConferenceControl extends Control
 
     public function render(): void
     {
+        $this->template->conferenceId = $this->conferenceId;
+        $this->conference = $this->conferenceService->getConferenceById($this->conferenceId);
+        $this->template->conference = $this->conference;
+
         $this->template->setFile(__DIR__ . '/../../templates/AddRoomToConference/add.latte');
         $this->template->render();
     }
@@ -68,19 +73,37 @@ final class AddRoomToConferenceControl extends Control
     {
         $err = 0;
         $presenter = $this->getPresenter();
-
-
-
+        \Tracy\Debugger::barDump($values, 'Form Data');
 
         try {
-            // TODO update conference capacity, add rooms
+            // TODO generate tickets
+
+            $roomId = $values->room;
+            $room = $this->roomService->fetchById($roomId);
+            $conference = $this->conferenceService->getConferenceById($this->conferenceId);
+
+            $currentCapacity = $conference->capacity + $room->capacity;
+
+            $bookingStart = $values->booking_start;
+            $bookingEnd = $values->booking_end;
+
+            // Add room to conference
+            $this->conferenceHasRoomsService->addConferenceHasRooms([
+                'room_id' => $roomId,
+                'conference_id' => $this->conferenceId,
+                'booking_start' => $bookingStart,
+                'booking_end' => $bookingEnd,
+            ]);
+
+            // Update capacity
+            $this->conferenceService->updateConferenceCapacity($this->conferenceId, $currentCapacity);
+
         } catch (\Exception $e) {
             $err = 1;
             $form->addError('An error occurred while adding the conference: ' . $e->getMessage());
         }
 
-        if (null !== $presenter && $err !== 1)
-        {
+        if (null !== $presenter && $err !== 1) {
             $this->flashMessage('Conference added successfully.', 'success');
             $presenter->redirect(':CommonModule:Home:default');
         }
