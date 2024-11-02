@@ -48,9 +48,6 @@ entity "Vstupenka" {
 entity "Uživatel" {
     <<PK>> Id uživatele
     ---
-    - Role - neregistrovaný/
-            registrovaný
-
     + Jméno
     + Příjmení
     + E-mail

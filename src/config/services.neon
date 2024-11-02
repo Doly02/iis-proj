@@ -9,6 +9,7 @@ services:
 	- App\UserModule\Controls\Login\ILoginControlFactory
 	- App\ConferenceHasRoomsModule\Model\ConferenceHasRoomsService
 	- App\ConferenceModule\Controls\AddConference\IAddConferenceControlFactory
+	- App\ConferenceModule\Controls\AddRoomToConference\IAddRoomToConferenceControlFactory
 	- App\ConferenceModule\Controls\ListConference\IListConferenceControlFactory
 	- App\RoomModule\Controls\AddRoom\IAddRoomControlFactory
 	- App\ReservationModule\Controls\ReserveNonRegistered\IReserveNonRegisteredControlFactory
@@ -17,6 +18,7 @@ services:
 
 	# Forms
 	- App\UserModule\Model\UserFormFactory
+	- App\ConferenceModule\Model\ConferenceFormFactory
 
 search:
 	-	in: %appDir%
