@@ -11,6 +11,8 @@ final class ReserveNonRegisteredControl extends Control
 {
     private $_reservationService;
     private $_conferenceId;
+    private $_availableTickets;
+    private $_ticketPrice;
 
     public function __construct(
         ReservationService $reservationService
@@ -19,36 +21,24 @@ final class ReserveNonRegisteredControl extends Control
         $this->_reservationService = $reservationService;
     }
 
-    public function setConferenceId(int $conferenceId): void
+    public function setConferenceId(int $conferenceId) : void
     {
         $this->_conferenceId = $conferenceId;
     }
 
-    public function getAvailableTickets() : int
+    public function setAvailableTickets(int $availableTickets) : void
     {
-        /* Get Total Capacity of Conference */
-        $conference = $this->_reservationService->getConferenceById($this->_conferenceId);
-        if (!$conference) {
-            return 0;
-        }
-        $totalCapacity = (int) $conference->capacity;
+        $this->_availableTickets = $availableTickets;
+    }
 
-        /* Ticket Counter */
-        $reservedTickets = $this->_reservationService->getReservedTicketsCount($this->_conferenceId);
-
-        /* Count Free Tickets */
-        return max(0, $totalCapacity - $reservedTickets);
+    public function setTicketPrice(float $ticketPrice) : void
+    {
+        $this->_ticketPrice = $ticketPrice;
     }
 
     protected function createComponentReserveNonRegisteredForm(): \Nette\Application\UI\Form
     {
         $form = new Form();
-        $availableTickets = $this->getAvailableTickets();
-
-        if ($availableTickets === 0) {
-            $this->presenter->flashMessage('No tickets are available for this conference. But On Other Might Be Space :D', 'error');
-            $this->presenter->redirect(':ConferenceModule:ConferenceList:list');
-        }
 
         /* Fist Name */
         $form->addText('firstName', 'First Name')
@@ -72,10 +62,10 @@ final class ReserveNonRegisteredControl extends Control
         $form->addText('tickets', 'Tickets')
             ->setDefaultValue(1)
             ->setRequired('Please select the number of tickets.')
-            ->addRule(function ($control) use ($availableTickets) {
+            ->addRule(function ($control) {
                 $value = (int) $control->getValue();
-                return Validators::isNumeric($control->getValue()) && $value >= 1 && $value <= $availableTickets;
-            }, 'You must reserve at least 1 ticket and no more than ' . $availableTickets . ' tickets.')
+                return Validators::isNumeric($control->getValue()) && $value >= 1 && $value <= $this->_availableTickets;
+            }, 'You must reserve at least 1 ticket and no more than ' . $this->_availableTickets . ' tickets.')
             ->setHtmlAttribute('class', 'form-control')
             ->setHtmlAttribute('id', 'ticket-quantity');
 
@@ -127,6 +117,7 @@ final class ReserveNonRegisteredControl extends Control
 
     public function render(): void
     {
+        $this->template->ticketPrice = $this->_ticketPrice;
         $this->template->setFile(__DIR__ . '/../../templates/ReserveNonRegistered/makeReservation.latte');
         $this->template->render();
     }
