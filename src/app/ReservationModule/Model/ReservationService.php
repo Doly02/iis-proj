@@ -31,6 +31,20 @@ final class ReservationService extends BaseService
             ->sum('num_reserved_tickets') ?: 0;
     }
 
+    public function getAvailableTickets(int $conferenceId): int
+    {
+        $conference = $this->getConferenceById($conferenceId);
+        if (!$conference) {
+            return 0;
+        }
+
+        $totalCapacity = (int) $conference->capacity;
+        $reservedTickets = $this->getReservedTicketsCount($conferenceId);
+
+        return max(0, $totalCapacity - $reservedTickets);
+    }
+
+
     public function reserveTickets(string $firstName, string $lastName, string $email, int $tickets, int $conferenceId, ?int $costumer_id) : void
     {
         $this->database->beginTransaction();

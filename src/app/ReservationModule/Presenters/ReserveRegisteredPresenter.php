@@ -15,6 +15,8 @@ final class ReserveRegisteredPresenter extends SecurePresenter
 {
     private $_reservationService;
     private $_reserveRegisteredControlFactory;
+    private $_ticketPrice;
+    private $_availableTickets;
 
     public function __construct(
         IReserveRegisteredControlFactory $reserveControlFactory,
@@ -25,6 +27,8 @@ final class ReserveRegisteredPresenter extends SecurePresenter
         Debugger::log("Reached construct", 'info');
         $this->_reserveRegisteredControlFactory = $reserveControlFactory;
         $this->_reservationService = $reservationService;
+        $this->_ticketPrice = 0;
+        $this->_availableTickets = 0;
     }
 
     public function actionMakeReservation(int $id): void
@@ -36,7 +40,22 @@ final class ReserveRegisteredPresenter extends SecurePresenter
         // \Tracy\Debugger::barDump($id, 'Conference ID');
         // Debugger::log('Reached actionMakeReservation with ID: ' . $id, 'info');
 
+        $conference = $this->_reservationService->getConferenceById($id);
+        if ($conference)
+        {
+            $this->_availableTickets = $this->_reservationService->getAvailableTickets($id);
+            if ($this->_availableTickets === 0) {
+                $this->flashMessage('No tickets are available for this conference.', 'error');
+                $this->redirect(':ConferenceModule:ConferenceList:list');
+            }
+            $this->_ticketPrice = $conference->price;
+        }
+        else
+        {
+            $this->_ticketPrice = 0;
+        }
         $this->template->conferenceId = $id;
+        $this->template->ticketPrice = $this->_ticketPrice;
     }
 
     protected function createComponentReserveRegisteredForm(): ReserveRegisteredControl
@@ -50,6 +69,9 @@ final class ReserveRegisteredPresenter extends SecurePresenter
         /* Get ConferenceId From URL Parameter */
         $conferenceId = (int) $this->getParameter('id');
         $control->setConferenceId($conferenceId); // Set conferenceId
+        $control->setTicketPrice($this->_ticketPrice);
+        $control->setAvailableTickets($this->_availableTickets);
+
 
         return $control;    /* Return Whole Controller */
     }
