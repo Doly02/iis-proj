@@ -7,6 +7,7 @@ use Nette\Security\IIdentity;
 use Nette\Security\Passwords;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
+use App\UserModule\Enums\Role;
 use Nette\Utils\ArrayHash;
 use App\CommonModule\Model\BaseService;
 use Nette\Security\SimpleIdentity;
@@ -75,7 +76,7 @@ final class UserService extends BaseService implements Authenticator
                 'name' => $data->name,
                 'surname' => $data->lastName,
                 'email' => $data->email,
-                'account_type' => role::USER,
+                'account_type' => Role::USER,
                 'password' => $passwords->hash($data->password)
             ]);
 
@@ -101,7 +102,7 @@ final class UserService extends BaseService implements Authenticator
             $passwords = new Passwords();
 
             $user = $this->getTable()->insert([
-                'account_type' => role::ADMIN,
+                'account_type' => Role::ADMIN,
                 'email' => $data->email,
                 'password' => $passwords->hash($data->password),
             ]);
@@ -129,7 +130,7 @@ final class UserService extends BaseService implements Authenticator
             'surname' => $data->lastName,
             'email' => $data->email,
         ]);
-        $this->updateUser($data, role::USER);
+        $this->updateUser($data, Role::USER);
 
         $this->database->commit();
     }

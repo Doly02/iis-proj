@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 02, 2024 at 10:51 AM
+-- Generation Time: Nov 02, 2024 at 01:55 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,7 +43,7 @@ CREATE TABLE `conferences` (
 --
 
 INSERT INTO `conferences` (`id`, `name`, `description`, `start_time`, `end_time`, `price`, `capacity`, `organiser_id`) VALUES
-(1, 'Konferencia', 'Konferenci o vsem a o nicem', '2024-11-22 21:56:45', '2024-11-23 21:56:45', 220, 50, 1);
+(1, 'Konferencia', 'Konferenci o vsem a o nicem', '2024-11-22 21:56:45', '2024-11-23 21:56:45', 220, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -88,8 +88,16 @@ CREATE TABLE `reservations` (
   `conference_id` int(11) NOT NULL,
   `first_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `last_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `num_reserved_tickets` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `reservations`
+--
+
+INSERT INTO `reservations` (`id`, `created_date`, `created_time`, `price_to_pay`, `customer_id`, `conference_id`, `first_name`, `last_name`, `email`, `num_reserved_tickets`) VALUES
+(12, '2024-11-02', '11:28:11', 220, NULL, 1, 'Hey', 'How', 'hey@hou.en', 1);
 
 -- --------------------------------------------------------
 
@@ -122,16 +130,7 @@ CREATE TABLE `tickets` (
 --
 
 INSERT INTO `tickets` (`id`, `price`, `conference_id`, `reservation_id`) VALUES
-(1, 220, 1, NULL),
-(2, 0, 1, NULL),
-(3, 0, 1, NULL),
-(4, 0, 1, NULL),
-(5, 0, 1, NULL),
-(6, 0, 1, NULL),
-(7, 0, 1, NULL),
-(8, 0, 1, NULL),
-(9, 0, 1, NULL),
-(10, 0, 1, NULL);
+(1, 220, 1, 12);
 
 -- --------------------------------------------------------
 
@@ -144,17 +143,19 @@ CREATE TABLE `users` (
   `name` varchar(30) NOT NULL,
   `surname` varchar(30) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `account_type` varchar(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `surname`, `email`, `password`) VALUES
-(1, 'Jan', 'Novák', 'nov@gmail.com', 'test'),
-(2, 'Petr', 'Koudel', 'kd@gmail.com', 'test'),
-(3, 'Pepa', 'Námořník', 'tadudududu@tadudududu.com', 'špenát');
+INSERT INTO `users` (`id`, `name`, `surname`, `email`, `password`, `account_type`) VALUES
+(1, 'Jan', 'Novák', 'nov@gmail.com', 'test', ''),
+(2, 'Petr', 'Koudel', 'kd@gmail.com', 'test', ''),
+(3, 'Pepa', 'Námořník', 'tadudududu@tadudududu.com', 'špenát', ''),
+(4, 'admin', 'admin', 'admin@local.cz', '$2y$10$N1LXY8shBk2jwdlfox7fOeLGZg76vIhFyUhgE6owM3610UuQC6ovG', 'user');
 
 --
 -- Indexes for dumped tables
@@ -233,7 +234,7 @@ ALTER TABLE `presentations`
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `rooms`
@@ -251,7 +252,7 @@ ALTER TABLE `tickets`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
