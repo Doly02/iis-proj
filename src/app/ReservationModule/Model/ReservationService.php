@@ -7,6 +7,7 @@ use Nette\Database\Table\Selection;
 use Nette\Utils\ArrayHash;
 use App\CommonModule\Model\BaseService;
 use Nette\Security\SimpleIdentity;
+use App\TicketModule\Model\TicketService;
 use Exception;
 use Tracy\Debugger;
 
@@ -15,6 +16,19 @@ final class ReservationService extends BaseService
     public function getTableName(): string
     {
         return 'reservations';
+    }
+
+    public function getConferenceById(int $conferenceId): ?ActiveRow
+    {
+        return $this->database->table('conferences')
+            ->get($conferenceId);
+    }
+
+    public function getReservedTicketsCount(int $conferenceId): int
+    {
+        return $this->database->table('reservations')
+            ->where('conference_id', $conferenceId)
+            ->sum('tickets') ?: 0;
     }
 
     public function reserveTickets(string $firstName, string $lastName, string $email, int $tickets, int $conferenceId) : void
@@ -47,25 +61,27 @@ final class ReservationService extends BaseService
                 'created_date' => new \DateTime(),  // Actual Date
                 'created_time' => new \DateTime(),  // Actual Time
                 'price_to_pay' => $totalPrice,
-                'conference_id' => $conferenceId,   // TODO: How To Get ConferenceId?
+                'conference_id' => $conferenceId,
+                'num_reserved_tickets' => $tickets,
                 'customer_id' => null               // Costumer is Not In The System
             ]);
 
-            if (!$reservation instanceof ActiveRow)
-            {
+            if (!$reservation instanceof ActiveRow) {
                 $this->database->rollBack();
-                throw new Exception("Heyy");
+                throw new Exception("Failed to create reservation.");
             }
 
+            /* Get Available Tickets Using TicketService */
+            $ticketService = new TicketService($this->database);
+            $availableTickets = $ticketService->getAvailableTickets($conferenceId, $tickets);
 
-            /* Connection Of Reservation With Items In Table Tickets Based On Relationship With reservation_id */
-            for ($i = 0; $i < $tickets; $i++)
-            {
-                $this->database->table('tickets')->insert([
-                    'conference_id' => $conferenceId,
-                    'reservation_id' => $reservation->id
-                ]);
+            if (count($availableTickets) < $tickets) {
+                $this->database->rollBack();
+                throw new Exception("Not enough available tickets for the selected conference.");
             }
+
+            /* Assign Available Tickets to Reservation */
+            $ticketService->assignTicketsToReservation($availableTickets, $reservation->id);
 
             $this->database->commit();
         }

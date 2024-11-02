@@ -23,6 +23,24 @@ final class ReserveNonRegisteredControl extends Control
     {
         $this->_conferenceId = $conferenceId;
     }
+
+    public function getAvailableTickets(): int
+    {
+        /* Get Total Capacity of Conference */
+        $conference = $this->_reservationService->getConferenceById($this->_conferenceId);
+        if (!$conference)
+        {
+            throw new \Exception('Conference not found.');
+        }
+        $totalCapacity = (int) $conference->capacity;
+
+        /* Ticket Counter */
+        $reservedTickets = $this->_reservationService->getReservedTicketsCount($this->_conferenceId);
+
+        /* Count Free Tickets */
+        return max(0, $totalCapacity - $reservedTickets);
+    }
+
     protected function createComponentReserveNonRegisteredForm() : \Nette\Application\UI\Form
     {
         $form = new Form();

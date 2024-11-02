@@ -13,6 +13,7 @@ services:
 	- App\RoomModule\Controls\AddRoom\IAddRoomControlFactory
 	- App\ReservationModule\Controls\ReserveNonRegistered\IReserveNonRegisteredControlFactory
 	- App\ReservationModule\Model\ReservationService
+	- App\TicketModule\Model\TicketService
 
 	# Forms
 	- App\UserModule\Model\UserFormFactory

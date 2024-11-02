@@ -5,6 +5,7 @@ application:
 	mapping:
 	    CommonModule: App\CommonModule\Presenters\*Presenter
 	    UserModule: App\UserModule\Presenters\*Presenter
+	    TicketModule: App\TicketModule\Presenters\*Presenter
 	    ConferenceModule: App\ConferenceModule\Presenters\*Presenter
 	    RoomModule: App\RoomModule\Presenters\*Presenter
 	    ReservationModule: App\ReservationModule\Presenters\*Presenter
