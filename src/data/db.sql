@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 01, 2024 at 09:52 PM
+-- Generation Time: Nov 02, 2024 at 10:51 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -37,6 +37,13 @@ CREATE TABLE `conferences` (
   `capacity` int(11) NOT NULL,
   `organiser_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `conferences`
+--
+
+INSERT INTO `conferences` (`id`, `name`, `description`, `start_time`, `end_time`, `price`, `capacity`, `organiser_id`) VALUES
+(1, 'Konferencia', 'Konferenci o vsem a o nicem', '2024-11-22 21:56:45', '2024-11-23 21:56:45', 220, 50, 1);
 
 -- --------------------------------------------------------
 
@@ -77,9 +84,9 @@ CREATE TABLE `reservations` (
   `created_date` date NOT NULL,
   `created_time` time NOT NULL,
   `price_to_pay` decimal(10,0) NOT NULL,
-  `customer_id` int(11) NOT NULL,
+  `customer_id` int(11) DEFAULT NULL,
   `conference_id` int(11) NOT NULL,
-  `first_nam` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `first_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `last_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -109,6 +116,22 @@ CREATE TABLE `tickets` (
   `conference_id` int(11) NOT NULL,
   `reservation_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `tickets`
+--
+
+INSERT INTO `tickets` (`id`, `price`, `conference_id`, `reservation_id`) VALUES
+(1, 220, 1, NULL),
+(2, 0, 1, NULL),
+(3, 0, 1, NULL),
+(4, 0, 1, NULL),
+(5, 0, 1, NULL),
+(6, 0, 1, NULL),
+(7, 0, 1, NULL),
+(8, 0, 1, NULL),
+(9, 0, 1, NULL),
+(10, 0, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -210,7 +233,7 @@ ALTER TABLE `presentations`
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `rooms`
@@ -222,7 +245,7 @@ ALTER TABLE `rooms`
 -- AUTO_INCREMENT for table `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `users`
