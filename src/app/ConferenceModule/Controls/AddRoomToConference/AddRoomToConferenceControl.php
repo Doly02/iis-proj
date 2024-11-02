@@ -12,6 +12,7 @@ use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
 use Nette\Security\AuthenticationException;
 use Nette\Application\UI\Control;
+use Tracy\Debugger;
 
 final class AddRoomToConferenceControl extends Control
 {
@@ -20,6 +21,7 @@ final class AddRoomToConferenceControl extends Control
     private RoomService $roomService;
     private ConferenceHasRoomsService $conferenceHasRoomsService;
     private ConferenceFormFactory $conferenceFormFactory;
+    private int $conferenceId;
 
 
     public function __construct(\Nette\Security\User $user, ConferenceService $conferenceService,
@@ -39,12 +41,26 @@ final class AddRoomToConferenceControl extends Control
         $this->template->render();
     }
 
-    // Form for adding rooms
-    protected function createComponentAddRoomToConferenceForm(\DateTimeImmutable $allowedStartTime,
-                                                              \DateTimeImmutable $allowedEndTime) : \Nette\Application\UI\Form
+    public function setConferenceId(int $conferenceId): void
     {
+        $this->conferenceId = $conferenceId;
+        \Tracy\Debugger::barDump($conferenceId, 'Conference ID in Control');
+    }
+
+    // Form for adding rooms
+    protected function createComponentAddRoomToConferenceForm() : \Nette\Application\UI\Form
+    {
+        $form = new Form();
+        $conference = $this->conferenceService->getConferenceById($this->conferenceId);
+        // null check
+        if(!$conference) return $form;
+
+        // Allowed times are from conference start to its end
+        $allowedStartTime = new \DateTimeImmutable($conference->start_time->format('Y-m-d H:i:s'));
+        $allowedEndTime = new \DateTimeImmutable($conference->end_time->format('Y-m-d H:i:s'));
         $form = $this->conferenceFormFactory->createAddRoomsToConferenceForm($allowedStartTime, $allowedEndTime);
         $form->onSuccess[] = [$this, 'addConferenceFormSucceeded'];
+
         return $form;
     }
 
@@ -54,21 +70,10 @@ final class AddRoomToConferenceControl extends Control
         $presenter = $this->getPresenter();
 
 
-        $rooms = $this->roomService->fetchAvailableRooms($values->startDate, $values->endDate);
 
-        // Sum capacity of rooms
-        $totalCapacity = 0;
-        if (!empty($values->rooms)) {
-            foreach ($values->rooms as $roomId) {
-                $room = $this->roomService->fetchById($roomId);
-                if ($room) {
-                    $totalCapacity += $room->capacity;
-                }
-            }
-        }
 
         try {
-            // update conference capacity, add rooms
+            // TODO update conference capacity, add rooms
         } catch (\Exception $e) {
             $err = 1;
             $form->addError('An error occurred while adding the conference: ' . $e->getMessage());
