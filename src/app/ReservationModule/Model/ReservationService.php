@@ -31,7 +31,7 @@ final class ReservationService extends BaseService
             ->sum('num_reserved_tickets') ?: 0;
     }
 
-    public function reserveTickets(string $firstName, string $lastName, string $email, int $tickets, int $conferenceId) : void
+    public function reserveTickets(string $firstName, string $lastName, string $email, int $tickets, int $conferenceId, ?int $costumer_id) : void
     {
         $this->database->beginTransaction();
         $errorMessage = 'Reservation could not be completed.';
@@ -63,7 +63,7 @@ final class ReservationService extends BaseService
                 'price_to_pay' => $totalPrice,
                 'conference_id' => $conferenceId,
                 'num_reserved_tickets' => $tickets,
-                'customer_id' => null               // Costumer is Not In The System
+                'customer_id' => $costumer_id
             ]);
 
             if (!$reservation instanceof ActiveRow) {

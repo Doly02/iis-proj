@@ -57,6 +57,8 @@ final class AuthenticationFactory
         // Adding a Special Placeholder Resource '*'
         $permission->addResource('*');
         $permission->addResource('usermodule.user');
+        $permission->addResource('reservationmodule.reservenonregistered');
+        $permission->addResource('reservationmodule.reserveregistered');
 
         // The Rest of The Code For Adding Other Resources
         foreach (Finder::findDirectories('*Module')->in($appDir) as $dir)

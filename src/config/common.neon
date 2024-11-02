@@ -34,14 +34,20 @@ parameters:
                 conference.conference: [list, default]
                 presentation.presentation: [list, default]
                 ticket.ticket: [default]
+                reservationmodule.reserveregistered: [view, makeReservation]
         admin:
             resources:
                 user.user: []
+                reservationmodule.reserveregistered: [view, makeReservation]
 
     publicPages:
         - UserModule:Authentication:signIn
+        - ReservationModule:ReserveNonRegistered:makeReservation
 
 di:
 	export:
 		parameters: no
 		tags: no
+
+http:
+	cookieSecure: auto

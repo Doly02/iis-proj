@@ -5,10 +5,11 @@ declare(strict_types=1);
 
 namespace App\UserModule\Controls\Register;
 
+use App\UserModule\Enums\Action;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
-use App\UserModule\Model\Action;
+use App\UserModule\Model\AuthenticationFactory;
 use App\UserModule\Model\UserService;
 use App\UserModule\Model\UserFormFactory;
 use App\CommonModule\Presenters\SecurePresenter;
@@ -43,7 +44,7 @@ final class RegisterControl extends Control
 
         if ($presenter instanceof SecurePresenter)
         {
-            $presenter->checkPrivilege(null, Action::ADD);
+            $presenter->checkPrivilege(null, AuthenticationFactory::ACTION_ADD);
         }
         try
         {

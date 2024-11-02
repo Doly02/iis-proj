@@ -4,42 +4,48 @@ declare(strict_types=1);
 
 namespace App\ReservationModule\Presenters;
 
-use App\CommonModule\Presenters\BasePresenter;
-use App\ReservationModule\Controls\ReserveNonRegistered\IReserveNonRegisteredControlFactory;
-use App\ReservationModule\Controls\ReserveNonRegistered\ReserveNonRegisteredControl;
+use App\CommonModule\Presenters\SecurePresenter;
+use App\ReservationModule\Controls\ReserveRegistered\IReserveRegisteredControlFactory;
+use App\ReservationModule\Controls\ReserveRegistered\ReserveRegisteredControl;
 use App\ReservationModule\Model\ReservationService;
 use Nette\Application\UI\Form;
 use Tracy\Debugger;
 
-final class ReserveNonRegisteredPresenter extends BasePresenter
+final class ReserveRegisteredPresenter extends SecurePresenter
 {
     private $_reservationService;
-    private $_reserveNonRegisteredControlFactory;
+    private $_reserveRegisteredControlFactory;
 
     public function __construct(
-        IReserveNonRegisteredControlFactory $reserveControlFactory,
+        IReserveRegisteredControlFactory $reserveControlFactory,
         ReservationService $reservationService
     )
     {
         parent::__construct();
-        $this->_reserveNonRegisteredControlFactory = $reserveControlFactory;
+        Debugger::log("Reached construct", 'info');
+        $this->_reserveRegisteredControlFactory = $reserveControlFactory;
         $this->_reservationService = $reservationService;
     }
 
     public function actionMakeReservation(int $id): void
     {
+        Debugger::log("Reached actionMakeReservation with ID: $id", 'info');
+        $this->checkPrivilege();
         /* Load Data And Prepare Before Render Of Template */
-        \Tracy\Debugger::log('Reached actionMakeReservation in presenter.');
-        \Tracy\Debugger::barDump($id, 'Conference ID');
-        Debugger::log('Reached actionMakeReservation with ID: ' . $id, 'info');
+        // \Tracy\Debugger::log('Reached actionMakeReservation in presenter.');
+        // \Tracy\Debugger::barDump($id, 'Conference ID');
+        // Debugger::log('Reached actionMakeReservation with ID: ' . $id, 'info');
 
         $this->template->conferenceId = $id;
     }
 
-    protected function createComponentReserveNonRegisteredForm(): ReserveNonRegisteredControl
+    protected function createComponentReserveRegisteredForm(): ReserveRegisteredControl
     {
+        Debugger::log("Reached create", 'info');
+        $this->checkPrivilege();
+
         /* Creation Of Controller Instance */
-        $control = $this->_reserveNonRegisteredControlFactory->create();
+        $control = $this->_reserveRegisteredControlFactory->create();
 
         /* Get ConferenceId From URL Parameter */
         $conferenceId = (int) $this->getParameter('id');
@@ -48,9 +54,11 @@ final class ReserveNonRegisteredPresenter extends BasePresenter
         return $control;    /* Return Whole Controller */
     }
 
-    public function handleReservation(string $firstName, string $lastName, string $email, int $tickets, int $conferenceId, int $costumerId): void
+    public function handleReservation(string $firstName, string $lastName, string $email, int $tickets, int $conferenceId, $costumerId): void
     {
-        \Tracy\Debugger::log('handleReservation called');
+        Debugger::log("Reached handle", 'info');
+        $this->checkPrivilege();
+
         try {
             $this->reservationService->reserveTickets($firstName, $lastName, $email, $tickets, $conferenceId, $costumerId);
             $this->flashMessage('Reservation completed successfully!', 'success');
@@ -62,8 +70,10 @@ final class ReserveNonRegisteredPresenter extends BasePresenter
         }
     }
 
-    public function onSuccessReserveForm(Form $form, \stdClass $values): void
+    public function onSuccessReserveForm(Form $form, \stdClass $values) : void
     {
+        $this->checkPrivilege();
+
         try {
             $this->reservationService->reserveTickets(
                 $values->firstName,
@@ -71,7 +81,7 @@ final class ReserveNonRegisteredPresenter extends BasePresenter
                 $values->email,
                 $values->tickets,
                 (int) $values->conferenceId,
-                null
+                (int) $values->costumerId
             );
             $this->presenter->flashMessage('Your tickets have been reserved successfully.', 'success');
             $this->presenter->redirect('this');
@@ -86,6 +96,8 @@ final class ReserveNonRegisteredPresenter extends BasePresenter
     /* Render The Template */
     public function renderDefault(int $conferenceId): void
     {
+        Debugger::log("Reached render", 'info');
+        $this->checkPrivilege();
         $this->template->conferenceId = $conferenceId;
     }
 }

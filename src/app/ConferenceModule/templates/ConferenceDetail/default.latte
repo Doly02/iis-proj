@@ -11,8 +11,14 @@
         <p><strong>Capacity:</strong> {$conference->capacity}</p>
     </div>
 
-    <a href="{link :ReservationModule:ReserveNonRegistered:makeReservation, id => $conference->id}" class="btn btn-primary">
-        Reserve Tickets
+{if $user->isLoggedIn()}
+    <a href="{link :ReservationModule:ReserveRegistered:makeReservation, id => $conference->id}" class="btn btn-primary">
+        Reserve Tickets (Registered)
     </a>
+{else}
+    <a href="{link :ReservationModule:ReserveNonRegistered:makeReservation, id => $conference->id}" class="btn btn-primary">
+        Reserve Tickets (Non-Registered)
+    </a>
+{/if}
 
 {/block}

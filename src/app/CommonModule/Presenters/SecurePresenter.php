@@ -16,6 +16,7 @@ abstract class SecurePresenter extends BasePresenter
     public function startup() : void
     {
         parent::startup();
+        Debugger::log("Reached startup", 'info');
         if (!$this->isPublicPage())
         {
             $this->checkLoggedIn();
@@ -24,6 +25,7 @@ abstract class SecurePresenter extends BasePresenter
 
     protected function getModuleName(): string
     {
+        Debugger::log("Reached getModuleName", 'info');
         /* Get Name Of Presenter And Extraction of Module */
         if (\preg_match('~^(\w+):~', (string) $this->getName(), $matches))
         {
@@ -46,6 +48,7 @@ abstract class SecurePresenter extends BasePresenter
      */
     protected function isPublicPage(): bool
     {
+        Debugger::log("Reached isPublicPage", 'info');
         // Getting a list of public sites from the configuration
         $publicPages = $this->context->parameters['publicPages'] ?? [];
 
@@ -58,6 +61,7 @@ abstract class SecurePresenter extends BasePresenter
 
     public function checkPrivilege(?string $resource = null, ?action $privilege = null) : bool
     {
+        Debugger::log("Reached checkPrivilege", 'info');
         /* Default Action, If Privilege Is Not Defined */
         $privilege = $privilege ?? $this->getAction();
 
@@ -81,16 +85,6 @@ abstract class SecurePresenter extends BasePresenter
         $session = $this->getSession('user_activity');
 
         Debugger::log("Checking if user is logged in.", Debugger::INFO);
-        /* If User Is Not Logged In */
-        /*
-        if (!$user->isLoggedIn())
-        {
-            $this->flashMessage("You have been logged out due to inactivity.", 'info');
-            $this->redirect(':UserModule:Authentication:signIn', [
-                'login-backLink' => $this->storeRequest()
-            ]);
-        }
-        */
 
         /* Check of Unactivity -> If User Has No Activity Durring 30 Minutes Then He/She Will Be Logged Out
          * 30 min. == 1800 sec.

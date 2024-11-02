@@ -1,26 +1,35 @@
 <?php
 
-namespace App\ReservationModule\Controls\ReserveNonRegistered;
+namespace App\ReservationModule\Controls\ReserveRegistered;
 
 use App\ReservationModule\Model\ReservationService;
+use App\UserModule\Model\UserService;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
+use Nette\Security\User;
 use Nette\Utils\Validators;
 
-final class ReserveNonRegisteredControl extends Control
+final class ReserveRegisteredControl extends Control
 {
     private $_reservationService;
     private $_conferenceId;
+    private $_userService;
+    private $_user;
 
     public function __construct(
-        ReservationService $reservationService
+        ReservationService $reservationService,
+        UserService $userService,
+        User $user
     )
     {
         $this->_reservationService = $reservationService;
+        $this->_userService = $userService;
+        $this->_user = $user;
     }
 
     public function setConferenceId(int $conferenceId): void
     {
+        \Tracy\Debugger::log("Conference ID set to: $conferenceId", \Tracy\ILogger::INFO);
         $this->_conferenceId = $conferenceId;
     }
 
@@ -40,33 +49,15 @@ final class ReserveNonRegisteredControl extends Control
         return max(0, $totalCapacity - $reservedTickets);
     }
 
-    protected function createComponentReserveNonRegisteredForm(): \Nette\Application\UI\Form
+    protected function createComponentReserveRegisteredForm(): Form
     {
         $form = new Form();
         $availableTickets = $this->getAvailableTickets();
 
         if ($availableTickets === 0) {
-            $this->presenter->flashMessage('No tickets are available for this conference. But On Other Might Be Space :D', 'error');
+            $this->presenter->flashMessage('No tickets are available for this conference.', 'error');
             $this->presenter->redirect(':ConferenceModule:ConferenceList:list');
         }
-
-        /* Fist Name */
-        $form->addText('firstName', 'First Name')
-            ->setRequired('Please enter your first name.')
-            ->setHtmlAttribute('class', 'form-control');
-
-        /* Last Name */
-        $form->addText('lastName', 'Last Name')
-            ->setRequired('Please enter your last name.')
-            ->setHtmlAttribute('class', 'form-control');
-
-        /* Email Address */
-        $form->addText('email', 'Email')
-            ->setRequired('Please enter your email.')
-            ->addRule(function ($control) {
-                return Validators::isEmail($control->value);
-            }, 'Please enter a valid email address.')
-            ->setHtmlAttribute('class', 'form-control');
 
         /* Number of Tickets */
         $form->addText('tickets', 'Tickets')
@@ -79,20 +70,17 @@ final class ReserveNonRegisteredControl extends Control
             ->setHtmlAttribute('class', 'form-control')
             ->setHtmlAttribute('id', 'ticket-quantity');
 
-        /* Hidden Button + */
+        /* Button to Increase Ticket Quantity */
         $form->addButton('addTicket', '+')
             ->setHtmlAttribute('class', 'btn btn-secondary')
             ->setHtmlAttribute('onclick', 'adjustTicketCount(1)');
 
-        /* Hidden Button - */
+        /* Button to Decrease Ticket Quantity */
         $form->addButton('removeTicket', '-')
             ->setHtmlAttribute('class', 'btn btn-secondary')
             ->setHtmlAttribute('onclick', 'adjustTicketCount(-1)');
 
-        $form->addHidden('conferenceId', (string) $this->_conferenceId);
-
-        /* Submission */
-        $form->addSubmit('submit', 'Reserve Tickets')
+        $form->addSubmit('submit', 'Reserve')
             ->setHtmlAttribute('class', 'btn btn-primary');
 
         $form->onSuccess[] = [$this, 'onSuccessReserveForm'];
@@ -101,22 +89,34 @@ final class ReserveNonRegisteredControl extends Control
 
     public function onSuccessReserveForm(Form $form, \stdClass $values): void
     {
-        try {
+        try
+        {
+            $userId = $this->_user->getId();
+            $user = $this->_userService->getUserById($userId);
+            if (!$user) {
+                throw new \Exception('User not found.');
+            }
+
+            $firstName = $user->name;
+            $lastName = $user->surname;
+            $email = $user->email;
+
             $this->_reservationService->reserveTickets(
-                $values->firstName,
-                $values->lastName,
-                $values->email,
-                $values->tickets,
-                (int) $values->conferenceId,
-                null
+                $firstName,
+                $lastName,
+                $email,
+                (int) $values->tickets,
+                (int) $this->_conferenceId,
+                $userId
             );
+
             $this->presenter->flashMessage('Your tickets have been reserved successfully.', 'success');
             $this->presenter->redirect(':ConferenceModule:ConferenceList:list');
         }
         catch (\Nette\Application\AbortException $e)
         {
-           /* This Exception Is Part Of Application Flow, So Do Not Bother */
-           throw $e;
+            /* This Exception Is Part Of Application Flow, So Do Not Bother */
+            throw $e;
         }
         catch (\Exception $e)
         {
@@ -127,7 +127,7 @@ final class ReserveNonRegisteredControl extends Control
 
     public function render(): void
     {
-        $this->template->setFile(__DIR__ . '/../../templates/ReserveNonRegistered/makeReservation.latte');
+        $this->template->setFile(__DIR__ . '/../../templates/ReserveRegistered/makeReservation.latte');
         $this->template->render();
     }
 }
