@@ -1,0 +1,19 @@
+{default $title = 'Conference detail'}
+
+{block content}
+    <h2>{$conference->name}</h2>
+
+    <div>
+        <p><strong>Description:</strong> {$conference->description}</p>
+        <p><strong>Start Time:</strong> {$conference->start_time}</p>
+        <p><strong>End Time:</strong> {$conference->end_time}</p>
+        <p><strong>Price:</strong> {$conference->price}</p>
+        <p><strong>Capacity:</strong> {$conference->capacity}</p>
+    </div>
+
+    {dump $conference->id}
+    <a href="{link :ReservationModule:ReserveNonRegistered:makeReservation, id => $conference->id}" class="btn btn-primary">
+        Reserve Tickets
+    </a>
+
+{/block}

@@ -1,0 +1,22 @@
+{default $title = 'Ticket Reservation'}
+s
+<div class="form-group">
+    {control reserveNonRegisteredForm}
+</div>
+
+
+<script>
+    function adjustTicketCount(change) {
+        const ticketInput = document.getElementById('ticket-quantity');
+        let currentTickets = parseInt(ticketInput.value) || 1;
+
+        currentTickets += change;
+        if (currentTickets < 1) {
+            currentTickets = 1; // Minimální hodnota 1
+        }
+
+        ticketInput.value = currentTickets;
+    }
+    // TODO Check If Number of Tickets Is Less Then Free Capacity
+</script>
+
