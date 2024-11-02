@@ -23,9 +23,32 @@ final class ReserveNonRegisteredControl extends Control
     {
         $this->_conferenceId = $conferenceId;
     }
-    protected function createComponentReserveNonRegisteredForm() : \Nette\Application\UI\Form
+
+    public function getAvailableTickets() : int
+    {
+        /* Get Total Capacity of Conference */
+        $conference = $this->_reservationService->getConferenceById($this->_conferenceId);
+        if (!$conference) {
+            return 0;
+        }
+        $totalCapacity = (int) $conference->capacity;
+
+        /* Ticket Counter */
+        $reservedTickets = $this->_reservationService->getReservedTicketsCount($this->_conferenceId);
+
+        /* Count Free Tickets */
+        return max(0, $totalCapacity - $reservedTickets);
+    }
+
+    protected function createComponentReserveNonRegisteredForm(): \Nette\Application\UI\Form
     {
         $form = new Form();
+        $availableTickets = $this->getAvailableTickets();
+
+        if ($availableTickets === 0) {
+            $this->presenter->flashMessage('No tickets are available for this conference. But On Other Might Be Space :D', 'error');
+            $this->presenter->redirect(':ConferenceModule:ConferenceList:list');
+        }
 
         /* Fist Name */
         $form->addText('firstName', 'First Name')
@@ -49,10 +72,10 @@ final class ReserveNonRegisteredControl extends Control
         $form->addText('tickets', 'Tickets')
             ->setDefaultValue(1)
             ->setRequired('Please select the number of tickets.')
-            ->addRule(function ($control) {
+            ->addRule(function ($control) use ($availableTickets) {
                 $value = (int) $control->getValue();
-                return Validators::isNumeric($control->getValue()) && $value >= 1 && $value <= 10;
-            }, 'You must reserve at least 1 and no more than 10 tickets.')
+                return Validators::isNumeric($control->getValue()) && $value >= 1 && $value <= $availableTickets;
+            }, 'You must reserve at least 1 ticket and no more than ' . $availableTickets . ' tickets.')
             ->setHtmlAttribute('class', 'form-control')
             ->setHtmlAttribute('id', 'ticket-quantity');
 

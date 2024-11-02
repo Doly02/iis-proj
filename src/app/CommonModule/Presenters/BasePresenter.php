@@ -27,7 +27,7 @@ abstract class BasePresenter extends Presenter
         parent::beforeRender();
         $this->template->basePath = $this->getHttpRequest()->getUrl()->getBasePath();
         $this->setLayout(__DIR__ . '/../../UI/@layout.latte');
-        dump($this->getTemplate()->getFile()); // Log of Actual Template
+        // dump($this->getTemplate()->getFile()); // Log of Actual Template
     }
 
 
