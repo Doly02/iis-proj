@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 02, 2024 at 01:26 PM
+-- Generation Time: Nov 02, 2024 at 01:55 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -143,17 +143,19 @@ CREATE TABLE `users` (
   `name` varchar(30) NOT NULL,
   `surname` varchar(30) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `account_type` varchar(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `surname`, `email`, `password`) VALUES
-(1, 'Jan', 'Novák', 'nov@gmail.com', 'test'),
-(2, 'Petr', 'Koudel', 'kd@gmail.com', 'test'),
-(3, 'Pepa', 'Námořník', 'tadudududu@tadudududu.com', 'špenát');
+INSERT INTO `users` (`id`, `name`, `surname`, `email`, `password`, `account_type`) VALUES
+(1, 'Jan', 'Novák', 'nov@gmail.com', 'test', ''),
+(2, 'Petr', 'Koudel', 'kd@gmail.com', 'test', ''),
+(3, 'Pepa', 'Námořník', 'tadudududu@tadudududu.com', 'špenát', ''),
+(4, 'admin', 'admin', 'admin@local.cz', '$2y$10$N1LXY8shBk2jwdlfox7fOeLGZg76vIhFyUhgE6owM3610UuQC6ovG', 'user');
 
 --
 -- Indexes for dumped tables
@@ -250,7 +252,7 @@ ALTER TABLE `tickets`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables

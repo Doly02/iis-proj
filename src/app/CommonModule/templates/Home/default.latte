@@ -12,3 +12,9 @@
 <p>
     <a href="{plink :UserModule:Register:default}">Registration</a>
 </p>
+
+{if $user->isLoggedIn()}
+    <p>
+        <a href="{plink :UserModule:EditUser:default}" class="btn btn-primary">Edit Profile</a>
+    </p>
+{/if}
