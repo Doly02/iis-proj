@@ -15,7 +15,8 @@ final class ReserveRegisteredControl extends Control
     private $_conferenceId;
     private $_userService;
     private $_user;
-
+    private $_availableTickets;
+    private $_ticketPrice;
     public function __construct(
         ReservationService $reservationService,
         UserService $userService,
@@ -33,40 +34,27 @@ final class ReserveRegisteredControl extends Control
         $this->_conferenceId = $conferenceId;
     }
 
-    public function getAvailableTickets() : int
+    public function setAvailableTickets(int $availableTickets) : void
     {
-        /* Get Total Capacity of Conference */
-        $conference = $this->_reservationService->getConferenceById($this->_conferenceId);
-        if (!$conference) {
-            return 0;
-        }
-        $totalCapacity = (int) $conference->capacity;
-
-        /* Ticket Counter */
-        $reservedTickets = $this->_reservationService->getReservedTicketsCount($this->_conferenceId);
-
-        /* Count Free Tickets */
-        return max(0, $totalCapacity - $reservedTickets);
+        $this->_availableTickets = $availableTickets;
+    }
+    public function setTicketPrice(float $ticketPrice) : void
+    {
+        $this->_ticketPrice = $ticketPrice;
     }
 
     protected function createComponentReserveRegisteredForm(): Form
     {
         $form = new Form();
-        $availableTickets = $this->getAvailableTickets();
-
-        if ($availableTickets === 0) {
-            $this->presenter->flashMessage('No tickets are available for this conference.', 'error');
-            $this->presenter->redirect(':ConferenceModule:ConferenceList:list');
-        }
 
         /* Number of Tickets */
         $form->addText('tickets', 'Tickets')
             ->setDefaultValue(1)
             ->setRequired('Please select the number of tickets.')
-            ->addRule(function ($control) use ($availableTickets) {
+            ->addRule(function ($control) {
                 $value = (int) $control->getValue();
-                return Validators::isNumeric($control->getValue()) && $value >= 1 && $value <= $availableTickets;
-            }, 'You must reserve at least 1 ticket and no more than ' . $availableTickets . ' tickets.')
+                return Validators::isNumeric($control->getValue()) && $value >= 1 && $value <= $this->_availableTickets;
+            }, 'You must reserve at least 1 ticket and no more than ' . $this->_availableTickets . ' tickets.')
             ->setHtmlAttribute('class', 'form-control')
             ->setHtmlAttribute('id', 'ticket-quantity');
 
@@ -127,6 +115,7 @@ final class ReserveRegisteredControl extends Control
 
     public function render(): void
     {
+        $this->template->ticketPrice = $this->_ticketPrice;
         $this->template->setFile(__DIR__ . '/../../templates/ReserveRegistered/makeReservation.latte');
         $this->template->render();
     }
