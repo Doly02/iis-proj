@@ -46,13 +46,13 @@ abstract class SecurePresenter extends BasePresenter
      */
     protected function isPublicPage(): bool
     {
-        // Získání seznamu veřejných stránek z konfigurace
+        // Getting a list of public sites from the configuration
         $publicPages = $this->context->parameters['publicPages'] ?? [];
 
-        // Získání aktuálního názvu presenteru a akce
+        // Getting the current presenter and event name
         $currentPage = $this->getName() . ':' . $this->getAction();
 
-        // Kontrola, zda je aktuální stránka v seznamu veřejných
+        // Check if the current page is in the public list
         return in_array($currentPage, $publicPages, true);
     }
 

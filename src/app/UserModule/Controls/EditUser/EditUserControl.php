@@ -73,7 +73,7 @@ final class EditUserControl extends Control
         return $form;
     }
 
-    public function editUserFormSucceeded(\Nette\Application\UI\Form $form, \stdClass $values) : void
+    public function editUserFormSucceeded(Form $form, \stdClass $values) : void
     {
         try {
             $data = [
@@ -82,13 +82,13 @@ final class EditUserControl extends Control
                 'email' => $values->email,
             ];
 
-            // Pokud bylo vyplněno heslo, přidáme ho do dat k uložení
+            // If Password Was Filled
             if (!empty($values->password)) {
                 $passwords = new \Nette\Security\Passwords();
                 $data['password'] = $passwords->hash($values->password);
             }
 
-            // Aktualizace uživatele v databázi
+            // Update User In Database
             $this->_userService->editUser($this->_user, $data);
 
             $this->presenter->flashMessage('User information updated successfully.', 'success');

@@ -54,11 +54,11 @@ final class AuthenticationFactory
      */
     private static function setupResources(Permission $permission, string $appDir): void
     {
-        // Přidání speciálního zástupného zdroje '*'
+        // Adding a Special Placeholder Resource '*'
         $permission->addResource('*');
         $permission->addResource('usermodule.user');
 
-        // Zbytek kódu pro přidání ostatních zdrojů
+        // The Rest of The Code For Adding Other Resources
         foreach (Finder::findDirectories('*Module')->in($appDir) as $dir)
         {
             preg_match('~^(.+)Module\z~', $dir->getFilename(), $matches);
