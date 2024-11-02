@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\UserModule\Controls\Login;
 
 use Tracy\Debugger;
-
 use Nette\Application\UI\Form;
 use Nette\Security\AuthenticationException;
 use Nette\Application\UI\Control;
@@ -50,6 +49,11 @@ final class LoginControl extends Control
         try
         {
             $this->user->login($values->email, $values->password);
+
+            $session = $this->getPresenter()->getSession('user_activity');
+            $session->lastActivity = time();
+
+            \Tracy\Debugger::log('User activity recorded at: ' . date('Y-m-d H:i:s', $session->lastActivity), \Tracy\ILogger::INFO);
 
             $this->flashMessage('Login successful!', 'success');
 

@@ -40,6 +40,7 @@ final class AuthenticationPresenter extends BasePresenter
 
             $session = $this->getSession('user_activity');
             $session->lastActivity = time();
+            \Tracy\Debugger::log('Auth. User activity recorded at: ' . date('Y-m-d H:i:s', $session->lastActivity), \Tracy\ILogger::INFO);
 
             $this->flashMessage('Login successful!');
             $this->redirect('Homepage:default');

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\UserModule\Controls\EditUser;
 
+use Nette\Database\Table\ActiveRow;
+
 interface IEditUserControlFactory
 {
-    function create(): \App\UserModule\Controls\Login\EditUserControl;
+    public function create(ActiveRow $user): EditUserControl;
 }

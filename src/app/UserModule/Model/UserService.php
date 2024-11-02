@@ -21,6 +21,15 @@ final class UserService extends BaseService implements Authenticator
         return 'users';
     }
 
+    public function getUserTable(): Selection
+    {
+        return $this->database->table('users');
+    }
+    public function getUserById(int $userId): ?ActiveRow
+    {
+        return $this->database->table('users')->get($userId);
+    }
+
     public function authenticate(string $email, string $password): SimpleIdentity
     {
         $passwords = new Passwords();
@@ -51,10 +60,6 @@ final class UserService extends BaseService implements Authenticator
         unset($userData['password']); // Remove The Password Safely
 
         return new SimpleIdentity($user->id, [$user->account_type], $userData);
-    }
-    public function getUserTable(): Selection
-    {
-        return $this->database->table('users');
     }
 
     // TODO Maybe Implemented getAdminTable

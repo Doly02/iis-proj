@@ -26,12 +26,15 @@ final class RouterFactory
 
         $router->addRoute('room/room-add/add', ':RoomModule:RoomAdd:add');
 
+
         $router->addRoute('presentation/presentation-add/add', ':PresentationModule:PresentationAdd:add');
 
+        // $router->addRoute('user/edit-user', ':UserModule:EditUser:editUser');
 
         $router->addRoute('user/authentication/sign-in', ':UserModule:Authentication:signIn');
 
         $router->addRoute('user/register/default', ':UserModule:Register:default');
+
 
 
         $router[] = new \Nette\Application\Routers\Route('[<module>[/<presenter>[/<action>[/<id \d+>]]]]', [

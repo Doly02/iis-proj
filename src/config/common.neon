@@ -23,6 +23,23 @@ latte:
 	extensions:
 		- App\UI\Accessory\LatteExtension
 
+parameters:
+    appDir: %appDir%
+
+    roles:
+        user:
+            resources:
+                usermodule.user: [edit, view]
+                user.profile: []
+                conference.conference: [list, default]
+                presentation.presentation: [list, default]
+                ticket.ticket: [default]
+        admin:
+            resources:
+                user.user: []
+
+    publicPages:
+        - UserModule:Authentication:signIn
 
 di:
 	export:

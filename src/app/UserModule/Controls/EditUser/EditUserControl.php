@@ -6,6 +6,7 @@ use Nette\Application\UI\Control;
 use App\UserModule\Model\UserService;
 use App\UserModule\Model\UserFormFactory;
 use \Nette\Database\Table\ActiveRow;
+use Nette\Application\UI\Form;
 final class EditUserControl extends Control
 {
     /*
@@ -28,9 +29,9 @@ final class EditUserControl extends Control
         $this->_userService = $userService;
     }
 
-    public function createComponentEditUser(): \Nette\Application\UI\Form
+    public function createComponentEditUser(): Form
     {
-        $form = new \Nette\Application\UI\Form();
+        $form = new Form();
 
         /* First Name */
         $form->addText('name', 'First Name')
@@ -40,7 +41,7 @@ final class EditUserControl extends Control
 
         /* Last Name */
         $form->addText('lastName', 'Last Name')
-            ->setDefaultValue($this->_user->lastName)
+            ->setDefaultValue($this->_user->surname)
             ->setRequired('Please Fill Your Last Name.')
             ->setHtmlAttribute('class', 'form-control');
 
@@ -95,5 +96,11 @@ final class EditUserControl extends Control
         } catch (\Exception $e) {
             $form->addError('An error occurred while updating user information: ' . $e->getMessage());
         }
+    }
+
+    public function render(): void
+    {
+        $this->template->setFile(__DIR__ . '/../../templates/User/editUser.latte');
+        $this->template->render();
     }
 }

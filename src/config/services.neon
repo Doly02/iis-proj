@@ -1,12 +1,13 @@
 services:
 	- App\Core\RouterFactory::createRouter
-	- App\UserModule\Model\UserService
 	- App\ConferenceModule\Model\ConferenceService
 	- App\RoomModule\Model\RoomService
 	- App\PresentationModule\Model\PresentationService
 	- App\PresentationModule\Controls\AddPresentation\IAddPresentationControlFactory
+	- App\UserModule\Model\UserService
 	- App\UserModule\Controls\Register\IRegisterControlFactory
 	- App\UserModule\Controls\Login\ILoginControlFactory
+	- App\UserModule\Controls\EditUser\IEditUserControlFactory
 	- App\ConferenceHasRoomsModule\Model\ConferenceHasRoomsService
 	- App\ConferenceModule\Controls\AddConference\IAddConferenceControlFactory
 	- App\ConferenceModule\Controls\AddRoomToConference\IAddRoomToConferenceControlFactory
@@ -19,6 +20,9 @@ services:
 	# Forms
 	- App\UserModule\Model\UserFormFactory
 	- App\ConferenceModule\Model\ConferenceFormFactory
+
+    #Authorizator
+	- App\UserModule\Model\AuthenticationFactory::create(%roles%, %appDir%)
 
 search:
 	-	in: %appDir%

@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\CommonModule\Presenters;
 
+use App\UserModule\Enums\Action;
 use Nette\Application\UI\Presenter;
-use App\UserModule\Model\Action;
 
 use Nette\Caching\Cache;
 use Nette\Caching\Storages\FileStorage;
+use Tracy\Debugger;
 
 abstract class SecurePresenter extends BasePresenter
 {
@@ -45,10 +46,14 @@ abstract class SecurePresenter extends BasePresenter
      */
     protected function isPublicPage(): bool
     {
-        // Here you can add conditions that decide whether the page is public.
-        // For example, access to the homepage does not require a login:
-        return $this->getName() === 'Home';
+        // Získání seznamu veřejných stránek z konfigurace
+        $publicPages = $this->context->parameters['publicPages'] ?? [];
 
+        // Získání aktuálního názvu presenteru a akce
+        $currentPage = $this->getName() . ':' . $this->getAction();
+
+        // Kontrola, zda je aktuální stránka v seznamu veřejných
+        return in_array($currentPage, $publicPages, true);
     }
 
     public function checkPrivilege(?string $resource = null, ?action $privilege = null) : bool
@@ -58,6 +63,8 @@ abstract class SecurePresenter extends BasePresenter
 
         /* Use Default Source Based On Module & Presenter If Resource Is Not Defined */
         $resource = $resource ?? $this->getModuleName() . '.' . $this->getPresenterName();
+
+        Debugger::log("Checking privilege for resource: $resource and action: $privilege", Debugger::INFO);
 
         /* Check If User Has Privileges For This Source And Action */
         if (false === $this->getUser()->isAllowed($resource, $privilege))
@@ -73,7 +80,7 @@ abstract class SecurePresenter extends BasePresenter
         $user = $this->getUser();
         $session = $this->getSession('user_activity');
 
-
+        Debugger::log("Checking if user is logged in.", Debugger::INFO);
         /* If User Is Not Logged In */
         /*
         if (!$user->isLoggedIn())
@@ -88,8 +95,11 @@ abstract class SecurePresenter extends BasePresenter
         /* Check of Unactivity -> If User Has No Activity Durring 30 Minutes Then He/She Will Be Logged Out
          * 30 min. == 1800 sec.
          */
+        \Tracy\Debugger::log('Sec. User activity recorded at: ' . date('Y-m-d H:i:s', $session->lastActivity), \Tracy\ILogger::INFO);
+
         if (isset($session->lastActivity) && (time() - $session->lastActivity > 1800))
         {
+            Debugger::log("User has been logged out due to inactivity.", Debugger::INFO);
             $this->getUser()->logout();
             $this->flashMessage("You have been logged out due to inactivity.", 'info');
 
@@ -98,9 +108,11 @@ abstract class SecurePresenter extends BasePresenter
             $cache->clean([Cache::ALL => true]); // Vymazání veškeré cache
 
             $this->redirect(':CommonModule:Home:default');
+
         }
 
         // TODO: Store The Time of Activity
         $session->lastActivity = time();
+        Debugger::log("User activity updated at " . date('Y-m-d H:i:s', $session->lastActivity), Debugger::INFO);
     }
 }
