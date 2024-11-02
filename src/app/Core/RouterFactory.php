@@ -18,11 +18,14 @@ final class RouterFactory
 
         $router->addRoute('conference/conference-list/list', ':ConferenceModule:ConferenceList:list');
 
+        $router->addRoute('reservation/non-registered/make-reservation', 'ReservationModule:ReserveNonRegistered:makeReservation');
+
         $router->addRoute('conference/conference-add/add', ':ConferenceModule:ConferenceAdd:add');
 
         $router->addRoute('room/room-add/add', ':RoomModule:RoomAdd:add');
 
         $router->addRoute('presentation/presentation-add/add', ':PresentationModule:PresentationAdd:add');
+
 
         $router->addRoute('user/authentication/sign-in', ':UserModule:Authentication:signIn');
 

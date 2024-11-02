@@ -20,8 +20,6 @@ final class UserFormFactory
         */
         $form = new Form();
 
-//        OutputDebugger::enable();
-
         /* First Name */
         $form->addText('name', 'First Name')
             ->setRequired('Please Fill Your First Name.')

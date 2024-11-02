@@ -10,6 +10,8 @@ use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
 use App\UserModule\Model\Action;
 use App\UserModule\Model\UserService;
+use App\UserModule\Model\UserFormFactory;
+use App\CommonModule\Presenters\SecurePresenter;
 use Exception;
 
 final class RegisterControl extends Control
@@ -19,8 +21,8 @@ final class RegisterControl extends Control
     private $_userFormFactory;
 
     public function __construct(
-        \App\UserModule\Model\UserService $userService,
-        \App\UserModule\Model\UserFormFactory $userFormFactory,
+        UserService $userService,
+        UserFormFactory $userFormFactory,
     )
     {
         // parent::__construct();
@@ -39,7 +41,7 @@ final class RegisterControl extends Control
     {
         $presenter = $this->getPresenter();
 
-        if ($presenter instanceof \App\CommonModule\Presenters\SecurePresenter)
+        if ($presenter instanceof SecurePresenter)
         {
             $presenter->checkPrivilege(null, Action::ADD);
         }
