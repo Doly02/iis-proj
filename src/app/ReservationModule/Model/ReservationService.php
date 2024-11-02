@@ -28,7 +28,7 @@ final class ReservationService extends BaseService
     {
         return $this->database->table('reservations')
             ->where('conference_id', $conferenceId)
-            ->sum('tickets') ?: 0;
+            ->sum('num_reserved_tickets') ?: 0;
     }
 
     public function reserveTickets(string $firstName, string $lastName, string $email, int $tickets, int $conferenceId) : void
