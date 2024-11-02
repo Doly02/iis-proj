@@ -52,4 +52,16 @@ final class TicketService extends BaseService
             }
         }
     }
+
+    public function generateTickets(int $conferenceId, int $limit, int $price): void
+    {
+        for($i = 0; $i < $limit; $i++) {
+            $this->getTable()->insert([
+                'conference_id' => $conferenceId,
+                'reservation_id' => null,
+                'price' => $price,
+            ]);
+        }
+        // TODO unique code
+    }
 }
