@@ -24,6 +24,8 @@ final class RouterFactory
 
         $router->addRoute('conference/conference-add/add', ':ConferenceModule:ConferenceAdd:add');
 
+        $router->addRoute('conference/edit-conference/edit', ':ConferenceModule:EditConference:edit');
+
         $router->addRoute('conference/add-room-to-conference/add', ':ConferenceModule:AddRoomToConference:add');
 
         $router->addRoute('room/room-add/add', ':RoomModule:RoomAdd:add');

@@ -10,6 +10,7 @@ services:
 	- App\UserModule\Controls\EditUser\IEditUserControlFactory
 	- App\ConferenceHasRoomsModule\Model\ConferenceHasRoomsService
 	- App\ConferenceModule\Controls\AddConference\IAddConferenceControlFactory
+	- App\ConferenceModule\Controls\EditConference\IEditConferenceControlFactory
 	- App\ConferenceModule\Controls\AddRoomToConference\IAddRoomToConferenceControlFactory
 	- App\ConferenceModule\Controls\ListConference\IListConferenceControlFactory
 	- App\RoomModule\Controls\AddRoom\IAddRoomControlFactory

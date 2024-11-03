@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ConferenceModule\Controls\AddConference;
+namespace App\ConferenceModule\Controls\EditConference;
 
 use App\ConferenceHasRoomsModule\Model\ConferenceHasRoomsService;
 use App\ConferenceModule\Model\ConferenceService;
@@ -13,14 +13,14 @@ use Nette\Application\UI\Form;
 use Nette\Security\AuthenticationException;
 use Nette\Application\UI\Control;
 
-final class AddConferenceControl extends Control
+final class EditConferenceControl extends Control
 {
     private $user;
     private ConferenceService $conferenceService;
     private RoomService $roomService;
     private ConferenceHasRoomsService $conferenceHasRoomsService;
     private ConferenceFormFactory $conferenceFormFactory;
-
+    private int $conferenceId;
 
     public function __construct(\Nette\Security\User $user, ConferenceService $conferenceService,
                                 RoomService $roomService, ConferenceHasRoomsService $conferenceHasRoomsService,
@@ -35,45 +35,51 @@ final class AddConferenceControl extends Control
 
     public function render(): void
     {
-        $this->template->setFile(__DIR__ . '/../../templates/ConferenceAdd/add.latte');
+        $this->template->setFile(__DIR__ . '/../../templates/EditConference/edit.latte');
         $this->template->render();
     }
 
-    // Creates Add Conference Form
-    protected function createComponentAddConferenceForm() : \Nette\Application\UI\Form
+    public function setConferenceId(int $conferenceId): void
     {
-        $form = $this->conferenceFormFactory->createConferenceForm();
-        $form->onSuccess[] = [$this, 'addConferenceFormSucceeded'];
+        $this->conferenceId = $conferenceId;
+        \Tracy\Debugger::barDump($conferenceId, 'Conference ID in Control');
+    }
+
+    // Creates Add Conference Form
+    protected function createComponentEditConferenceForm() : \Nette\Application\UI\Form
+    {
+        $form = $this->conferenceFormFactory->createConferenceForm($this->conferenceId);
+        $form->onSuccess[] = [$this, 'editConferenceFormSucceeded'];
         return $form;
     }
 
-    public function addConferenceFormSucceeded(Form $form, \stdClass $values): void
+    public function editConferenceFormSucceeded(Form $form, \stdClass $values): void
     {
         $err = 0;
         $presenter = $this->getPresenter();
-        $conferenceId = null;
+        $conferenceId = (int) $values->conferenceId;
+        \Tracy\Debugger::barDump($conferenceId, 'Conference ID in Success Handler');
+
         try {
             // Insert the conference data into the database
-            $conferenceId = $this->conferenceService->addConference([
+            $this->conferenceService->updateConference($conferenceId, [
                 'name' => $values->name,
                 'description' => $values->description,
                 'start_time' => $values->start_time,
                 'end_time' => $values->end_time,
                 'price' => $values->price,
-                'capacity' => 0,
-                'organiser_id' => 1, // TODO: User id
-            ])->id;
+            ]);
 
         } catch (\Exception $e) {
             $err = 1;
             $form->addError('An error occurred while adding the conference: ' . $e->getMessage());
         }
-        // TODO commit changes after successful add of both conference and conferenceHasRooms
+        // TODO commit changes after successful add conference
 
         if (null !== $presenter && $err !== 1)
         {
             $this->flashMessage('Conference added successfully.', 'success');
-            $presenter->redirect(':ConferenceModule:AddRoomToConference:add', ['id' => $conferenceId]);
+            $presenter->redirect(':ConferenceModule:ConferenceList:list');
         }
 
     }

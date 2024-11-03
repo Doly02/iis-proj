@@ -29,6 +29,9 @@ final class ConferenceFormFactory
         if ($conferenceId !== null) {
             $conference = $this->conferenceService->fetchById($conferenceId); // Replace with your method to get conference data by ID
         }
+        // ID seems to reset after send
+        $form->addHidden('conferenceId', $conferenceId);
+
 
         $form->addText('name', 'Name:')
             ->setRequired('Enter the conference name.')
@@ -53,7 +56,7 @@ final class ConferenceFormFactory
             ->addRule($form::Float, 'Price must be a number.')
             ->setHtmlAttribute('class', 'form-control');
 
-        $form->addSubmit('send', 'Add Conference')
+        $form->addSubmit('send', 'Send')
             ->setHtmlAttribute('class', 'btn btn-primary');
 
         // Validating time
