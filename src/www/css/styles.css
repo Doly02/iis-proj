@@ -266,3 +266,15 @@ footer a:hover {
     padding: 8px;
 }
 
+/* Styling for Total Price Section */
+.price-info {
+    text-align: center; /* Center the total price horizontally */
+    margin-top: 20px; /* Add some margin above */
+    font-size: 1.5em; /* Increase the font size for better visibility */
+    font-weight: bold; /* Make the text bold */
+    color: #2d4bad; /* Use a nice color to match the design */
+    background-color: #e6f2ff; /* Add a light background color to highlight the section */
+    padding: 15px; /* Add padding for spacing */
+    border-radius: 10px; /* Rounded corners for a nicer look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for emphasis */
+}
