@@ -61,7 +61,7 @@ final class AddConferenceControl extends Control
                 'end_time' => $values->end_time,
                 'price' => $values->price,
                 'capacity' => 0,
-                'organiser_id' => 1, // TODO: User id
+                'organiser_id' => 4, // TODO: User id
             ])->id;
 
         } catch (\Exception $e) {

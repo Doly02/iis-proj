@@ -68,6 +68,8 @@ final class AddRoomToConferenceControl extends Control
         // Allowed times are from conference start to its end
         $allowedStartTime = new \DateTimeImmutable($conference->start_time->format('Y-m-d H:i:s'));
         $allowedEndTime = new \DateTimeImmutable($conference->end_time->format('Y-m-d H:i:s'));
+        \Tracy\Debugger::barDump($allowedStartTime, 'Start time');
+        \Tracy\Debugger::barDump($allowedEndTime, 'End time');
         $form = $this->conferenceFormFactory->createAddRoomsToConferenceForm($allowedStartTime, $allowedEndTime);
         $form->onSuccess[] = [$this, 'addConferenceFormSucceeded'];
 
@@ -81,26 +83,28 @@ final class AddRoomToConferenceControl extends Control
         \Tracy\Debugger::barDump($values, 'Form Data');
 
         try {
-            $roomId = $values->room;
-            $room = $this->roomService->fetchById($roomId);
             $conference = $this->conferenceService->getConferenceById($this->conferenceId);
+            $oldCapacity = $conference->capacity;
+            $newCapacity = $oldCapacity;
+            foreach ($values->rooms as $roomId) {
+                // Sum new capacity
+                $room = $this->roomService->fetchById($roomId);
+                $newCapacity += $room->capacity;
 
-            $currentCapacity = $conference->capacity + $room->capacity;
-
-            $bookingStart = $values->booking_start;
-            $bookingEnd = $values->booking_end;
-
-            // Add room to conference
-            $this->conferenceHasRoomsService->addConferenceHasRooms([
-                'room_id' => $roomId,
-                'conference_id' => $this->conferenceId,
-                'booking_start' => $bookingStart,
-                'booking_end' => $bookingEnd,
-            ]);
+                // Add room to conference
+                $this->conferenceHasRoomsService->addConferenceHasRooms([
+                    'room_id' => $roomId,
+                    'conference_id' => $this->conferenceId,
+                    'booking_start' => $conference->start_time,
+                    'booking_end' => $conference->end_time,
+                ]);
+            }
 
             // Update capacity
-            $this->conferenceService->updateConferenceCapacity($this->conferenceId, $currentCapacity);
-            $this->ticketService->generateTickets($this->conferenceId, $room->capacity, $conference->price);
+            $this->conferenceService->updateConferenceCapacity($this->conferenceId, $newCapacity);
+            // Generate tickets
+            $ticketCount = $newCapacity - $oldCapacity;
+            $this->ticketService->generateTickets($this->conferenceId, $ticketCount, $conference->price);
 
         } catch (\Exception $e) {
             $err = 1;

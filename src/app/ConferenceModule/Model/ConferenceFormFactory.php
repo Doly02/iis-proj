@@ -106,45 +106,13 @@ final class ConferenceFormFactory
         }
 
         // Add multiselect field to the form
-        $form->addSelect('room', 'Select Room:', $roomOptions)
-            ->setRequired('Please select a room.');
-
-        $form->addDateTime('booking_start', 'Booking Start:')
-            ->setRequired('Select a start time.')
-            ->setHtmlAttribute('class', 'form-control')
-            ->setHtmlAttribute('min', $allowedStartTime->format('Y-m-d\TH:i'))
-            ->setHtmlAttribute('max', $allowedEndTime->format('Y-m-d\TH:i'));
-
-        $form->addDateTime('booking_end', 'Booking End:')
-            ->setRequired('Select an end time.')
-            ->setHtmlAttribute('class', 'form-control')
-            ->setHtmlAttribute('min', $allowedStartTime->format('Y-m-d\TH:i'))
-            ->setHtmlAttribute('max', $allowedEndTime->format('Y-m-d\TH:i'));
+        $form->addMultiSelect('rooms', 'Select Room:', $roomOptions)
+            ->setRequired('Please select at least one room.');
 
         $form->addSubmit('send', 'Book Room')
             ->setHtmlAttribute('class', 'btn btn-primary');
 
-        // Step 2: Add PHP validation to enforce interval restrictions
-        $form->onValidate[] = function (Form $form) use ($allowedStartTime, $allowedEndTime) {
-            $values = $form->getValues();
 
-            $bookingStart = $values->booking_start;
-            $bookingEnd = $values->booking_end;
-
-            // Ensure booking times fall within the allowed interval
-            if ($bookingStart < $allowedStartTime || $bookingEnd > $allowedEndTime) {
-                $form->addError('Booking time must be during conference.');
-            }
-
-            // Ensure booking end is after booking start
-            if ($bookingStart >= $bookingEnd) {
-                $form->addError('The end time must be after the start time.');
-            }
-
-            if($values->room === null) {
-                $form->addError('Room cannot be empty.');
-            }
-        };
 
         return $form;
     }
