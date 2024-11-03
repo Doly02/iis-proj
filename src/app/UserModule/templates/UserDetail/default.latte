@@ -1,0 +1,16 @@
+{default $title = 'Detail'}
+
+{block content}
+
+    <h1>User Details</h1>
+
+    <p><strong>Name:</strong> {$userData->name}</p>
+    <p><strong>Surname:</strong> {$userData->surname}</p>
+    <p><strong>Email:</strong> {$userData->email}</p>
+
+    {if $user->isLoggedIn()}
+        <p>
+            <a href="{plink :UserModule:User:editUser, userId => $user->id}" class="btn btn-primary">Edit Profile</a>
+        </p>
+    {/if}
+{/block}
