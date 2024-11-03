@@ -9,6 +9,7 @@ use App\CommonModule\Model\BaseService;
 use Nette\Security\SimpleIdentity;
 use Exception;
 use Tracy\Debugger;
+use Nette\Utils\Random;
 
 final class TicketService extends BaseService
 {
@@ -53,12 +54,30 @@ final class TicketService extends BaseService
         }
     }
 
+    public function generateUniqueTicketCode(int $length = 10): string
+    {
+        do {
+            // Generate a random alphanumeric code
+            $code = Random::generate($length, 'A-Z0-9');
+
+            // Check if the code already exists in the tickets table
+            $exists = $this->database->table('tickets')
+                    ->where('code', $code)
+                    ->count('*') > 0;
+
+        } while ($exists); // Repeat until a unique code is found
+
+        return $code;
+    }
+
     public function generateTickets(int $conferenceId, int $limit, int $price): void
     {
         for($i = 0; $i < $limit; $i++) {
+            $uniqueCode = $this->generateUniqueTicketCode();
             $this->getTable()->insert([
                 'conference_id' => $conferenceId,
                 'reservation_id' => null,
+                'code' => $uniqueCode,
                 'price' => $price,
             ]);
         }

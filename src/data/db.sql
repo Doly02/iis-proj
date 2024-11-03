@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Hostiteľ: 127.0.0.1
--- Čas generovania: Sun 03.Nov 2024, 17:44
--- Verzia serveru: 10.4.32-MariaDB
--- Verzia PHP: 8.2.12
+-- Počítač: 127.0.0.1
+-- Vytvořeno: Ned 03. lis 2024, 22:01
+-- Verze serveru: 10.4.32-MariaDB
+-- Verze PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Databáza: `iis`
+-- Databáze: `iis`
 --
 
 -- --------------------------------------------------------
 
 --
--- Štruktúra tabuľky pre tabuľku `conferences`
+-- Struktura tabulky `conferences`
 --
 
 CREATE TABLE `conferences` (
@@ -40,7 +40,7 @@ CREATE TABLE `conferences` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Sťahujem dáta pre tabuľku `conferences`
+-- Vypisuji data pro tabulku `conferences`
 --
 
 INSERT INTO `conferences` (`id`, `name`, `area_of_interest`, `description`, `start_time`, `end_time`, `price`, `capacity`, `organiser_id`) VALUES
@@ -53,7 +53,7 @@ INSERT INTO `conferences` (`id`, `name`, `area_of_interest`, `description`, `sta
 -- --------------------------------------------------------
 
 --
--- Štruktúra tabuľky pre tabuľku `conference_has_rooms`
+-- Struktura tabulky `conference_has_rooms`
 --
 
 CREATE TABLE `conference_has_rooms` (
@@ -65,23 +65,23 @@ CREATE TABLE `conference_has_rooms` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Sťahujem dáta pre tabuľku `conference_has_rooms`
+-- Vypisuji data pro tabulku `conference_has_rooms`
 --
 
 INSERT INTO `conference_has_rooms` (`id`, `conference_id`, `room_id`, `booking_start`, `booking_end`) VALUES
-(1, 6, 19, '2024-11-12 10:00:00', '2024-11-12 17:00:00'),
-(2, 6, 15, '2024-11-12 10:00:00', '2024-11-12 17:00:00'),
-(3, 7, 20, '2024-11-09 09:00:00', '2024-11-09 17:00:00'),
-(4, 9, 16, '2024-11-05 08:30:00', '2024-11-05 16:30:00'),
-(5, 8, 18, '2024-11-15 10:00:00', '2024-11-15 18:00:00'),
-(6, 8, 16, '2024-11-15 10:00:00', '2024-11-15 18:00:00'),
-(7, 10, 14, '2024-11-12 10:00:00', '2024-11-12 17:00:00'),
-(8, 10, 17, '2024-11-12 10:00:00', '2024-11-12 17:00:00');
+(10, 6, 15, '2024-11-12 10:00:00', '2024-11-12 17:00:00'),
+(11, 6, 19, '2024-11-12 10:00:00', '2024-11-12 17:00:00'),
+(12, 7, 20, '2024-11-09 09:00:00', '2024-11-09 17:00:00'),
+(13, 9, 16, '2024-11-05 08:30:00', '2024-11-09 16:30:00'),
+(14, 8, 16, '2024-11-15 10:00:00', '2024-11-15 18:00:00'),
+(15, 8, 18, '2024-11-15 10:00:00', '2024-11-15 18:00:00'),
+(16, 10, 14, '2024-11-12 10:00:00', '2024-11-12 17:00:00'),
+(17, 10, 17, '2024-11-12 10:00:00', '2024-11-12 17:00:00');
 
 -- --------------------------------------------------------
 
 --
--- Štruktúra tabuľky pre tabuľku `lectures`
+-- Struktura tabulky `lectures`
 --
 
 CREATE TABLE `lectures` (
@@ -91,37 +91,10 @@ CREATE TABLE `lectures` (
   `end_time` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Sťahujem dáta pre tabuľku `lectures`
---
-
-INSERT INTO `lectures` (`id`, `id_conference_has_rooms`, `start_time`, `end_time`) VALUES
-(1, 1, '2024-11-12 10:00:00', '2024-11-12 13:00:00'),
-(2, 1, '2024-11-12 13:00:00', '2024-11-12 17:00:00'),
-(3, 2, '2024-11-12 10:00:00', '2024-11-12 14:00:00'),
-(4, 2, '2024-11-12 14:00:00', '2024-11-12 17:00:00'),
-(5, 3, '2024-11-09 09:00:00', '2024-11-09 13:00:00'),
-(6, 3, '2024-11-09 13:00:00', '2024-11-09 17:00:00'),
-(7, 6, '2024-11-15 10:00:00', '2024-11-15 13:00:00'),
-(8, 6, '2024-11-15 13:00:00', '2024-11-15 16:00:00'),
-(9, 6, '2024-11-15 16:00:00', '2024-11-15 18:00:00'),
-(10, 5, '2024-11-15 10:00:00', '2024-11-15 12:00:00'),
-(11, 5, '2024-11-15 12:00:00', '2024-11-15 15:00:00'),
-(12, 5, '2024-11-15 15:00:00', '2024-11-15 15:30:00'),
-(13, 5, '2024-11-15 15:30:00', '2024-11-15 18:00:00'),
-(14, 4, '2024-11-05 08:30:00', '2024-11-05 12:30:00'),
-(15, 4, '2024-11-05 12:30:00', '2024-11-05 16:30:00'),
-(16, 7, '2024-11-12 10:00:00', '2024-11-12 12:00:00'),
-(17, 7, '2024-11-12 12:00:00', '2024-11-12 14:00:00'),
-(18, 7, '2024-11-12 14:00:00', '2024-11-12 17:00:00'),
-(19, 8, '2024-11-12 10:00:00', '2024-11-12 12:00:00'),
-(20, 8, '2024-11-12 12:00:00', '2024-11-12 14:00:00'),
-(21, 8, '2024-11-12 14:00:00', '2024-11-12 17:00:00');
-
 -- --------------------------------------------------------
 
 --
--- Štruktúra tabuľky pre tabuľku `presentations`
+-- Struktura tabulky `presentations`
 --
 
 CREATE TABLE `presentations` (
@@ -134,20 +107,10 @@ CREATE TABLE `presentations` (
   `lecture_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
---
--- Sťahujem dáta pre tabuľku `presentations`
---
-
-INSERT INTO `presentations` (`id`, `name`, `description`, `state`, `attachment`, `lecturer_id`, `lecture_id`) VALUES
-(8, 'Kybernetická bezpečnost pro firmy', 'Přednáška se zaměří na nejnovější bezpečnostní strategie a technologie pro firmy, včetně ochrany proti kybernetickým útokům a zabezpečení soukromých dat.', 'waiting', 'OSNOVA\r\n\r\n1. Úvod do kybernetické bezpečnosti:\r\n- Význam a aktuální výzvy v oblasti ochrany dat\r\n- Vývoj hrozeb v digitálním světě\r\n\r\n2. Hlavní bezpečnostní hrozby:\r\n- Kybernetické útoky a jejich dopad na firmy a jednotlivce\r\n- Phishing, malware, ransomware, a další hrozby\r\n\r\n3. Ochrana soukromí a dat:\r\n- Právní předpisy a regulace (např. GDPR)\r\n- Nejlepší praktiky pro zabezpečení citlivých informací\r\n\r\n4. Moderní technologie pro zabezpečení:\r\n- Umělá inteligence a strojové učení v boji proti kybernetickým hrozbám\r\n- Role blockchainu a šifrování\r\n\r\n5. Praktické příklady a případové studie:\r\n- Úspěšné implementace bezpečnostních opatření\r\n- Analýza reálných útoků a poučení z nich\r\n\r\n6. Diskuse o budoucnosti kybernetické bezpečnosti:\r\n- Očekávaný vývoj technologií a nových hrozeb\r\n- Spolupráce mezi firmami a vládami pro lepší ochranu', 5, 2),
-(10, 'Inovace v oblasti udržitelné energie', 'Přednáška se zaměří na moderní technologie a inovace v oblasti udržitelné energetiky, které pomáhají snižovat emise a bojovat proti klimatickým změnám. Představíme úspěšné projekty a budoucí směry vývoje v environmentální politice.', 'waiting', 'https://www.energiepriklad.cz/prednaska-materialy', 5, 14),
-(14, 'Mikroslužby a jejich implementace v praxi', 'Tato přednáška se bude zabývat návrhem a implementací mikroslužební architektury. Ukážeme osvědčené postupy, výhody oproti monolitickým aplikacím a jak využít cloudová řešení pro škálování a flexibilitu softwarových projektů.', 'waiting', 'https://www.mikrosluzbypriklad.cz/prednaska', 10, 21),
-(15, 'Automatizace v DevOps: Nejlepší postupy', 'Přednáška se zaměří na moderní přístupy k automatizaci v DevOps, včetně integrace mikroslužeb, optimalizace nasazování softwaru a využití cloudových řešení. Budou představeny příklady z praxe a tipy na efektivní řízení DevOps procesů.', 'waiting', 'https://www.devopspraktiky.cz/materialy', 10, 18);
-
 -- --------------------------------------------------------
 
 --
--- Štruktúra tabuľky pre tabuľku `reservations`
+-- Struktura tabulky `reservations`
 --
 
 CREATE TABLE `reservations` (
@@ -165,7 +128,7 @@ CREATE TABLE `reservations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Sťahujem dáta pre tabuľku `reservations`
+-- Vypisuji data pro tabulku `reservations`
 --
 
 INSERT INTO `reservations` (`id`, `created_date`, `created_time`, `price_to_pay`, `is_paid`, `customer_id`, `conference_id`, `first_name`, `last_name`, `email`, `num_reserved_tickets`) VALUES
@@ -184,7 +147,7 @@ INSERT INTO `reservations` (`id`, `created_date`, `created_time`, `price_to_pay`
 -- --------------------------------------------------------
 
 --
--- Štruktúra tabuľky pre tabuľku `rooms`
+-- Struktura tabulky `rooms`
 --
 
 CREATE TABLE `rooms` (
@@ -195,7 +158,7 @@ CREATE TABLE `rooms` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Sťahujem dáta pre tabuľku `rooms`
+-- Vypisuji data pro tabulku `rooms`
 --
 
 INSERT INTO `rooms` (`id`, `name`, `capacity`, `creator_id`) VALUES
@@ -210,7 +173,7 @@ INSERT INTO `rooms` (`id`, `name`, `capacity`, `creator_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Štruktúra tabuľky pre tabuľku `selected_lectures`
+-- Struktura tabulky `selected_lectures`
 --
 
 CREATE TABLE `selected_lectures` (
@@ -223,92 +186,93 @@ CREATE TABLE `selected_lectures` (
 -- --------------------------------------------------------
 
 --
--- Štruktúra tabuľky pre tabuľku `tickets`
+-- Struktura tabulky `tickets`
 --
 
 CREATE TABLE `tickets` (
   `id` int(11) NOT NULL,
   `price` decimal(10,0) NOT NULL,
+  `code` varchar(20) NOT NULL,
   `conference_id` int(11) NOT NULL,
   `reservation_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Sťahujem dáta pre tabuľku `tickets`
+-- Vypisuji data pro tabulku `tickets`
 --
 
-INSERT INTO `tickets` (`id`, `price`, `conference_id`, `reservation_id`) VALUES
-(1, 180, 6, 16),
-(2, 180, 6, 21),
-(3, 180, 6, 22),
-(4, 180, 6, 22),
-(5, 180, 6, NULL),
-(6, 180, 6, NULL),
-(7, 180, 6, NULL),
-(8, 180, 6, NULL),
-(9, 180, 6, NULL),
-(10, 180, 6, NULL),
-(11, 180, 6, NULL),
-(12, 180, 6, NULL),
-(13, 180, 6, NULL),
-(14, 180, 6, NULL),
-(15, 180, 6, NULL),
-(16, 180, 6, NULL),
-(17, 180, 6, NULL),
-(18, 180, 6, NULL),
-(19, 150, 7, 20),
-(20, 150, 7, 20),
-(21, 150, 7, 20),
-(22, 150, 7, 23),
-(23, 150, 7, 25),
-(24, 150, 7, NULL),
-(25, 150, 7, NULL),
-(26, 150, 7, NULL),
-(27, 150, 7, NULL),
-(28, 150, 7, NULL),
-(29, 150, 7, NULL),
-(30, 150, 7, NULL),
-(31, 195, 8, 15),
-(32, 195, 8, 15),
-(33, 195, 8, 15),
-(34, 195, 8, 15),
-(35, 195, 8, 15),
-(36, 195, 8, 24),
-(37, 195, 8, 26),
-(38, 195, 8, 26),
-(39, 195, 8, NULL),
-(40, 195, 8, NULL),
-(41, 195, 8, NULL),
-(42, 195, 8, NULL),
-(43, 195, 8, NULL),
-(44, 195, 8, NULL),
-(45, 195, 8, NULL),
-(46, 195, 8, NULL),
-(47, 200, 9, NULL),
-(48, 200, 9, NULL),
-(49, 200, 9, NULL),
-(50, 200, 9, NULL),
-(51, 200, 9, NULL),
-(52, 200, 9, NULL),
-(53, 200, 9, NULL),
-(54, 200, 9, NULL),
-(55, 200, 9, NULL),
-(56, 200, 9, NULL),
-(57, 195, 10, 14),
-(58, 195, 10, 14),
-(59, 195, 10, 19),
-(60, 195, 10, 19),
-(61, 195, 10, 19),
-(62, 195, 10, 19),
-(63, 195, 10, 19),
-(64, 195, 10, NULL),
-(65, 195, 10, NULL),
-(66, 195, 10, NULL);
+INSERT INTO `tickets` (`id`, `price`, `code`, `conference_id`, `reservation_id`) VALUES
+(72, 180, 'SFPMIHZDDI', 6, NULL),
+(73, 180, '13RLAO7098', 6, NULL),
+(74, 180, '2IEBH4PKAI', 6, NULL),
+(75, 180, 'BX50N11IIE', 6, NULL),
+(76, 180, 'DX6PYZ8428', 6, NULL),
+(77, 180, 'JW9NDX3ZXQ', 6, NULL),
+(78, 180, 'W501RA4NJ1', 6, NULL),
+(79, 180, 'G32BH92M0M', 6, NULL),
+(80, 180, 'ASKDULA5H4', 6, NULL),
+(81, 180, 'AITH409T9L', 6, NULL),
+(82, 180, 'T68O6JSDZX', 6, NULL),
+(83, 180, 'O3Z58NK134', 6, NULL),
+(84, 180, 'O28A9P5MBN', 6, NULL),
+(85, 180, 'DZ8EBRDVGC', 6, NULL),
+(86, 180, 'FLPHVIKJI7', 6, NULL),
+(87, 180, 'LTZEA69KXA', 6, NULL),
+(88, 180, '9SBVIB766C', 6, NULL),
+(89, 180, '00WL3AB02G', 6, NULL),
+(90, 150, 'BAWFYNTUKH', 7, NULL),
+(91, 150, 'H3UMQ357XD', 7, NULL),
+(92, 150, 'DXFIOHDICC', 7, NULL),
+(93, 150, 'F942MOJKPH', 7, NULL),
+(94, 150, 'PBJXRHDFM0', 7, NULL),
+(95, 150, 'OPZ25DAWW6', 7, NULL),
+(96, 150, '8UJMXVFB8H', 7, NULL),
+(97, 150, '609WURO7Y1', 7, NULL),
+(98, 150, '79IYDBKDUI', 7, NULL),
+(99, 150, 'T4RC8BK7M1', 7, NULL),
+(100, 150, 'T3CRUL5WG3', 7, NULL),
+(101, 150, '72CXAFGQI6', 7, NULL),
+(102, 200, 'AG36LBBVQ0', 9, NULL),
+(103, 200, 'WMT82XOBHM', 9, NULL),
+(104, 200, 'BZPN98DQJS', 9, NULL),
+(105, 200, '34NS1TLL5J', 9, NULL),
+(106, 200, 'PXHVEAKPT0', 9, NULL),
+(107, 200, '6TAL8IL4XA', 9, NULL),
+(108, 200, 'WWD5N2UG5S', 9, NULL),
+(109, 200, 'KIMHBDLONB', 9, NULL),
+(110, 200, 'XMOM9JG1U6', 9, NULL),
+(111, 200, 'JGM1SS4LHF', 9, NULL),
+(112, 195, 'ZCU68DGHBM', 8, NULL),
+(113, 195, 'U3F5GUYGLU', 8, NULL),
+(114, 195, '3H48ZUZB7E', 8, NULL),
+(115, 195, '4QK89EDEOY', 8, NULL),
+(116, 195, 'LPSYTW7MS4', 8, NULL),
+(117, 195, '36L2Z3HY9V', 8, NULL),
+(118, 195, '0ZBDD8E6LB', 8, NULL),
+(119, 195, 'G6Q4KZ2AYS', 8, NULL),
+(120, 195, '0GOPI5HXSE', 8, NULL),
+(121, 195, '2ABZR4Q1LM', 8, NULL),
+(122, 195, 'QVMSM5LW8P', 8, NULL),
+(123, 195, 'ZK4T1PPVP5', 8, NULL),
+(124, 195, 'EOHRW9WX56', 8, NULL),
+(125, 195, 'P78VWH6LBD', 8, NULL),
+(126, 195, '6IZVZXO8JH', 8, NULL),
+(127, 195, 'UJ4PSJE6HR', 8, NULL),
+(128, 195, 'MGV2FG0TUO', 10, NULL),
+(129, 195, '1W758NQHCL', 10, NULL),
+(130, 195, '9PSILDNXS0', 10, NULL),
+(131, 195, '8CW3UJRZD0', 10, NULL),
+(132, 195, '5GY5NFN3IL', 10, NULL),
+(133, 195, 'QFY60C7STB', 10, NULL),
+(134, 195, 'QTGS24Y1GS', 10, NULL),
+(135, 195, 'KD2U4NMJFO', 10, NULL),
+(136, 195, 'ZJH06802BC', 10, NULL),
+(137, 195, '8ZXHVPJ0SM', 10, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Štruktúra tabuľky pre tabuľku `users`
+-- Struktura tabulky `users`
 --
 
 CREATE TABLE `users` (
@@ -321,7 +285,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Sťahujem dáta pre tabuľku `users`
+-- Vypisuji data pro tabulku `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `surname`, `email`, `password`, `account_type`) VALUES
@@ -332,18 +296,18 @@ INSERT INTO `users` (`id`, `name`, `surname`, `email`, `password`, `account_type
 (10, 'Hana', 'Gregorová', 'hana1@gmail.com', '$2y$10$DgWzNiAXUl/ULim7aUYi1Oi6xMsTkhSmEmjLXrwpoJDoswlMrcZZm', 'user');
 
 --
--- Kľúče pre exportované tabuľky
+-- Indexy pro exportované tabulky
 --
 
 --
--- Indexy pre tabuľku `conferences`
+-- Indexy pro tabulku `conferences`
 --
 ALTER TABLE `conferences`
   ADD PRIMARY KEY (`id`),
   ADD KEY `conference_organiser` (`organiser_id`);
 
 --
--- Indexy pre tabuľku `conference_has_rooms`
+-- Indexy pro tabulku `conference_has_rooms`
 --
 ALTER TABLE `conference_has_rooms`
   ADD PRIMARY KEY (`id`),
@@ -351,14 +315,14 @@ ALTER TABLE `conference_has_rooms`
   ADD KEY `room_conference` (`room_id`);
 
 --
--- Indexy pre tabuľku `lectures`
+-- Indexy pro tabulku `lectures`
 --
 ALTER TABLE `lectures`
   ADD PRIMARY KEY (`id`),
   ADD KEY `conference_and_room` (`id_conference_has_rooms`);
 
 --
--- Indexy pre tabuľku `presentations`
+-- Indexy pro tabulku `presentations`
 --
 ALTER TABLE `presentations`
   ADD PRIMARY KEY (`id`),
@@ -366,7 +330,7 @@ ALTER TABLE `presentations`
   ADD KEY `lecture_lesson` (`lecture_id`);
 
 --
--- Indexy pre tabuľku `reservations`
+-- Indexy pro tabulku `reservations`
 --
 ALTER TABLE `reservations`
   ADD PRIMARY KEY (`id`),
@@ -374,7 +338,7 @@ ALTER TABLE `reservations`
   ADD KEY `reservation_for_conference` (`conference_id`);
 
 --
--- Indexy pre tabuľku `rooms`
+-- Indexy pro tabulku `rooms`
 --
 ALTER TABLE `rooms`
   ADD PRIMARY KEY (`id`),
@@ -382,7 +346,7 @@ ALTER TABLE `rooms`
   ADD KEY `room_created_by` (`creator_id`);
 
 --
--- Indexy pre tabuľku `selected_lectures`
+-- Indexy pro tabulku `selected_lectures`
 --
 ALTER TABLE `selected_lectures`
   ADD PRIMARY KEY (`id`),
@@ -390,7 +354,7 @@ ALTER TABLE `selected_lectures`
   ADD KEY `whose_schedule` (`id_user`);
 
 --
--- Indexy pre tabuľku `tickets`
+-- Indexy pro tabulku `tickets`
 --
 ALTER TABLE `tickets`
   ADD PRIMARY KEY (`id`),
@@ -398,122 +362,122 @@ ALTER TABLE `tickets`
   ADD KEY `reservation_ticket` (`reservation_id`);
 
 --
--- Indexy pre tabuľku `users`
+-- Indexy pro tabulku `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- AUTO_INCREMENT pre exportované tabuľky
+-- AUTO_INCREMENT pro tabulky
 --
 
 --
--- AUTO_INCREMENT pre tabuľku `conferences`
+-- AUTO_INCREMENT pro tabulku `conferences`
 --
 ALTER TABLE `conferences`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT pre tabuľku `conference_has_rooms`
+-- AUTO_INCREMENT pro tabulku `conference_has_rooms`
 --
 ALTER TABLE `conference_has_rooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT pre tabuľku `lectures`
+-- AUTO_INCREMENT pro tabulku `lectures`
 --
 ALTER TABLE `lectures`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
--- AUTO_INCREMENT pre tabuľku `presentations`
+-- AUTO_INCREMENT pro tabulku `presentations`
 --
 ALTER TABLE `presentations`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT pre tabuľku `reservations`
+-- AUTO_INCREMENT pro tabulku `reservations`
 --
 ALTER TABLE `reservations`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
--- AUTO_INCREMENT pre tabuľku `rooms`
+-- AUTO_INCREMENT pro tabulku `rooms`
 --
 ALTER TABLE `rooms`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT pre tabuľku `selected_lectures`
+-- AUTO_INCREMENT pro tabulku `selected_lectures`
 --
 ALTER TABLE `selected_lectures`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pre tabuľku `tickets`
+-- AUTO_INCREMENT pro tabulku `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
 
 --
--- AUTO_INCREMENT pre tabuľku `users`
+-- AUTO_INCREMENT pro tabulku `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- Obmedzenie pre exportované tabuľky
+-- Omezení pro exportované tabulky
 --
 
 --
--- Obmedzenie pre tabuľku `conferences`
+-- Omezení pro tabulku `conferences`
 --
 ALTER TABLE `conferences`
   ADD CONSTRAINT `conference_organiser` FOREIGN KEY (`organiser_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Obmedzenie pre tabuľku `conference_has_rooms`
+-- Omezení pro tabulku `conference_has_rooms`
 --
 ALTER TABLE `conference_has_rooms`
   ADD CONSTRAINT `conference_room` FOREIGN KEY (`conference_id`) REFERENCES `conferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `room_conference` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Obmedzenie pre tabuľku `lectures`
+-- Omezení pro tabulku `lectures`
 --
 ALTER TABLE `lectures`
   ADD CONSTRAINT `conference_and_room` FOREIGN KEY (`id_conference_has_rooms`) REFERENCES `conference_has_rooms` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Obmedzenie pre tabuľku `presentations`
+-- Omezení pro tabulku `presentations`
 --
 ALTER TABLE `presentations`
   ADD CONSTRAINT `lecture_lesson` FOREIGN KEY (`lecture_id`) REFERENCES `lectures` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `lecturer_submitted_presentation` FOREIGN KEY (`lecturer_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Obmedzenie pre tabuľku `reservations`
+-- Omezení pro tabulku `reservations`
 --
 ALTER TABLE `reservations`
   ADD CONSTRAINT `customer_created_reservation` FOREIGN KEY (`customer_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `reservation_for_conference` FOREIGN KEY (`conference_id`) REFERENCES `conferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Obmedzenie pre tabuľku `rooms`
+-- Omezení pro tabulku `rooms`
 --
 ALTER TABLE `rooms`
   ADD CONSTRAINT `room_created_by` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`);
 
 --
--- Obmedzenie pre tabuľku `selected_lectures`
+-- Omezení pro tabulku `selected_lectures`
 --
 ALTER TABLE `selected_lectures`
   ADD CONSTRAINT `which_lecture_is_selected` FOREIGN KEY (`id_lecture`) REFERENCES `lectures` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `whose_schedule` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Obmedzenie pre tabuľku `tickets`
+-- Omezení pro tabulku `tickets`
 --
 ALTER TABLE `tickets`
   ADD CONSTRAINT `conference_ticket` FOREIGN KEY (`conference_id`) REFERENCES `conferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
