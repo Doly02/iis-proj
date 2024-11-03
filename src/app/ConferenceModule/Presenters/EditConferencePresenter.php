@@ -4,6 +4,7 @@ namespace App\ConferenceModule\Presenters;
 
 use App\CommonModule\Presenters\BasePresenter;
 use App\ConferenceModule\Controls\EditConference;
+use App\ConferenceModule\Model\ConferenceService;
 use Nette\Application\UI\Form;
 use Nette\Security\AuthenticationException;
 use Tracy\Debugger;
@@ -11,11 +12,13 @@ use Tracy\Debugger;
 final class EditConferencePresenter extends BasePresenter
 {
     private $editConferenceControlFactory;
+    private ConferenceService $conferenceService;
 
-    public function __construct(EditConference\IEditConferenceControlFactory $EditConferenceControlFactory)
+    public function __construct(EditConference\IEditConferenceControlFactory $EditConferenceControlFactory, ConferenceService $conferenceService)
     {
         parent::__construct();
         $this->editConferenceControlFactory = $EditConferenceControlFactory;
+        $this->conferenceService = $conferenceService;
     }
 
     protected function createComponentEditConferenceForm(): EditConference\EditConferenceControl
@@ -26,6 +29,19 @@ final class EditConferencePresenter extends BasePresenter
         $control->setConferenceId($conferenceId);
 
         return $control;
+    }
+
+    public function actionDelete(int $id): void
+    {
+        try {
+            $this->conferenceService->deleteConferenceById($id);
+            $this->flashMessage('Conference deleted successfully.', 'success');
+        } catch (\Exception $e) {
+            $this->flashMessage('Error deleting conference: ' . $e->getMessage(), 'error');
+        }
+
+        // Redirect to the list of conferences
+        $this->redirect(':ConferenceModule:ConferenceList:list');
     }
 
 }

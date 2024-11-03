@@ -51,4 +51,11 @@ final class ConferenceService extends BaseService
             ->where('id = ?', $conferenceId)
             ->update($data);
     }
+
+    public function deleteConferenceById(int $id): void
+    {
+        $this->database->table('conferences')
+            ->where('id', $id)
+            ->delete();
+    }
 }
