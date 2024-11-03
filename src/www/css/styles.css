@@ -243,18 +243,22 @@ footer a:hover {
 }
 
 .datagrid input {
-    width: 100%;
+    width: 100%; /* Filtracni pole zabere celou sirku */
     box-sizing: border-box;
+    padding: 6px 10px; /* Snizeni vertikalniho odsazeni pro mensi vysku */
+    font-size: 14px;  /* Velikost pisma */
 }
 
 .datagrid .filter-row {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around; /* Vetsi rozlozeni po ose X */
+    align-items: center; /* Vyrovani na stred na ose Y */
+    gap: 15px; /* Zvetseny rozestup mezi filtry */
 }
 
 .datagrid .filter-item {
     flex: 1;
-    margin-right: 8px;
+    margin-right: 20px;
 }
 
 .datagrid .filter-item:last-child {
@@ -263,18 +267,20 @@ footer a:hover {
 
 .datagrid th {
     text-align: left;
-    padding: 8px;
+    padding: 5px 10px; /* Snizeni vertikalniho odsazeni */
+    font-size: 14px;
 }
+
 
 /* Styling for Total Price Section */
 .price-info {
-    text-align: center; /* Center the total price horizontally */
-    margin-top: 20px; /* Add some margin above */
-    font-size: 1.5em; /* Increase the font size for better visibility */
-    font-weight: bold; /* Make the text bold */
-    color: #2d4bad; /* Use a nice color to match the design */
-    background-color: #e6f2ff; /* Add a light background color to highlight the section */
-    padding: 15px; /* Add padding for spacing */
-    border-radius: 10px; /* Rounded corners for a nicer look */
+    text-align: center;                 /* Center the total price horizontally */
+    margin-top: 20px;                   /* Add some margin above */
+    font-size: 1.5em;                   /* Increase the font size for better visibility */
+    font-weight: bold;                  /* Make the text bold */
+    color: #2d4bad;                     /* Use a nice color to match the design */
+    background-color: #e6f2ff;          /* Add a light background color to highlight the section */
+    padding: 15px;                      /* Add padding for spacing */
+    border-radius: 10px;                /* Rounded corners for a nicer look */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for emphasis */
 }

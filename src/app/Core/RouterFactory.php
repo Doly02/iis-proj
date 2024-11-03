@@ -18,6 +18,8 @@ final class RouterFactory
 
         $router->addRoute('conference/conference-list/list', ':ConferenceModule:ConferenceList:list');
 
+        $router->addRoute('conference/conference-list-user/list', ':ConferenceModule:ConferenceListUser:list');
+
         $router->addRoute('reservation/non-registered/make-reservation', ':ReservationModule:ReserveNonRegistered:makeReservation');
 
         $router->addRoute('reservation/non-registered/make-reservation', ':ReservationModule:ReserveRegistered:makeReservation');

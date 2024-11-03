@@ -112,4 +112,17 @@ final class ReservationService extends BaseService
         }
     }
 
+    /**
+     * Get User's Reserved Conferences
+     *
+     * @param int $userId
+     * @return Selection
+     */
+    public function getUserReservedConferences(int $userId): Selection
+    {
+        return $this->database->table($this->getTableName())
+            ->where('customer_id', $userId)
+            ->select('conference_id');
+    }
+
 }
