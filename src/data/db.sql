@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Počítač: 127.0.0.1
--- Vytvořeno: Ned 03. lis 2024, 22:01
+-- Vytvořeno: Ned 03. lis 2024, 22:39
 -- Verze serveru: 10.4.32-MariaDB
 -- Verze PHP: 8.2.12
 
@@ -132,17 +132,18 @@ CREATE TABLE `reservations` (
 --
 
 INSERT INTO `reservations` (`id`, `created_date`, `created_time`, `price_to_pay`, `is_paid`, `customer_id`, `conference_id`, `first_name`, `last_name`, `email`, `num_reserved_tickets`) VALUES
-(14, '2024-11-03', '17:27:47', 390, 0, NULL, 10, 'Daniel', 'Lampa', 'lampa4@azet.cz', 2),
-(15, '2024-11-03', '17:28:49', 975, 0, NULL, 8, 'Dana', 'Sviečková', 'dana@gmail.com', 5),
-(16, '2024-11-03', '17:29:23', 180, 0, NULL, 6, 'Milan', 'Vačko', 'milo55@gmail.com', 1),
-(19, '2024-11-03', '17:34:19', 975, 0, 9, 10, 'Martinko', 'Klingáčik', 'martin@azet.cz', 5),
-(20, '2024-11-03', '17:34:34', 450, 0, 9, 7, 'Martinko', 'Klingáčik', 'martin@azet.cz', 3),
-(21, '2024-11-03', '17:35:06', 180, 0, 9, 6, 'Martinko', 'Klingáčik', 'martin@azet.cz', 1),
-(22, '2024-11-03', '17:35:52', 360, 0, 10, 6, 'Hana', 'Gregorová', 'hana1@gmail.com', 2),
-(23, '2024-11-03', '17:36:00', 150, 0, 10, 7, 'Hana', 'Gregorová', 'hana1@gmail.com', 1),
-(24, '2024-11-03', '17:36:07', 195, 0, 10, 8, 'Hana', 'Gregorová', 'hana1@gmail.com', 1),
-(25, '2024-11-03', '17:42:25', 150, 0, 6, 7, 'Jana', 'Nováková', 'novakova@seznam.cz', 1),
-(26, '2024-11-03', '17:42:35', 390, 0, 6, 8, 'Jana', 'Nováková', 'novakova@seznam.cz', 2);
+(27, '2024-11-03', '22:31:58', 390, 0, NULL, 10, 'Daniel', 'Lampa', 'lampa4@azet.cz', 2),
+(28, '2024-11-03', '22:33:05', 975, 0, NULL, 8, 'Dana', 'Sviečková', 'dana@gmail.com', 5),
+(29, '2024-11-03', '22:34:12', 180, 0, NULL, 6, 'Milan', 'Vačko', 'milo55@gmail.com', 1),
+(30, '2024-11-03', '22:35:06', 975, 0, 9, 10, 'Martinko', 'Klingáčik', 'martin@azet.cz', 5),
+(31, '2024-11-03', '22:35:19', 180, 0, 9, 6, 'Martinko', 'Klingáčik', 'martin@azet.cz', 1),
+(32, '2024-11-03', '22:35:28', 450, 0, 9, 7, 'Martinko', 'Klingáčik', 'martin@azet.cz', 3),
+(33, '2024-11-03', '22:37:17', 360, 0, 10, 6, 'Hana', 'Gregorová', 'hana1@gmail.com', 2),
+(34, '2024-11-03', '22:37:23', 150, 0, 10, 7, 'Hana', 'Gregorová', 'hana1@gmail.com', 1),
+(35, '2024-11-03', '22:37:31', 195, 0, 10, 8, 'Hana', 'Gregorová', 'hana1@gmail.com', 1),
+(36, '2024-11-03', '22:38:33', 195, 0, 6, 8, 'Jana', 'Nováková', 'novakova@seznam.cz', 1),
+(37, '2024-11-03', '22:38:41', 390, 0, 6, 8, 'Jana', 'Nováková', 'novakova@seznam.cz', 2),
+(38, '2024-11-03', '22:38:49', 150, 0, 6, 7, 'Jana', 'Nováková', 'novakova@seznam.cz', 1);
 
 -- --------------------------------------------------------
 
@@ -202,10 +203,10 @@ CREATE TABLE `tickets` (
 --
 
 INSERT INTO `tickets` (`id`, `price`, `code`, `conference_id`, `reservation_id`) VALUES
-(72, 180, 'SFPMIHZDDI', 6, NULL),
-(73, 180, '13RLAO7098', 6, NULL),
-(74, 180, '2IEBH4PKAI', 6, NULL),
-(75, 180, 'BX50N11IIE', 6, NULL),
+(72, 180, 'SFPMIHZDDI', 6, 29),
+(73, 180, '13RLAO7098', 6, 31),
+(74, 180, '2IEBH4PKAI', 6, 33),
+(75, 180, 'BX50N11IIE', 6, 33),
 (76, 180, 'DX6PYZ8428', 6, NULL),
 (77, 180, 'JW9NDX3ZXQ', 6, NULL),
 (78, 180, 'W501RA4NJ1', 6, NULL),
@@ -220,11 +221,11 @@ INSERT INTO `tickets` (`id`, `price`, `code`, `conference_id`, `reservation_id`)
 (87, 180, 'LTZEA69KXA', 6, NULL),
 (88, 180, '9SBVIB766C', 6, NULL),
 (89, 180, '00WL3AB02G', 6, NULL),
-(90, 150, 'BAWFYNTUKH', 7, NULL),
-(91, 150, 'H3UMQ357XD', 7, NULL),
-(92, 150, 'DXFIOHDICC', 7, NULL),
-(93, 150, 'F942MOJKPH', 7, NULL),
-(94, 150, 'PBJXRHDFM0', 7, NULL),
+(90, 150, 'BAWFYNTUKH', 7, 32),
+(91, 150, 'H3UMQ357XD', 7, 32),
+(92, 150, 'DXFIOHDICC', 7, 32),
+(93, 150, 'F942MOJKPH', 7, 34),
+(94, 150, 'PBJXRHDFM0', 7, 38),
 (95, 150, 'OPZ25DAWW6', 7, NULL),
 (96, 150, '8UJMXVFB8H', 7, NULL),
 (97, 150, '609WURO7Y1', 7, NULL),
@@ -242,15 +243,15 @@ INSERT INTO `tickets` (`id`, `price`, `code`, `conference_id`, `reservation_id`)
 (109, 200, 'KIMHBDLONB', 9, NULL),
 (110, 200, 'XMOM9JG1U6', 9, NULL),
 (111, 200, 'JGM1SS4LHF', 9, NULL),
-(112, 195, 'ZCU68DGHBM', 8, NULL),
-(113, 195, 'U3F5GUYGLU', 8, NULL),
-(114, 195, '3H48ZUZB7E', 8, NULL),
-(115, 195, '4QK89EDEOY', 8, NULL),
-(116, 195, 'LPSYTW7MS4', 8, NULL),
-(117, 195, '36L2Z3HY9V', 8, NULL),
-(118, 195, '0ZBDD8E6LB', 8, NULL),
-(119, 195, 'G6Q4KZ2AYS', 8, NULL),
-(120, 195, '0GOPI5HXSE', 8, NULL),
+(112, 195, 'ZCU68DGHBM', 8, 28),
+(113, 195, 'U3F5GUYGLU', 8, 28),
+(114, 195, '3H48ZUZB7E', 8, 28),
+(115, 195, '4QK89EDEOY', 8, 28),
+(116, 195, 'LPSYTW7MS4', 8, 28),
+(117, 195, '36L2Z3HY9V', 8, 35),
+(118, 195, '0ZBDD8E6LB', 8, 36),
+(119, 195, 'G6Q4KZ2AYS', 8, 37),
+(120, 195, '0GOPI5HXSE', 8, 37),
 (121, 195, '2ABZR4Q1LM', 8, NULL),
 (122, 195, 'QVMSM5LW8P', 8, NULL),
 (123, 195, 'ZK4T1PPVP5', 8, NULL),
@@ -258,13 +259,13 @@ INSERT INTO `tickets` (`id`, `price`, `code`, `conference_id`, `reservation_id`)
 (125, 195, 'P78VWH6LBD', 8, NULL),
 (126, 195, '6IZVZXO8JH', 8, NULL),
 (127, 195, 'UJ4PSJE6HR', 8, NULL),
-(128, 195, 'MGV2FG0TUO', 10, NULL),
-(129, 195, '1W758NQHCL', 10, NULL),
-(130, 195, '9PSILDNXS0', 10, NULL),
-(131, 195, '8CW3UJRZD0', 10, NULL),
-(132, 195, '5GY5NFN3IL', 10, NULL),
-(133, 195, 'QFY60C7STB', 10, NULL),
-(134, 195, 'QTGS24Y1GS', 10, NULL),
+(128, 195, 'MGV2FG0TUO', 10, 27),
+(129, 195, '1W758NQHCL', 10, 27),
+(130, 195, '9PSILDNXS0', 10, 30),
+(131, 195, '8CW3UJRZD0', 10, 30),
+(132, 195, '5GY5NFN3IL', 10, 30),
+(133, 195, 'QFY60C7STB', 10, 30),
+(134, 195, 'QTGS24Y1GS', 10, 30),
 (135, 195, 'KD2U4NMJFO', 10, NULL),
 (136, 195, 'ZJH06802BC', 10, NULL),
 (137, 195, '8ZXHVPJ0SM', 10, NULL);
@@ -400,7 +401,7 @@ ALTER TABLE `presentations`
 -- AUTO_INCREMENT pro tabulku `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT pro tabulku `rooms`
