@@ -26,62 +26,15 @@ final class RoomService extends BaseService
     public function fetchAvailableRooms(\DateTimeImmutable $startTime, \DateTimeImmutable $endTime): array
     {
         $sql = "
-            SELECT r.id, r.name, r.capacity
-            FROM rooms AS r
-            LEFT JOIN conference_has_rooms AS chr
-                ON r.id = chr.room_id
-                AND chr.booking_start < :start_time
-                AND chr.booking_end > :end_time
-            WHERE chr.room_id IS NULL
-        ";
+        SELECT rooms.id, rooms.name, rooms.capacity
+        FROM rooms
+        LEFT JOIN conference_has_rooms
+            ON rooms.id = conference_has_rooms.room_id
+            AND NOT (conference_has_rooms.booking_end <= ? OR conference_has_rooms.booking_start >= ?)
+        WHERE conference_has_rooms.room_id IS NULL
+    ";
 
-        $params = [
-            'start_time' => $startTime,
-            'end_time' => $endTime
-        ];
-
-        return $this->getTable()->fetchAll($sql, $params);
+        return $this->database->query($sql, $startTime, $endTime)->fetchAll();
     }
-    /*
-    public function getAvailableRoomsWithTimes(\DateTimeImmutable $startTime, \DateTimeImmutable $endTime): array
-    {
-        $rooms = $this->fetchAvailableRooms($startTime, $endTime);
-        $availableRooms = [];
 
-        foreach ($rooms as $room) {
-            $roomId = $room->id;
-            $roomName = $room->name;
-
-            if (!isset($availableRooms[$roomId])) {
-                $availableRooms[$roomId] = [
-                    'name' => $roomName,
-                    'available_times' => []
-                ];
-                $lastEnd = $startTime;
-            }
-
-            $bookingStart = $room->booking_start ? new \DateTimeImmutable($room->booking_start) : null;
-            $bookingEnd = $room->booking_end ? new \DateTimeImmutable($room->booking_end) : null;
-
-            if ($bookingStart && $lastEnd < $bookingStart) {
-                $availableRooms[$roomId]['available_times'][] = [
-                    'start' => $lastEnd,
-                    'end' => $bookingStart
-                ];
-            }
-
-            $lastEnd = $bookingEnd ?? $lastEnd;
-        }
-
-        foreach ($availableRooms as &$room) {
-            if ($lastEnd < $endTime) {
-                $room['available_times'][] = [
-                    'start' => $lastEnd,
-                    'end' => $endTime
-                ];
-            }
-        }
-
-        return $availableRooms;
-    }*/
 }
