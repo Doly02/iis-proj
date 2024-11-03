@@ -59,6 +59,7 @@ final class AuthenticationFactory
         $permission->addResource('usermodule.user');
         $permission->addResource('reservationmodule.reservenonregistered');
         $permission->addResource('reservationmodule.reserveregistered');
+        $permission->addResource('conferencemodule.conferenceadd');
 
         // The Rest of The Code For Adding Other Resources
         foreach (Finder::findDirectories('*Module')->in($appDir) as $dir)

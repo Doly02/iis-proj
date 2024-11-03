@@ -2,12 +2,12 @@
 
 namespace App\ConferenceModule\Presenters;
 
-use App\CommonModule\Presenters\BasePresenter;
+use App\CommonModule\Presenters\SecurePresenter;
 use App\ConferenceModule\Controls\AddConference;
 use Nette\Application\UI\Form;
 use Nette\Security\AuthenticationException;
 
-final class ConferenceAddPresenter extends BasePresenter
+final class ConferenceAddPresenter extends SecurePresenter
 {
     private $addConferenceControlFactory;
 
@@ -19,11 +19,15 @@ final class ConferenceAddPresenter extends BasePresenter
 
     protected function createComponentAddConferenceForm(): AddConference\AddConferenceControl
     {
+        $this->checkPrivilege();
+
         return $this->addConferenceControlFactory->create();
     }
 
     public function addConferenceFormSucceeded(Form $form, \stdClass $values): void
     {
+        $this->checkPrivilege();
+
         try
         {
             $this->flashMessage('Adding conference successful!');

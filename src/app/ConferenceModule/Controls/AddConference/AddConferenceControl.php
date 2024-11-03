@@ -12,6 +12,7 @@ use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
 use Nette\Security\AuthenticationException;
 use Nette\Application\UI\Control;
+use Nette\Security\User;
 
 final class AddConferenceControl extends Control
 {
@@ -22,7 +23,7 @@ final class AddConferenceControl extends Control
     private ConferenceFormFactory $conferenceFormFactory;
 
 
-    public function __construct(\Nette\Security\User $user, ConferenceService $conferenceService,
+    public function __construct(User $user, ConferenceService $conferenceService,
                                 RoomService $roomService, ConferenceHasRoomsService $conferenceHasRoomsService,
                                 ConferenceFormFactory $conferenceFormFactory)
     {
@@ -52,6 +53,7 @@ final class AddConferenceControl extends Control
         $err = 0;
         $presenter = $this->getPresenter();
         $conferenceId = null;
+        $userId = $this->user->getId();
         try {
             // Insert the conference data into the database
             $conferenceId = $this->conferenceService->addConference([
@@ -61,7 +63,7 @@ final class AddConferenceControl extends Control
                 'end_time' => $values->end_time,
                 'price' => $values->price,
                 'capacity' => 0,
-                'organiser_id' => 4, // TODO: User id
+                'organiser_id' => $userId,
             ])->id;
 
         } catch (\Exception $e) {

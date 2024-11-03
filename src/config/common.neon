@@ -35,10 +35,12 @@ parameters:
                 presentation.presentation: [list, default]
                 ticket.ticket: [default]
                 reservationmodule.reserveregistered: [view, makeReservation]
+                conferencemodule.conferenceadd: [add, default]
         admin:
             resources:
                 user.user: []
                 reservationmodule.reserveregistered: [view, makeReservation]
+                conferencemodule.conferenceadd: [add, default]
 
     publicPages:
         - UserModule:Authentication:signIn
