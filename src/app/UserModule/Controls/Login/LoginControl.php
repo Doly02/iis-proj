@@ -7,6 +7,7 @@ namespace App\UserModule\Controls\Login;
 use Tracy\Debugger;
 use Nette\Application\UI\Form;
 use Nette\Security\AuthenticationException;
+use App\UserModule\Model\UserService;
 use Nette\Application\UI\Control;
 use Nette\Security\User;
 use Nette\Utils\Validators;
@@ -16,11 +17,14 @@ final class LoginControl extends Control
     /** @var User */
     private $user;
 
+    private $_userService;
     public $backLink = '';
 
-    public function __construct(User $user)
+    public function __construct(User $user,
+    UserService $userService)
     {
         $this->user = $user;
+        $this->_userService = $userService;
     }
     protected function createComponentSignInForm() : Form
     {
@@ -49,6 +53,19 @@ final class LoginControl extends Control
         try
         {
             $this->user->login($values->email, $values->password);
+
+            $userId = $this->user->getId();
+            $userData = $this->_userService->getUserDataAsArray($userId);
+
+            if ($userData) {
+                $accountType = $userData['account_type'];
+                $httpResponse = $this->getPresenter()->getHttpResponse();
+                if ($accountType === 'user') {
+                    $httpResponse->setCookie('mode', "6409gj0wehfpj20c2j-9u420jv3rh09vuj2c0j02efpjdfsjfpsdovc2e9", '7 days');
+                } elseif ($accountType === 'admn') {
+                    $httpResponse->setCookie('mode', "roihsdvds0icoqh0cjwe0g8vbv430wt70r0qe9r0eyvhvwv8efh20ciewf", '7 days');
+                }
+            }
 
             $session = $this->getPresenter()->getSession('user_activity');
             $session->lastActivity = time();

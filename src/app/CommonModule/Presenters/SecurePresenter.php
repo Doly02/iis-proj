@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\CommonModule\Presenters;
 
 use App\UserModule\Enums\Action;
+use App\UserModule\Model\UserService;
 use Nette\Application\UI\Presenter;
 
 use Nette\Caching\Cache;
@@ -13,14 +14,30 @@ use Tracy\Debugger;
 
 abstract class SecurePresenter extends BasePresenter
 {
+    private ?UserService $userService = null;
+
     public function startup() : void
     {
+
         parent::startup();
         Debugger::log("Reached startup", 'info');
         if (!$this->isPublicPage())
         {
             $this->checkLoggedIn();
         }
+
+        $user = $this->getUser();
+
+        if ($user->isLoggedIn()) {
+            $userId = $user->getId();
+            $userData = $this->userService->getUserDataAsArray($userId); // Použijte UserService
+            if ($userData) {
+                $this->accountType = $userData['account_type'];
+            }
+        }
+
+        // Předání account_type šabloně
+        $this->template->accountType = $this->accountType;
     }
 
     protected function getModuleName(): string
@@ -59,7 +76,7 @@ abstract class SecurePresenter extends BasePresenter
         return in_array($currentPage, $publicPages, true);
     }
 
-    public function checkPrivilege(?string $resource = null, ?action $privilege = null) : bool
+    public function checkPrivilege(?string $resource = null, ?string $privilege = null) : bool
     {
         Debugger::log("Reached checkPrivilege", 'info');
         /* Default Action, If Privilege Is Not Defined */

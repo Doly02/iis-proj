@@ -3,8 +3,9 @@
 declare(strict_types=1);
 
 
-namespace App\UserModule\Controls\Register;
+namespace App\UserModule\Controls\CreateAdmin;
 
+use App\UserModule\Enums\Action;
 use App\UserModule\Enums\Role;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
@@ -15,7 +16,7 @@ use App\UserModule\Model\UserFormFactory;
 use App\CommonModule\Presenters\SecurePresenter;
 use Exception;
 
-final class RegisterControl extends Control
+final class CreateAdminControl extends Control
 {
     private $_userService;
 
@@ -31,14 +32,14 @@ final class RegisterControl extends Control
         $this->_userFormFactory = $userFormFactory;
     }
 
-    protected function createComponentRegisterForm() : \Nette\Application\UI\Form
+    protected function createComponentCreateAdminForm() : Form
     {
-        $form = $this->_userFormFactory->createUserForm();
-        $form->onSuccess[] = [$this, 'onSuccessRegisterForm'];
+        $form = $this->_userFormFactory->createAdminForm();
+        $form->onSuccess[] = [$this, 'onSuccessCreateAdminForm'];
         return $form;
     }
 
-    public function onSuccessRegisterForm(Form $form, ArrayHash $vals): void
+    public function onSuccessCreateAdminForm(Form $form, ArrayHash $vals): void
     {
         $presenter = $this->getPresenter();
 
@@ -48,7 +49,7 @@ final class RegisterControl extends Control
         }
         try
         {
-            $this->_userService->registrateUser($vals,Role::USER);
+            $this->_userService->registrateUser($vals,Role::ADMIN);
         }
         catch (Exception $e)
         {
@@ -65,7 +66,7 @@ final class RegisterControl extends Control
 
     public function render() : void
     {
-        $this->template->setFile(__DIR__ . '/../../templates/Register/default.latte');
+        $this->template->setFile(__DIR__ . '/../../templates/CreateAdmin/default.latte');
         $this->template->render();
     }
 }

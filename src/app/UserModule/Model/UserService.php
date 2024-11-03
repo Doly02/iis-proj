@@ -64,11 +64,15 @@ final class UserService extends BaseService implements Authenticator
 
     // TODO Maybe Implemented getAdminTable
 
-    public function registrateUser(ArrayHash $data): void
+    public function registrateUser(ArrayHash $data, string $role) : void
     {
         $errorMessage = 'During Creation of An Account Was Error.';
         $this->database->beginTransaction();
 
+        if (Role::USER !== $role || Role::ADMIN === $role)
+        {
+            throw new Exception($errorMessage);
+        }
         try
         {
             /* Creation Instance of Password For Hash Function */
@@ -81,7 +85,7 @@ final class UserService extends BaseService implements Authenticator
                 'name' => $data->name,
                 'surname' => $data->lastName,
                 'email' => $data->email,
-                'account_type' => Role::USER,
+                'account_type' => $role,
                 'password' => $passwords->hash($data->password)
             ]);
 
@@ -123,6 +127,14 @@ final class UserService extends BaseService implements Authenticator
         }
     }
 
+    public function getUserDataAsArray(int $userId): ?array
+    {
+        $user = $this->getUserById($userId);
+        if ($user) {
+            return $user->toArray();
+        }
+        return null;
+    }
     /*
      * TODO: User Does Not Have Address or Telephone Number?
      */

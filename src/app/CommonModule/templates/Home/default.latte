@@ -12,7 +12,14 @@
 </p>
 
 <p>
-    <a href="{plink :UserModule:Register:default}">Registration</a>
+    <a href="{plink :UserModule:Register:default}">Registration</a> <br>
+    {if $user->isLoggedIn()}
+        <p>Account Type: {$accountType}</p> <!-- Debug: print the accountType -->
+
+        {if $accountType === 'admn'}
+            <a href="{plink :UserModule:CreateAdmin:default}">Create Admin</a>
+        {/if}
+    {/if}
 </p>
 
 {if $user->isLoggedIn()}

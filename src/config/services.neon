@@ -8,6 +8,7 @@ services:
 	- App\UserModule\Controls\Register\IRegisterControlFactory
 	- App\UserModule\Controls\Login\ILoginControlFactory
 	- App\UserModule\Controls\EditUser\IEditUserControlFactory
+	- App\UserModule\Controls\CreateAdmin\ICreateAdminControlFactory
 	- App\ConferenceHasRoomsModule\Model\ConferenceHasRoomsService
 	- App\ConferenceModule\Controls\AddConference\IAddConferenceControlFactory
 	- App\ConferenceModule\Controls\EditConference\IEditConferenceControlFactory
