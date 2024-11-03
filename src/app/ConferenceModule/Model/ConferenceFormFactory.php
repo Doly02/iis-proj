@@ -29,6 +29,9 @@ final class ConferenceFormFactory
         if ($conferenceId !== null) {
             $conference = $this->conferenceService->fetchById($conferenceId); // Replace with your method to get conference data by ID
         }
+        // ID seems to reset after send
+        $form->addHidden('conferenceId', $conferenceId);
+
 
         $form->addText('name', 'Name:')
             ->setRequired('Enter the conference name.')
@@ -53,7 +56,7 @@ final class ConferenceFormFactory
             ->addRule($form::Float, 'Price must be a number.')
             ->setHtmlAttribute('class', 'form-control');
 
-        $form->addSubmit('send', 'Add Conference')
+        $form->addSubmit('send', 'Send')
             ->setHtmlAttribute('class', 'btn btn-primary');
 
         // Validating time
@@ -99,14 +102,13 @@ final class ConferenceFormFactory
 
         $roomOptions = [];
         foreach ($availableRooms as $room) {
-            $roomOptions[$room->id] = $room->name; // Assuming your fetch method returns objects with id and name properties
+            $roomOptions[$room->id] = $room->name;
         }
 
         // Add multiselect field to the form
-        $form->addMultiSelect('rooms', 'Select Rooms:', $roomOptions)
-            ->setRequired('Please select at least one room.');
+        $form->addSelect('room', 'Select Room:', $roomOptions)
+            ->setRequired('Please select a room.');
 
-        // TODO Display after a room is selected
         $form->addDateTime('booking_start', 'Booking Start:')
             ->setRequired('Select a start time.')
             ->setHtmlAttribute('class', 'form-control')
@@ -131,12 +133,16 @@ final class ConferenceFormFactory
 
             // Ensure booking times fall within the allowed interval
             if ($bookingStart < $allowedStartTime || $bookingEnd > $allowedEndTime) {
-                $form->addError('The booking time must be within the allowed interval.');
+                $form->addError('Booking time must be during conference.');
             }
 
             // Ensure booking end is after booking start
             if ($bookingStart >= $bookingEnd) {
                 $form->addError('The end time must be after the start time.');
+            }
+
+            if($values->room === null) {
+                $form->addError('Room cannot be empty.');
             }
         };
 

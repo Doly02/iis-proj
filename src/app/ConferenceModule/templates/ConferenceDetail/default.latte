@@ -5,8 +5,8 @@
 
     <div>
         <p><strong>Description:</strong> {$conference->description}</p>
-        <p><strong>Start Time:</strong> {$conference->start_time}</p>
-        <p><strong>End Time:</strong> {$conference->end_time}</p>
+        <p><strong>Start Time:</strong> {$start_time_formatted}</p>
+        <p><strong>End Time:</strong> {$end_time_formatted}</p>
         <p><strong>Price:</strong> {$conference->price}</p>
         <p><strong>Capacity:</strong> {$conference->capacity}</p>
     </div>
@@ -20,5 +20,9 @@
         Reserve Tickets (Non-Registered)
     </a>
 {/if}
+
+    <a href="{link :ConferenceModule:EditConference:edit, id => $conference->id}" class="btn btn-primary">
+        Edit conference (Should be organizer)
+    </a>
 
 {/block}

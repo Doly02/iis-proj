@@ -1,12 +1,14 @@
 {default $title = 'Add rooms'}
 
 <h1>
-    Adding room maybe
+    Adding room
 </h1>
+
+<p>Conference ID: {$conference->id}</p>
+<h2>{$conference->name}</h2>
+<p>Start: {$conference->start_time|date:'j. n. Y H:i'}</p>
+<p>End: {$conference->end_time|date:'j. n. Y H:i'}</p>
+
 {block content}
-
-
-
-
     {control addRoomToConferenceForm}
 {/block}

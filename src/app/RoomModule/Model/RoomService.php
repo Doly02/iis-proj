@@ -42,4 +42,46 @@ final class RoomService extends BaseService
 
         return $this->getTable()->fetchAll($sql, $params);
     }
+    /*
+    public function getAvailableRoomsWithTimes(\DateTimeImmutable $startTime, \DateTimeImmutable $endTime): array
+    {
+        $rooms = $this->fetchAvailableRooms($startTime, $endTime);
+        $availableRooms = [];
+
+        foreach ($rooms as $room) {
+            $roomId = $room->id;
+            $roomName = $room->name;
+
+            if (!isset($availableRooms[$roomId])) {
+                $availableRooms[$roomId] = [
+                    'name' => $roomName,
+                    'available_times' => []
+                ];
+                $lastEnd = $startTime;
+            }
+
+            $bookingStart = $room->booking_start ? new \DateTimeImmutable($room->booking_start) : null;
+            $bookingEnd = $room->booking_end ? new \DateTimeImmutable($room->booking_end) : null;
+
+            if ($bookingStart && $lastEnd < $bookingStart) {
+                $availableRooms[$roomId]['available_times'][] = [
+                    'start' => $lastEnd,
+                    'end' => $bookingStart
+                ];
+            }
+
+            $lastEnd = $bookingEnd ?? $lastEnd;
+        }
+
+        foreach ($availableRooms as &$room) {
+            if ($lastEnd < $endTime) {
+                $room['available_times'][] = [
+                    'start' => $lastEnd,
+                    'end' => $endTime
+                ];
+            }
+        }
+
+        return $availableRooms;
+    }*/
 }

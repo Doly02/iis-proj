@@ -81,6 +81,8 @@ button, .btn {
 
 button:hover, .btn:hover {
     background-color: #021e78;
+    color: #ffffff;
+    text-decoration: none;
 }
 
 /* Table Styles */
@@ -229,6 +231,8 @@ footer a:hover {
     border-radius: 5px; /* Zaoblené rohy */
 }
 
+
+/* Data Grid styles*/
 .datagrid th:last-child {
     color: #acbffc;
 }
@@ -237,3 +241,28 @@ footer a:hover {
 .datagrid th .fa-times {
     display: none;
 }
+
+.datagrid input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.datagrid .filter-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.datagrid .filter-item {
+    flex: 1;
+    margin-right: 8px;
+}
+
+.datagrid .filter-item:last-child {
+    margin-right: 0;
+}
+
+.datagrid th {
+    text-align: left;
+    padding: 8px;
+}
+
