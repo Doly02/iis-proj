@@ -20,20 +20,24 @@
         Reserve Tickets (Non-Registered)
     </a>
 {/if}
+
+{if ($userId === $organiserId)}
     <br>
     <br>
     <a href="{link :ConferenceModule:EditConference:edit, id => $conference->id}" class="btn btn-primary">
-        Edit conference (Should be organizer)
+        Edit conference (Organizer)
     </a>
     <br>
     <br>
     <a href="{link ':ConferenceModule:AddRoomToConference:add', id => $conference->id}" class="btn btn-primary">
-        Add room (Should be organizer)
+        Add room (Organizer)
     </a>
     <br>
     <br>
     <a href="{link :ConferenceModule:EditConference:delete, id => $conference->id}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this conference?');">
-        Delete Conference (Should be organizer)
+        Delete Conference (Organizer)
     </a>
+{/if}
+
 
 {/block}
