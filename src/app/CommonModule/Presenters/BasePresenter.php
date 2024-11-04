@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\CommonModule\Presenters;
 
 use Nette\Application\UI\Presenter;
+use Others\SSL\SslOperations;
 
 abstract class BasePresenter extends Presenter
 {
@@ -15,16 +16,13 @@ abstract class BasePresenter extends Presenter
         /* Launch Session */
         $this->getSession()->start();
 
-        $accountTypeCookie = $this->getHttpRequest()->getCookie('account_type');
-        if ($accountTypeCookie)
-        {
-            if ($accountTypeCookie === "6409gj0wehfpj20c2j-9u420jv3rh09vuj2c0j02efpjdfsjfpsdovc2e9")
-            {
-                $this->accountType = "user";
-            }
-            else if ($accountTypeCookie === "roihsdvds0icoqh0cjwe0g8vbv430wt70r0qe9r0eyvhvwv8efh20ciewf")
-            {
-                $this->accountType = "admn";
+        $accountTypeCookie = $this->getHttpRequest()->getCookie('mode');
+        $ssl = new SslOperations();
+        if ($accountTypeCookie) {
+            $accountType = $ssl->decryptAccountType($accountTypeCookie);
+
+            if ($accountType === 'user' || $accountType === 'admn') {
+                $this->accountType = $accountType;
             }
         }
 

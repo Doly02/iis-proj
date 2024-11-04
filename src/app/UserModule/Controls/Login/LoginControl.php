@@ -11,6 +11,7 @@ use App\UserModule\Model\UserService;
 use Nette\Application\UI\Control;
 use Nette\Security\User;
 use Nette\Utils\Validators;
+use Others\SSL\SslOperations;
 
 final class LoginControl extends Control
 {
@@ -48,6 +49,7 @@ final class LoginControl extends Control
         $this->template->setFile(__DIR__ . '/../../templates/Authentication/signIn.latte');
         $this->template->render();
     }
+
     public function signInFormSucceeded(Form $form, \stdClass $values): void
     {
         try
@@ -56,15 +58,15 @@ final class LoginControl extends Control
 
             $userId = $this->user->getId();
             $userData = $this->_userService->getUserDataAsArray($userId);
+            $ssl = new SslOperations();
 
-            if ($userData) {
+            if ($userData)
+            {
                 $accountType = $userData['account_type'];
+                $encryptedAccountType = $ssl->encryptAccountType($accountType);
+
                 $httpResponse = $this->getPresenter()->getHttpResponse();
-                if ($accountType === 'user') {
-                    $httpResponse->setCookie('mode', "6409gj0wehfpj20c2j-9u420jv3rh09vuj2c0j02efpjdfsjfpsdovc2e9", '7 days');
-                } elseif ($accountType === 'admn') {
-                    $httpResponse->setCookie('mode', "roihsdvds0icoqh0cjwe0g8vbv430wt70r0qe9r0eyvhvwv8efh20ciewf", '7 days');
-                }
+                $httpResponse->setCookie('mode', $encryptedAccountType, '7 days');
             }
 
             $session = $this->getPresenter()->getSession('user_activity');
@@ -85,4 +87,5 @@ final class LoginControl extends Control
             // Pokud dojde k chybě autentizace, přidáme chybu do formuláře
             $form->addError('Login failed: ' . $e->getMessage());
         }
-    }}
+    }
+}

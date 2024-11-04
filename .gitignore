@@ -1,3 +1,6 @@
 vendor/
 .idea/
 src/.idea/
+
+# config file:
+src/others/SSL/SslEnum.php
