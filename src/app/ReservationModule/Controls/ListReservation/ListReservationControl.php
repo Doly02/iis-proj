@@ -54,10 +54,16 @@ final class ListReservationControl extends Control
             ->setSortable()
             ->setFilterRange();
 
+        $grid->addColumnText('is_paid', 'Paid')
+            ->setSortable()
+            ->setRenderer(function ($item) {
+                return $item->is_paid ? 'Yes' : 'No'; // Custom rendering for is_paid
+            });
+
         $grid->addAction('detail', '', 'ReservationDetail:default')
-            ->setTitle('Show detail')
+            ->setTitle('Show tickets')
             ->setclass('')
-            ->setIcon('eye');
+            ->setIcon('ticket');
 
         return $grid;
     }
