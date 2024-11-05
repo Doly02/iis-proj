@@ -23,6 +23,7 @@ services:
 	- App\ReservationModule\Controls\ReserveRegistered\IReserveRegisteredControlFactory
 	- App\ReservationModule\Model\ReservationService
 	- App\TicketModule\Model\TicketService
+	- App\UserModule\Presenters\AuthenticationPresenter
 
 	# Forms
 	- App\UserModule\Model\UserFormFactory

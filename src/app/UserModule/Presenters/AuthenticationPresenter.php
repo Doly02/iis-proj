@@ -26,6 +26,12 @@ final class AuthenticationPresenter extends BasePresenter
         }
     }
 
+    public function handleLogout(): void
+    {
+        $this->getUser()->logout(true);
+        $this->flashMessage('You have been logged out.', 'info');
+        $this->redirect(':CommonModule:Home:default');
+    }
     // Creates Sign-In Form
     protected function createComponentSignInForm(): \App\UserModule\Controls\Login\LoginControl
     {

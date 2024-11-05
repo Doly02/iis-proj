@@ -22,6 +22,10 @@ final class RouterFactory
 
         $router->addRoute('reservation/non-registered/make-reservation', ':ReservationModule:ReserveNonRegistered:makeReservation');
 
+        //$router->addRoute('user/sign-out', ':CommonModule:Base:signOut');
+
+        $router->addRoute('user/sign-out', ':UserModule:Authentication:signOut');
+
         $router->addRoute('reservation/non-registered/make-reservation', ':ReservationModule:ReserveRegistered:makeReservation');
 
         $router->addRoute('conference/conference-add/add', ':ConferenceModule:ConferenceAdd:add');

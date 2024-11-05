@@ -54,11 +54,11 @@ abstract class BasePresenter extends Presenter
     }
 
 
-    public function handleSignOut(?string $redirect = ':UserModule:Authentication:signIn') : void
+    public function handleLogout(): void
     {
         $this->getUser()->logout(true);
         $this->flashMessage('You Have Been Logged Out.', 'info');
-        $this->redirect($redirect);
+        $this->redirect(':CommonModule:Homepage:default');
     }
 
 
