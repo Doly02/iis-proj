@@ -138,6 +138,26 @@ tr:hover {
     background-color: #e6f2ff; /* Jemný efekt hoveru pre lepší zážitok */
 }
 
+/* Cielenie na bunky tabuľky s tlačidlami */
+form table tr:last-child td {
+    text-align: center;
+    background-color: #ffffff; /* Biele pozadie pre bunku */
+    padding-top: 10px; /* Priestor nad tlačidlom */
+}
+
+table tr:last-of-type th {
+    background-color: #ffffff; /* Odstráni pozadie hlavičkovej bunky v poslednom riadku */
+}
+
+/* Úprava samotného tlačidla */
+form .btn-primary {
+    display: block; /* Blokové zobrazenie pre lepšie zarovnanie */
+    width: auto; /* Automatická šírka */
+    margin: 0 auto; /* Centrálne zarovnanie */
+}
+
+
+
 /* Form Styles */
 form {
     margin: 20px 0;
@@ -288,6 +308,12 @@ form button:active {
     padding: 5px 10px; /* Snizeni vertikalniho odsazeni */
     font-size: 14px;
 }
+
+/* Vylúčenie grid tabuľky z centrácie */
+.datagrid tr:last-child td {
+    text-align: left; /* Alebo iné zarovnanie podľa vašich potrieb */
+}
+
 
 
 /* Styling for Total Price Section */
