@@ -1,29 +1,45 @@
-<h1>Hello</h1>
+{default $title = 'Homepage'}
 
-<p>
-    <a href="{plink :UserModule:Authentication:signIn}">Sign In</a> <br>
-    <a href="{plink :ConferenceModule:ConferenceList:list}">List of conferences</a> <br>
-    <a href="{plink :ConferenceModule:ConferenceAdd:add}">Add conference</a> <br>
-    <a href="{plink :RoomModule:RoomAdd:addRoom}">Add room</a> <br>
-    <a href="{plink :PresentationModule:PresentationAdd:add}">Add presentation</a> <br>
-    <a href="{plink :ConferenceModule:AddRoomToConference:add}">Add room to conference</a> <br>
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>{$title|noescape}</title>
+    <link rel="stylesheet" href="{$basePath}/css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    {block content}
 
-    <a href="{plink :ConferenceModule:EditConference:edit}">Edit conference</a>
-</p>
+        <h1>Hello</h1>
 
-<p>
-    <a href="{plink :UserModule:Register:default}">Registration</a> <br>
-    {if $user->isLoggedIn()}
-        <p>Account Type: {$accountType}</p> <!-- Debug: print the accountType -->
+        <p>
+            <a href="{plink :UserModule:Authentication:signIn}">Sign In</a> <br>
+            <a href="{plink :ConferenceModule:ConferenceList:list}">List of conferences</a> <br>
+            <a href="{plink :ConferenceModule:ConferenceAdd:add}">Add conference</a> <br>
+            <a href="{plink :RoomModule:RoomAdd:addRoom}">Add room</a> <br>
+            <a href="{plink :PresentationModule:PresentationAdd:add}">Add presentation</a> <br>
+            <a href="{plink :ConferenceModule:AddRoomToConference:add}">Add room to conference</a> <br>
 
-        {if $accountType === 'admn'}
-            <a href="{plink :UserModule:CreateAdmin:default}">Create Admin</a>
+            <a href="{plink :ConferenceModule:EditConference:edit}">Edit conference</a>
+        </p>
+
+        <p>
+            <a href="{plink :UserModule:Register:default}">Registration</a> <br>
+            {if $user->isLoggedIn()}
+                <p>Account Type: {$accountType}</p> <!-- Debug: print the accountType -->
+
+                {if $accountType === 'admn'}
+                    <a href="{plink :UserModule:CreateAdmin:default}">Create Admin</a>
+                {/if}
+            {/if}
+        </p>
+
+        {if $user->isLoggedIn()}
+            <p>
+                <a href="{plink :UserModule:UserDetail:default, userId => $user->id}" class="btn btn-primary">View Your Information</a>
+            </p>
         {/if}
-    {/if}
-</p>
-
-{if $user->isLoggedIn()}
-    <p>
-        <a href="{plink :UserModule:UserDetail:default, userId => $user->id}" class="btn btn-primary">View Your Information</a>
-    </p>
-{/if}
+    {/block}
+</body>
+</html>
