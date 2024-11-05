@@ -6,14 +6,27 @@ body {
     margin: 0;
     padding: 0;
     line-height: 1.6;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Celková výška stránky pokryje celé okno */
+}
+
+main {
+    flex: 1; /* Umožní hlavnému obsahu rásť a zaberať zostávajúci priestor */
 }
 
 .container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    margin-left: 250px; /* Posunie celkový obsah doprava o šírku sidebaru */
+}
+
+.content-wrapper {
+    flex: 1; /* Zabezpečí, že obsah zaberie zostávajúci priestor */
     padding: 20px;
-    border-radius: 5px; 
+    border-radius: 5px;
+    box-sizing: border-box;
 }
 
 h1 {
@@ -48,6 +61,24 @@ header h1 {
     font-size: 24px;
 }
 
+/* Footer */
+footer {
+    background-color: #2d4bad;
+    color: #ffffff;
+    padding: 15px;
+    text-align: right;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+footer a {
+    color: #ffffff;
+}
+
+footer a:hover {
+    color: #acbffc;
+}
+
 /* Button Styles */
 button, .btn {
     background-color: #2d4bad;
@@ -75,10 +106,21 @@ table {
     overflow: hidden;
 }
 
-table, th, td {
+/* Table Styles */
+table {
+    width: 100%; /* Zabezpečí, že tabuľka zaberie celú šírku */
+    border-collapse: collapse; /* Odstráni medzery medzi bunkami */
+    margin: 20px 0;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Jemný tieň pre efekt hĺbky */
+}
+
+th, td {
     border: 1px solid #dddddd;
     padding: 12px;
     text-align: left;
+    font-size: 14px; /* Mierne zmenšená veľkosť textu pre lepšiu čitateľnosť */
 }
 
 th {
@@ -89,27 +131,28 @@ th {
 }
 
 tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #f8f9fa; /* Svetlejšie pozadie pre lepší kontrast */
 }
 
 tr:hover {
-    background-color: #e6f2ff;
+    background-color: #e6f2ff; /* Jemný efekt hoveru pre lepší zážitok */
 }
 
 /* Form Styles */
 form {
     margin: 20px 0;
-    padding: 20px;
-    background-color: #f9f9f9;
+    padding: 25px; /* Zvýšené vnútorné odsadenie pre lepšiu štruktúru */
+    background-color: #ffffff; /* Čistejšie pozadie */
     border: 1px solid #dddddd;
-    border-radius: 5px; 
+    border-radius: 8px; /* Viac zaoblené rohy pre modernejší vzhľad */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Jemný tieň pre efekt hĺbky */
 }
 
 form label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
-    color: #000000;
+    color: #333333; /* Tmavší odtieň čiernej pre lepší kontrast */
 }
 
 form input[type="text"],
@@ -122,8 +165,20 @@ form textarea {
     padding: 10px;
     margin: 8px 0;
     border: 1px solid #cccccc;
-    border-radius: 5px; 
-    font-size: 16px;
+    border-radius: 5px;
+    font-size: 15px; /* Mierne zmenšená veľkosť textu */
+    box-sizing: border-box; /* Zabezpečí správne vykresľovanie */
+    transition: border-color 0.3s; /* Plynulý prechod pri zmene farby rámu */
+}
+
+form input[type="text"]:focus,
+form input[type="password"]:focus,
+form input[type="email"]:focus,
+form input[type="number"]:focus,
+form select:focus,
+form textarea:focus {
+    border-color: #2d4bad; /* Zmena farby rámu pri zaostrení */
+    outline: none; /* Odstráni predvolené zvýraznenie */
 }
 
 form input[type="submit"],
@@ -132,18 +187,27 @@ form button {
     background-color: #2d4bad;
     color: #ffffff;
     border: none;
-    padding: 10px 20px;
+    padding: 12px 25px; /* Väčšie tlačidlá pre lepšiu interakciu */
     cursor: pointer;
-    border-radius: 5px; 
+    border-radius: 5px;
     font-size: 16px;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s; /* Pridanie efektu transformácie */
 }
 
 form input[type="submit"]:hover,
 form input[type="button"]:hover,
 form button:hover {
     background-color: #021e78;
+    transform: translateY(-2px); /* Jemný posun hore pri hover */
 }
+
+/* Dodatočný štýl pre tlačidlá pri kliknutí */
+form input[type="submit"]:active,
+form input[type="button"]:active,
+form button:active {
+    transform: translateY(0); /* Vrátenie späť pri kliknutí */
+}
+
 
 /* Card Styles */
 .card {
@@ -185,33 +249,6 @@ form button:hover {
     color: #721c24;
     border-radius: 5px;
 }
-
-/* Footer */
-footer {
-    background-color: #2d4bad;
-    color: #ffffff;
-    padding: 15px;
-    text-align: center;
-    font-size: 14px;
-    border-radius: 5px; 
-}
-
-footer a {
-    color: #ffffff;
-}
-
-footer a:hover {
-    color: #acbffc;
-}
-
-.content-wrapper {
-    max-width: 1000px; /* Nastaví maximálnu šírku obsahu */
-    margin: 0 auto;    /* Centrovanie obsahu */
-    padding: 20px;     /* Vnútorné odsadenie */
-    background-color: #f9f9f9; /* Svetlé pozadie */
-    border-radius: 5px; /* Zaoblené rohy */
-}
-
 
 /* Data Grid styles*/
 .datagrid th:last-child {
@@ -266,6 +303,11 @@ footer a:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for emphasis */
 }
 
+.nav {
+    list-style-type: none; /* Odstráni odrážky */
+    padding-left: 0; /* Odstráni predvolené odsadenie */
+}
+
 .navbar-nav {
     color: #2d4bad;
     display: flex; /* Usporiada položky horizontálne */
@@ -302,4 +344,40 @@ footer a:hover {
     padding: 10px 20px; /* Prispôsobené odsadenie */
 }
 
+.nav-sideitem {
+    display: block; /* Zabezpečí, že odkazy budú blokové prvky */
+    padding: 3px 15px; /* Odsadenie vo vnútri odkazu */
+    text-decoration: none; /* Odstráni podčiarknutie odkazu */
+    border-radius: 5px; /* Zaoblené rohy odkazu */
+    transition: background-color 0.3s; /* Prechod na zmenu pozadia */
+    text-align: center;
+    font-size: 14px;
+}
 
+.nav-sidelink {
+    color: black;
+    background-color: #acbffc;
+    padding: 10px 15px;
+    border-radius: 5px;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.nav-sidelink:hover {
+    background-color: #d4deff;
+    color: black;
+    text-decoration: none;
+}
+
+
+.sideBar {
+    background-color: #2d4bad; /* Svetlé pozadie */
+    height: 100vh; /* Výška sidebaru rovná výške okna prehliadača */
+    padding: 1rem; /* Padding na všetkých stranách */
+    box-sizing: border-box; /* Zabezpečí správne počítanie paddingu */
+    position: fixed; /* Sidebar zostane na mieste aj pri skrolovaní */
+    top: 0; /* Začiatok sidebaru na vrchu stránky */
+    left: 0; /* Zarovnanie sidebaru na ľavú stranu */
+    width: 200px; /* Nastavte šírku sidebaru */
+}

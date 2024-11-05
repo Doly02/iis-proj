@@ -13,27 +13,34 @@
 </head>
 
 <body>
-	<header>
+	<!-- Horný panel -->
+	<header class="header">
 		{control headBar}
 	</header>
 
 	<main class="container">
+
 		<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
-		<!-- Obalový div pre block content -->
-		<div class="content-wrapper">
-			{include content}
-		</div>
+			<!-- Bočný panel -->
+			<aside>
+				{control sideBar}
+			</aside>
+
+			<!-- Obalový div pre block content -->
+			<div class="content-wrapper">
+				{include content}
+			</div>
 
 		{block scripts}
 			<script src="https://unpkg.com/nette-forms@3"></script>
 		{/block}
 	</main>
 
+	<!-- Patička -->
 	<footer class="footer">
 		{control footer}
 	</footer>
-
 
 </body>
 </html>

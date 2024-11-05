@@ -2,6 +2,7 @@ services:
 	- App\Core\RouterFactory::createRouter
 	- App\CommonModule\Controls\Footer\IFooterControlFactory
 	- App\CommonModule\Controls\HeadBar\IHeadBarControlFactory
+	- App\CommonModule\Controls\SideBar\ISideBarControlFactory
 	- App\ConferenceModule\Model\ConferenceService
 	- App\RoomModule\Model\RoomService
 	- App\PresentationModule\Model\PresentationService

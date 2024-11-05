@@ -26,16 +26,6 @@ abstract class SecurePresenter extends BasePresenter
             $this->checkLoggedIn();
         }
 
-        $user = $this->getUser();
-
-        if ($user->isLoggedIn()) {
-            $userId = $user->getId();
-            $userData = $this->userService->getUserDataAsArray($userId); // Použijte UserService
-            if ($userData) {
-                $this->accountType = $userData['account_type'];
-            }
-        }
-
         // Předání account_type šabloně
         $this->template->accountType = $this->accountType;
     }

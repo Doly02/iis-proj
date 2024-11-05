@@ -8,6 +8,8 @@ use App\CommonModule\Controls\Footer\FooterControl;
 use App\CommonModule\Controls\Footer\IFooterControlFactory;
 use App\CommonModule\Controls\HeadBar\HeadBarControl;
 use App\CommonModule\Controls\HeadBar\IHeadBarControlFactory;
+use App\CommonModule\Controls\SideBar\ISideBarControlFactory;
+use App\CommonModule\Controls\SideBar\SideBarControl;
 use Nette\Application\UI\Presenter;
 use Others\SSL\SslOperations;
 
@@ -15,6 +17,7 @@ abstract class BasePresenter extends Presenter
 {
     private IFooterControlFactory $footerControlFactory;
     private IHeadBarControlFactory $headBarControlFactory;
+    private ISideBarControlFactory $sideBarControlFactory;
 
 
     protected string $accountType = 'unknown';
@@ -69,6 +72,11 @@ abstract class BasePresenter extends Presenter
         $this->headBarControlFactory = $headBarControlFactory;
     }
 
+    public function injectSideBarControlFactory(ISideBarControlFactory $sideBarControlFactory): void
+    {
+        $this->sideBarControlFactory = $sideBarControlFactory;
+    }
+
     protected function createComponentFooter(): FooterControl
     {
         return $this->footerControlFactory->create();
@@ -77,5 +85,10 @@ abstract class BasePresenter extends Presenter
     protected function createComponentHeadBar(): HeadBarControl
     {
         return $this->headBarControlFactory->create();
+    }
+
+    protected function createComponentSideBar(): SideBarControl
+    {
+        return $this->sideBarControlFactory->create();
     }
 }
