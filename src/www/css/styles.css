@@ -48,25 +48,6 @@ header h1 {
     font-size: 24px;
 }
 
-/* Navigation */
-nav {
-    display: flex;
-    justify-content: center;
-    background-color: #acbffc;
-    border-radius: 5px; 
-}
-
-nav a {
-    color: #ffffff;
-    padding: 10px 20px;
-    font-weight: bold;
-    border-radius: 5px;
-}
-
-nav a:hover {
-    background-color: #2d4bad;
-}
-
 /* Button Styles */
 button, .btn {
     background-color: #2d4bad;
@@ -284,3 +265,41 @@ footer a:hover {
     border-radius: 10px;                /* Rounded corners for a nicer look */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for emphasis */
 }
+
+.navbar-nav {
+    color: #2d4bad;
+    display: flex; /* Usporiada položky horizontálne */
+    list-style-type: none; /* Odstráni odrážky zo zoznamu */
+    padding: 0; /* Odstráni predvolené odsadenie */
+    margin: 0; /* Odstráni predvolené okraje */
+    align-items: center; /* Zarovná položky vertikálne do stredu */
+}
+
+.nav-item {
+    margin-left: 15px; /* Pridá medzeru medzi položky */
+}
+
+.nav-link {
+    color: black;
+    background-color: #acbffc;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+.nav-link:hover {
+    background-color: #d4deff;
+    color: black;
+    text-decoration: none
+}
+
+.nav-container {
+    display: flex; /* Použije flexbox na rozloženie */
+    justify-content: flex-end; /* Posunie tlačidlá na pravú stranu */
+    align-items: center; /* Zarovná tlačidlá vertikálne */
+    width: 100%; /* Nastaví šírku na 100% */
+    max-width: 1200px; /* Môžeš prispôsobiť podľa potreby */
+    margin: 0 auto; /* Centrálne zarovnanie */
+    padding: 10px 20px; /* Prispôsobené odsadenie */
+}
+
+

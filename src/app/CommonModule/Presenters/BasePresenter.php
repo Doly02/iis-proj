@@ -4,11 +4,19 @@ declare(strict_types=1);
 
 namespace App\CommonModule\Presenters;
 
+use App\CommonModule\Controls\Footer\FooterControl;
+use App\CommonModule\Controls\Footer\IFooterControlFactory;
+use App\CommonModule\Controls\HeadBar\HeadBarControl;
+use App\CommonModule\Controls\HeadBar\IHeadBarControlFactory;
 use Nette\Application\UI\Presenter;
 use Others\SSL\SslOperations;
 
 abstract class BasePresenter extends Presenter
 {
+    private IFooterControlFactory $footerControlFactory;
+    private IHeadBarControlFactory $headBarControlFactory;
+
+
     protected string $accountType = 'unknown';
     public function startup(): void
     {
@@ -48,5 +56,26 @@ abstract class BasePresenter extends Presenter
         $this->getUser()->logout(true);
         $this->flashMessage('You Have Been Logged Out.', 'info');
         $this->redirect($redirect);
+    }
+
+
+    public function injectFooterControlFactory(IFooterControlFactory $footerControlFactory): void
+    {
+        $this->footerControlFactory = $footerControlFactory;
+    }
+
+    public function injectHeadBarControlFactory(IHeadBarControlFactory $headBarControlFactory): void
+    {
+        $this->headBarControlFactory = $headBarControlFactory;
+    }
+
+    protected function createComponentFooter(): FooterControl
+    {
+        return $this->footerControlFactory->create();
+    }
+
+    protected function createComponentHeadBar(): HeadBarControl
+    {
+        return $this->headBarControlFactory->create();
     }
 }
