@@ -24,6 +24,7 @@ services:
 	- App\ReservationModule\Controls\ListReservation\IListReservationControlFactory
 	- App\ReservationModule\Model\ReservationService
 	- App\TicketModule\Model\TicketService
+	- App\UserModule\Presenters\AuthenticationPresenter
 
 	# Forms
 	- App\UserModule\Model\UserFormFactory

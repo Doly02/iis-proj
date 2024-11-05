@@ -21,11 +21,9 @@ final class CreateAdminPresenter extends SecurePresenter
 
     public function actionDefault(): void
     {
-        if ($this->getUser()->isLoggedIn())
-        {
-            $this->redirect(':CommonModule:Home:default');
-        }
+
     }
+
     protected function createComponentCreateAdminForm() : CreateAdminControl
     {
         return $this->_createAdminControlFactory->create();
