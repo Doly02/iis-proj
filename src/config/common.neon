@@ -36,11 +36,13 @@ parameters:
                 ticket.ticket: [default]
                 reservationmodule.reserveregistered: [view, makeReservation]
                 conferencemodule.conferenceadd: [add, default]
+                reservationmodule.reservationlist: [list]
         admin:
             resources:
                 user.user: []
                 reservationmodule.reserveregistered: [view, makeReservation]
                 conferencemodule.conferenceadd: [add, default]
+                reservationmodule.reservationlist: [list]
 
     publicPages:
         - UserModule:Authentication:signIn

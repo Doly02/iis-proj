@@ -23,13 +23,11 @@ final class ListReservationControl extends Control
         $this->reservationService = $reservationService;
     }
 
-    /**
-     * @throws DataGridException
-     */
-    /*protected function createComponentReservationGrid(): DataGrid
+    protected function createComponentReservationGrid(): DataGrid
     {
         $grid = new DataGrid;
-        $grid->setDataSource($this->reservationService->getTable());
+        $userId = $this->user->getId();
+        $grid->setDataSource($this->reservationService->getTableWithConferenceName($userId));
 
         $grid->setRefreshUrl(false);
         $grid->setAutoSubmit(false);
@@ -40,23 +38,21 @@ final class ListReservationControl extends Control
         $grid->setPagination(false);
 
 
-        $grid->addColumnText('name', 'Name')
+        $grid->addColumnText('conference_name', 'Conference name')
             ->setSortable()
             ->setFilterText()
-            ->setPlaceholder('Search by name');
+            ->setPlaceholder('Search by conference');
+
+        // TODO reservation needs datetime created
 
 
-        $grid->addColumnDateTime('start_time', 'Start')
-            ->setFormat('d.m.Y H:i:s')
-            ->setSortable()
-            ->setFilterDateRange();
-
-        $grid->addColumnText('price', 'Price (kč)')
+        $grid->addColumnText('price_to_pay', 'Total price (kč)')
             ->setSortable()
             ->setFilterRange();
 
-        $grid->addColumnText('capacity', 'Capacity')
-            ->setSortable();
+        $grid->addColumnText('num_reserved_tickets', 'Tickets reserved')
+            ->setSortable()
+            ->setFilterRange();
 
         $grid->addAction('detail', '', 'ReservationDetail:default')
             ->setTitle('Show detail')
@@ -64,7 +60,7 @@ final class ListReservationControl extends Control
             ->setIcon('eye');
 
         return $grid;
-    }*/
+    }
 
 
     public function render(): void
