@@ -34,6 +34,8 @@ final class RouterFactory
 
         $router->addRoute('room/room-add/add', ':RoomModule:RoomAdd:add');
 
+        $router->addRoute('reservation/reservation-list/list', ':ReservationModule:ReservationList:list');
+
 
         $router->addRoute('presentation/presentation-add/add', ':PresentationModule:PresentationAdd:add');
 

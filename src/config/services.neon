@@ -21,6 +21,7 @@ services:
 	- App\RoomModule\Controls\AddRoom\IAddRoomControlFactory
 	- App\ReservationModule\Controls\ReserveNonRegistered\IReserveNonRegisteredControlFactory
 	- App\ReservationModule\Controls\ReserveRegistered\IReserveRegisteredControlFactory
+	- App\ReservationModule\Controls\ListReservation\IListReservationControlFactory
 	- App\ReservationModule\Model\ReservationService
 	- App\TicketModule\Model\TicketService
 
