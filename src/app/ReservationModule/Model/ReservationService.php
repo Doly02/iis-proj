@@ -125,4 +125,31 @@ final class ReservationService extends BaseService
             ->select('conference_id');
     }
 
+    /**
+     * Joins conference name with reservations
+     */
+    public function getTableWithConferenceName(int $userId): array
+    {
+        // SQL query to fetch reservations with conference name, filtered by user_id
+        $sql = "
+            SELECT reservations.id AS reservation_id, reservations.*, conferences.name AS conference_name
+            FROM reservations
+            LEFT JOIN conferences ON reservations.conference_id = conferences.id
+            WHERE reservations.customer_id = ?
+        ";
+
+        // Execute the query with the userId parameter
+        return $this->database->query($sql, $userId)->fetchAll();
+    }
+    /*public function getTableWithConferenceName(): array
+    {
+        // Reference the view directly as if it were a table
+        $sql = "
+        SELECT reservations.id AS reservation_id, reservations.*, conferences.name AS conference_name
+        FROM reservations
+        LEFT JOIN conferences ON reservations.conference_id = conferences.id
+        ";
+
+        return $this->database->query($sql)->fetchAll();
+    }*/
 }

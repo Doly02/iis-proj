@@ -40,6 +40,8 @@ final class RouterFactory
 
         $router->addRoute('reservation/reservation-list/list', ':ReservationModule:ReservationList:list');
 
+        $router->addRoute('reservation/reservation-detail/default', ':ReservationModule:ReservationDetail:default');
+
 
         $router->addRoute('presentation/presentation-add/add', ':PresentationModule:PresentationAdd:add');
 

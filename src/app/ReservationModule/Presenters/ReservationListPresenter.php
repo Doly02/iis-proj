@@ -2,11 +2,11 @@
 
 namespace App\ReservationModule\Presenters;
 
-use App\CommonModule\Presenters\BasePresenter;
+use App\CommonModule\Presenters\SecurePresenter;
 use App\ReservationModule\Controls\ListReservation\IListReservationControlFactory;
 use App\ReservationModule\Controls\ListReservation\ListReservationControl;
 
-final class ReservationListPresenter extends BasePresenter
+final class ReservationListPresenter extends SecurePresenter
 {
     private IListReservationControlFactory $listReservationControlFactory;
 
@@ -18,6 +18,8 @@ final class ReservationListPresenter extends BasePresenter
 
     protected function createComponentReservationGrid(): ListReservationControl
     {
+        // $this->checkPrivilege();
+
         return $this->listReservationControlFactory->create();
     }
 }

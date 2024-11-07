@@ -81,6 +81,12 @@ final class TicketService extends BaseService
                 'price' => $price,
             ]);
         }
-        // TODO unique code
+    }
+
+    public function getTicketsForPaidReservation(int $reservationId) : array
+    {
+        return $this->database->table('tickets')
+            ->where('reservation_id', $reservationId)
+            ->fetchAll();
     }
 }

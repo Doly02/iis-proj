@@ -383,7 +383,7 @@ form button:active {
 .nav-sidelink {
     color: black;
     background-color: #acbffc;
-    padding: 10px 15px;
+    padding: 5px 15px;
     border-radius: 5px;
     display: block;
     width: 100%;
@@ -406,4 +406,10 @@ form button:active {
     top: 0; /* Začiatok sidebaru na vrchu stránky */
     left: 0; /* Zarovnanie sidebaru na ľavú stranu */
     width: 200px; /* Nastavte šírku sidebaru */
+}
+
+.sideBar-text {
+    color: white;
+    font-size: 16px;
+    text-align: center;
 }
