@@ -4,17 +4,17 @@
 
     <h2>Tickets</h2>
 
-    {foreach $tickets as $ticket}
-        <div class="ticket">
-            <p>{$conference->name} {$ticket->code}</p>
 
-        </div>
-    {/foreach}
 
     {if !$reservation->is_paid}
         <p>No tickets, complete their purchase.</p>
     {else}
+        {foreach $tickets as $ticket}
+            <div class="ticket">
+                <p>{$conference->name} {$ticket->code}</p>
 
+            </div>
+        {/foreach}
     {/if}
 
 {/block}
