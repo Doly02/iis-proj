@@ -4,6 +4,7 @@ namespace App\ConferenceModule\Presenters;
 
 use App\CommonModule\Presenters\SecurePresenter;
 use App\ConferenceModule\Controls\AddConference;
+use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
 use Nette\Security\AuthenticationException;
 
@@ -17,10 +18,18 @@ final class ConferenceAddPresenter extends SecurePresenter
         $this->addConferenceControlFactory = $addConferenceControlFactory;
     }
 
+    public function startup(): void
+    {
+        parent::startup();
+        if (!$this->getUser()->isLoggedIn())
+        {
+            $this->flashMessage('You Have To Log In For Access This Page.', 'warning');
+            $this->redirect(':UserModule:Authentication:signIn');
+        }
+    }
     protected function createComponentAddConferenceForm(): AddConference\AddConferenceControl
     {
         $this->checkPrivilege();
-
         return $this->addConferenceControlFactory->create();
     }
 

@@ -21,7 +21,14 @@ final class CreateAdminPresenter extends SecurePresenter
 
     public function actionDefault(): void
     {
-
+        if ($this->getUser()->isLoggedIn() === false)
+        {
+            $this->redirect(':CommonModule:Home:default');
+        }
+        else if ($this->getUser()->isLoggedIn() === true && $this->template->accountType !== 'admn')
+        {
+            $this->redirect(':CommonModule:Home:default');
+        }
     }
 
     protected function createComponentCreateAdminForm() : CreateAdminControl

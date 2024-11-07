@@ -13,8 +13,9 @@ final class AuthenticationFactory
 {
     use \Nette\StaticClass;
 
-    public const ROLE_ADMIN = 'admn';
+    public const ROLE_GUEST = 'guest';
     public const ROLE_USER = 'user';
+    public const ROLE_ADMIN = 'admn';
 
     public const ACTION_ADD = 'add';
     public const ACTION_EDIT = 'edit';
@@ -43,7 +44,8 @@ final class AuthenticationFactory
      */
     private static function setupRoles(Permission $permission): void
     {
-        $permission->addRole(self::ROLE_USER);
+        $permission->addRole(self::ROLE_GUEST);
+        $permission->addRole(self::ROLE_USER, self::ROLE_GUEST);
         $permission->addRole(self::ROLE_ADMIN, self::ROLE_USER);
     }
 
@@ -86,6 +88,9 @@ final class AuthenticationFactory
      */
     private static function setupRules(Permission $permission, array $roles): void
     {
+        /* Role Guest Does Not Have Access To Any Action */
+        $permission->deny(self::ROLE_GUEST, '*', '*');
+
         foreach ($roles as $role => $roleData) {
             if (!$permission->hasRole($role)) {
                 $permission->addRole($role, $roleData['parent'] ?? null);
@@ -109,6 +114,18 @@ final class AuthenticationFactory
                 }
             } else {
                 $permission->deny($role, '*', '*');
+            }
+
+            if ($role === self::ROLE_GUEST)
+            {
+                $permission->deny($role, '*', '*');
+                if (!empty($roleData['resources']) && is_array($roleData['resources'])) {
+                    foreach ($roleData['resources'] as $resource => $actions) {
+                        if ($permission->hasResource($resource)) {
+                            $permission->allow($role, $resource, $actions);
+                        }
+                    }
+                }
             }
         }
     }

@@ -6,6 +6,7 @@ namespace App\CommonModule\Presenters;
 
 use App\UserModule\Enums\Action;
 use App\UserModule\Model\UserService;
+use Nette\Application\AbortException;
 use Nette\Application\UI\Presenter;
 
 use Nette\Caching\Cache;
@@ -25,8 +26,7 @@ abstract class SecurePresenter extends BasePresenter
         {
             $this->checkLoggedIn();
         }
-
-        // Předání account_type šabloně
+        // Put accountType into Template
         $this->template->accountType = $this->accountType;
     }
 
@@ -82,7 +82,14 @@ abstract class SecurePresenter extends BasePresenter
         {
             /* Permission Denied */
             $this->flashMessage(sprintf('Permission Denied To "%s" on Resource "%s".', $privilege, $resource), 'error');
-            $this->redirect(':Common:Home:default');
+            try
+            {
+                $this->redirect(':CommonModule:Home:default');
+            } catch (AbortException $e)
+            {
+                // Můžete například zalogovat nebo ji ignorovat
+                Debugger::log('Redirect executed without issues.');
+            }
         }
         return true;
     }
@@ -104,10 +111,11 @@ abstract class SecurePresenter extends BasePresenter
             $this->getUser()->logout();
             $this->flashMessage("You have been logged out due to inactivity.", 'info');
 
-            $storage = new FileStorage(__DIR__ . '/../../../temp/cache'); // Úprava cesty dle vaší aplikace
+            $storage = new FileStorage(__DIR__ . '/../../../temp/cache'); // Path To Cache
             $cache = new Cache($storage);
-            $cache->clean([Cache::ALL => true]); // Vymazání veškeré cache
+            $cache->clean([Cache::ALL => true]); // Clear All Cache
 
+            Debugger::enable('production'); // TODO: Maybe To Be Deleted?
             $this->redirect(':CommonModule:Home:default');
 
         }
