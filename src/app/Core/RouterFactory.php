@@ -49,6 +49,8 @@ final class RouterFactory
 
         $router->addRoute('user/register/default', ':UserModule:Register:default');
 
+        $router->addRoute('user/register/admin', ':UserModule:CreateAdmin:default');
+
 
 
         $router[] = new \Nette\Application\Routers\Route('[<module>[/<presenter>[/<action>[/<id \d+>]]]]', [

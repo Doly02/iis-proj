@@ -27,6 +27,9 @@ parameters:
     appDir: %appDir%
 
     roles:
+        guest:
+            resources:
+                conference.conferencelist: [list]
         user:
             resources:
                 usermodule.user: [edit, view]
