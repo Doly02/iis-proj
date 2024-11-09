@@ -29,6 +29,7 @@ services:
 	- App\ReservationModule\Model\ReservationService
 	- App\TicketModule\Model\TicketService
 	- App\UserModule\Presenters\AuthenticationPresenter
+	- App\PresentationModule\Controls\ListPresentation\IListPresentationControlFactory
 
 	# Forms
 	- App\UserModule\Model\UserFormFactory

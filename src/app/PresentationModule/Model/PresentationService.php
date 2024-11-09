@@ -27,4 +27,10 @@ final class PresentationService extends BaseService
 
         return $insertedRow instanceof ActiveRow ? $insertedRow : null;
     }
+
+    public function getConferencePresentations(int $conferenceId): Selection
+    {
+        return $this->getTable()
+            ->where('conference_id', $conferenceId);
+    }
 }

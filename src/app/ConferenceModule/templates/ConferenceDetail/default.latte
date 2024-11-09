@@ -40,6 +40,13 @@
     <a href="{link :ConferenceModule:EditConference:delete, id => $conference->id}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this conference?');">
         Delete Conference (Organizer)
     </a>
+
+    <br>
+    <br>
+    <a href="{link ':PresentationModule:PresentationList:list', id => $conference->id}" class="btn btn-primary">
+        Manage presentations (Organizer)
+    </a>
+
 {/if}
 
 
