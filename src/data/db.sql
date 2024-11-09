@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Počítač: 127.0.0.1
--- Vytvořeno: Ned 03. lis 2024, 22:39
+-- Vytvořeno: Sob 09. lis 2024, 22:06
 -- Verze serveru: 10.4.32-MariaDB
 -- Verze PHP: 8.2.12
 
@@ -101,10 +101,11 @@ CREATE TABLE `presentations` (
   `id` int(11) NOT NULL,
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `state` enum('approved','waiting','denied') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `state` enum('waiting','approved','denied') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `attachment` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `lecturer_id` int(11) NOT NULL,
-  `lecture_id` int(11) NOT NULL
+  `lecture_id` int(11) DEFAULT NULL,
+  `conference_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
@@ -328,7 +329,8 @@ ALTER TABLE `lectures`
 ALTER TABLE `presentations`
   ADD PRIMARY KEY (`id`),
   ADD KEY `lecturer_submitted_presentation` (`lecturer_id`),
-  ADD KEY `lecture_lesson` (`lecture_id`);
+  ADD KEY `lecture_lesson` (`lecture_id`),
+  ADD KEY `presentation_for_conference` (`conference_id`);
 
 --
 -- Indexy pro tabulku `reservations`
@@ -395,7 +397,7 @@ ALTER TABLE `lectures`
 -- AUTO_INCREMENT pro tabulku `presentations`
 --
 ALTER TABLE `presentations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT pro tabulku `reservations`
@@ -454,8 +456,8 @@ ALTER TABLE `lectures`
 -- Omezení pro tabulku `presentations`
 --
 ALTER TABLE `presentations`
-  ADD CONSTRAINT `lecture_lesson` FOREIGN KEY (`lecture_id`) REFERENCES `lectures` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `lecturer_submitted_presentation` FOREIGN KEY (`lecturer_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `lecturer_submitted_presentation` FOREIGN KEY (`lecturer_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `presentation_for_conference` FOREIGN KEY (`conference_id`) REFERENCES `conferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Omezení pro tabulku `reservations`
