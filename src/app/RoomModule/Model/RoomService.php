@@ -23,6 +23,43 @@ final class RoomService extends BaseService
         return $this->getTable()->insert($data);
     }
 
+    public function updateRoom(int $id, array $data): bool
+    {
+        $room = $this->getTable()->get($id);
+        if ($room) {
+            return (bool) $room->update($data);
+        }
+        return false;
+    }
+    /**
+     * Creates a new room in the database.
+     *
+     * @param string $name The name of the room.
+     * @param int $capacity The capacity of the room.
+     * @param int $creatorId The ID of the user who created the room.
+     * @return ActiveRow|null The created room row, or null if creation failed.
+     */
+    public function createRoom(string $name, int $capacity, int $creatorId): ?ActiveRow
+    {
+        $data = [
+            'name' => $name,
+            'capacity' => $capacity,
+            'creator_id' => $creatorId,
+        ];
+
+        return $this->getTable()->insert($data);
+    }
+
+    public function deleteRoomById(int $id): bool
+    {
+        $room = $this->getTable()->get($id);
+        if ($room) {
+            $room->delete();
+            return true;
+        }
+        return false;
+    }
+
     public function fetchAvailableRooms(\DateTimeImmutable $startTime, \DateTimeImmutable $endTime): array
     {
         $sql = "

@@ -1,0 +1,30 @@
+{default $title = 'Rooms'}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{$basePath}/css/styles.css">
+    <title>{$title}</title>
+</head>
+<body>
+
+{block content}
+
+    {if $flashes}
+        {foreach $flashes as $flash}
+            <div class="flash {$flash->type}">{$flash->message}</div>
+        {/foreach}
+    {/if}
+
+    <div class="btn-group-inline">
+        <div class="wide-form">
+            {control listRoom}
+        </div>
+    </div>
+
+{/block}
+
+</body>
+</html>

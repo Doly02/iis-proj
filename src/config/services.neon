@@ -6,6 +6,8 @@ services:
 	- App\CommonModule\Controls\DataGrid\IDataGridControlFactory
 	- App\ConferenceModule\Model\ConferenceService
 	- App\RoomModule\Model\RoomService
+	- App\RoomModule\Controls\EditRoom\IEditRoomControlFactory
+	- App\RoomModule\Controls\ListRoom\IListRoomControlFactory
 	- App\PresentationModule\Model\PresentationService
 	- App\PresentationModule\Controls\AddPresentation\IAddPresentationControlFactory
 	- App\UserModule\Model\UserService
