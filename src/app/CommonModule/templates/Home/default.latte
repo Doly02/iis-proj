@@ -37,7 +37,8 @@
 
         {if $user->isLoggedIn()}
             <p>
-                <a href="{plink :UserModule:UserDetail:default, userId => $user->id}" class="btn btn-primary">View Your Information</a>
+                <a href="{plink :UserModule:UserDetail:default, userId => $user->id}" class="btn btn-primary">View Your Information</a> <br><br>
+                <a href="{plink :ConferenceModule:ConferenceListCreator:list, userId => $user->id}" class="btn btn-primary">View Your Conferences</a>
             </p>
         {/if}
     {/block}

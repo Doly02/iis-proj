@@ -3,6 +3,7 @@ services:
 	- App\CommonModule\Controls\Footer\IFooterControlFactory
 	- App\CommonModule\Controls\HeadBar\IHeadBarControlFactory
 	- App\CommonModule\Controls\SideBar\ISideBarControlFactory
+	- App\CommonModule\Controls\DataGrid\IDataGridControlFactory
 	- App\ConferenceModule\Model\ConferenceService
 	- App\RoomModule\Model\RoomService
 	- App\PresentationModule\Model\PresentationService
@@ -18,6 +19,7 @@ services:
 	- App\ConferenceModule\Controls\AddRoomToConference\IAddRoomToConferenceControlFactory
 	- App\ConferenceModule\Controls\ListConference\IListConferenceControlFactory
 	- App\ConferenceModule\Controls\ListConferenceUser\IListConferenceUserControlFactory
+	- App\ConferenceModule\Controls\ListConferenceCreator\IListConferenceCreatorControlFactory
 	- App\RoomModule\Controls\AddRoom\IAddRoomControlFactory
 	- App\ReservationModule\Controls\ReserveNonRegistered\IReserveNonRegisteredControlFactory
 	- App\ReservationModule\Controls\ReserveRegistered\IReserveRegisteredControlFactory

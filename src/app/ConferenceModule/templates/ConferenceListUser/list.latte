@@ -10,18 +10,19 @@
 </head>
 <body>
 
-{block content}
+    {block content}
 
-    {if $flashes}
-        {foreach $flashes as $flash}
-            <div class="flash {$flash->type}">{$flash->message}</div>
-        {/foreach}
-    {/if}
-<div class="form-group">
-    {control conferenceGrid}
-</div>
+            {if $flashes}
+                {foreach $flashes as $flash}
+                    <div class="flash {$flash->type}">{$flash->message}</div>
+                {/foreach}
+            {/if}
 
-{/block}
+        <div class="form-group">
+            {control conferenceGrid}
+        </div>
+
+    {/block}
 
 </body>
 </html>
