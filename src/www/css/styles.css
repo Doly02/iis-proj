@@ -91,6 +91,44 @@ button, .btn {
     transition: background-color 0.3s;
 }
 
+.btn-danger {
+    background-color: #f28482;  /* Cervena barva */
+    color: #ffffff;             /* Barva textu */
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.btn-danger:hover {
+    background-color: #e06666 !important;
+}
+
+.btn-inline {
+    background-color: #2d4bad;
+    color: #ffffff;
+    display: inline-block;
+    margin-right: 20px;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.btn-group-inline {
+    display: flex;
+    gap: 20px;              /* Mezera mezi tlacitky */
+    align-items: center;    /* Vertikalni zarovnani */
+}
+
 button:hover, .btn:hover {
     background-color: #021e78;
     color: #ffffff;
@@ -266,7 +304,7 @@ form button:active {
 
 .flash.error {
     background-color: #f8d7da;
-    color: #721c24;
+    color: #f28482;
     border-radius: 5px;
 }
 

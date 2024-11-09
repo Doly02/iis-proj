@@ -30,7 +30,8 @@
                 <p>Account Type: {$accountType}</p> <!-- Debug: print the accountType -->
 
                 {if $accountType === 'admn'}
-                    <a href="{plink :UserModule:CreateAdmin:default}">Create Admin</a>
+                    <a href="{plink :UserModule:CreateAdmin:default}">Create Admin</a> <br>
+                    <a href="{plink :RoomModule:RoomList:list}">See Rooms</a>
                 {/if}
             {/if}
         </p>
