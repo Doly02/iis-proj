@@ -91,42 +91,41 @@ button, .btn {
     transition: background-color 0.3s;
 }
 
-.btn-danger {
-    background-color: #f28482;  /* Cervena barva */
-    color: #ffffff;             /* Barva textu */
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: background-color 0.3s;
-    text-align: center;
-    vertical-align: middle;
-}
-
 .btn-danger:hover {
     background-color: #e06666 !important;
 }
 
-.btn-inline {
-    background-color: #2d4bad;
+.btn-inline, .btn-danger {
+    background-color: #2d4bad;  /* Základní modrá barva pro "btn-inline" */
     color: #ffffff;
-    display: inline-block;
+    display: inline-flex;       /* Zajistí stejné rozložení pro všechna tlačítka */
+    align-items: center;
+    justify-content: center;
     margin-right: 20px;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
     font-size: 16px;
-    transition: background-color 0.3s;
     text-align: center;
     vertical-align: middle;
+    transition: background-color 0.3s;
+}
+
+/* Delete Button */
+.btn-danger {
+    background-color: #f28482;
 }
 
 .btn-group-inline {
     display: flex;
     gap: 20px;              /* Mezera mezi tlacitky */
     align-items: center;    /* Vertikalni zarovnani */
+}
+
+.btn-inline .icon, .btn-danger .icon {
+    margin-right: 5px; /* Rozestup mezi ikonou a textem */
+    font-size: 18px; /* Velikost ikony */
 }
 
 button:hover, .btn:hover {
@@ -174,6 +173,12 @@ tr:nth-child(even) {
 
 tr:hover {
     background-color: #e6f2ff; /* Jemný efekt hoveru pre lepší zážitok */
+}
+
+.wide-form {
+    max-width: 1000px;       /* Nastaví maximální šířku formuláře */
+    width: 100%;            /* Formulář bude zabírat 100 % dostupného prostoru */
+    margin: 0 auto;         /* Vycentruje formulář na stránce */
 }
 
 /* Cielenie na bunky tabuľky s tlačidlami */

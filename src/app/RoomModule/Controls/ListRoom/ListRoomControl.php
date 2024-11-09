@@ -48,7 +48,6 @@ final class ListRoomControl extends Control
             ->setClass('btn btn-primary btn-inline')
             ->setIcon('edit');
 
-        /* Room Delete Action using signal */
         $grid->addAction('delete', '')
             ->setTitle('Delete')
             ->setClass('btn btn-danger btn-inline')
