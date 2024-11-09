@@ -40,32 +40,33 @@ final class ListConferenceCreatorControl extends Control
         });
 
         $grid->setPagination(false);
+        $grid->removeColumn('id');
 
-        $grid->addColumnText('name', 'Název konference', 'name')
+        $grid->addColumnText('name', 'Conference Name', 'name')
             ->setFilterText();
 
-        $grid->addColumnText('area_of_interest', 'Oblast zájmu', 'area_of_interest')
+        $grid->addColumnText('area_of_interest', 'Area of Interest', 'area_of_interest')
             ->setFilterText();
 
-        $grid->addColumnDateTime('start_time', 'Začátek', 'start_time')
+        $grid->addColumnDateTime('start_time', 'Starts', 'start_time')
             ->setFormat('d.m.Y H:i:s')
             ->setFilterDate();
 
-        $grid->addColumnDateTime('end_time', 'Konec', 'end_time')
+        $grid->addColumnDateTime('end_time', 'Ends', 'end_time')
             ->setFormat('d.m.Y H:i:s')
             ->setFilterDate();
 
-        $grid->addColumnText('price', 'Cena (Kč)', 'price')
+        $grid->addColumnText('price', 'Price (Kč)', 'price')
             ->setFilterRange();
 
-        $grid->addColumnText('capacity', 'Kapacita', 'capacity')
+        $grid->addColumnText('capacity', 'Capacity', 'capacity')
             ->setFilterText();
 
         $grid->addAction('detail', '', 'ConferenceDetail:default')
             ->setTitle('Show detail')
             ->setclass('')
             ->setIcon('eye');
-        
+
         return $grid;
     }
 
