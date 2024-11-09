@@ -14,7 +14,10 @@
 {if $user->isLoggedIn()}
     <a href="{link :ReservationModule:ReserveRegistered:makeReservation, id => $conference->id}" class="btn btn-primary">
         Reserve Tickets (Registered)
-    </a>
+    </a> <br><br>
+    <a href="{link :PresentationModule:PresentationAdd:add, id => $conference->id}" class="btn btn-primary">
+        Propose Presentation (Registered)
+    </a> <br>
 {else}
     <a href="{link :ReservationModule:ReserveNonRegistered:makeReservation, id => $conference->id}" class="btn btn-primary">
         Reserve Tickets (Non-Registered)
