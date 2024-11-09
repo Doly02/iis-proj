@@ -7,15 +7,26 @@ use App\RoomModule\Model\RoomService;
 use Nette\Application\UI\Form;
 use Nette\Application\AbortException;
 use Nette\Database\Table\ActiveRow;
+use Nette\Security\User;
+use Tracy\Debugger;
 
 final class RoomAddPresenter extends BasePresenter
 {
     private RoomService $roomService;
+    private User $user;
 
-    public function __construct(RoomService $roomService)
+    public function __construct(RoomService $roomService, User $user)
     {
         parent::__construct();
         $this->roomService = $roomService;
+        $this->user = $user;
+    }
+
+    public function actionAdd(): void
+    {
+        if (!$this->user->isLoggedIn()) {
+            $this->redirect(':CommonModule:Login:default');
+        }
     }
 
     protected function createComponentAddRoomForm(): Form
@@ -36,12 +47,13 @@ final class RoomAddPresenter extends BasePresenter
 
     public function addRoomFormSucceeded(Form $form, \stdClass $values): void
     {
+        $userId = $this->user->getId();
         try {
             // Call RoomService to insert room data
             $newRoom = $this->roomService->addRoom([
                 'name' => $values->name,
                 'capacity' => $values->capacity,
-                'creator_id' => 1, // TODO: Replace with actual user ID
+                'creator_id' => $userId,
             ]);
 
             if ($newRoom instanceof ActiveRow) {
