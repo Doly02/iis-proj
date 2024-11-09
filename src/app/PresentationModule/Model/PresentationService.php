@@ -33,4 +33,21 @@ final class PresentationService extends BaseService
         return $this->getTable()
             ->where('conference_id', $conferenceId);
     }
+
+    public function approvePresentationById(int $id): bool
+    {
+        return $this->updatePresentationState($id, 'approved');
+    }
+
+    public function denyPresentationById(int $id): bool
+    {
+        return $this->updatePresentationState($id, 'denied');
+    }
+
+    private function updatePresentationState(int $id, string $state): bool
+    {
+        $row = $this->getTable()->get($id);
+
+        return (bool) $row->update(['state' => $state]);
+    }
 }

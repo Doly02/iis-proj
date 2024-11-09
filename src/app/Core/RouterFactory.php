@@ -46,7 +46,10 @@ final class RouterFactory
 
 
         $router->addRoute('presentation/presentation-add/add', ':PresentationModule:PresentationAdd:add');
+
         $router->addRoute('presentation/presentation-list/list', ':PresentationModule:PresentationList:list');
+
+        $router->addRoute('presentation/presentation-detail/default', ':PresentationModule:PresentationDetail:default');
 
         // $router->addRoute('user/edit-user', ':UserModule:EditUser:editUser');
 
