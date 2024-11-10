@@ -10,6 +10,7 @@ application:
 	    RoomModule: App\RoomModule\Presenters\*Presenter
 	    ReservationModule: App\ReservationModule\Presenters\*Presenter
 	    PresentationModule: App\PresentationModule\Presenters\*Presenter
+	    LectureModule: App\LectureModule\Presenters\*Presenter
 
 database:
 	dsn: 'mysql:host=127.0.0.1;dbname=iis'

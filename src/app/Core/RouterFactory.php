@@ -56,6 +56,7 @@ final class RouterFactory
         $router->addRoute('user/authentication/sign-in', ':UserModule:Authentication:signIn');
 
         $router->addRoute('user/register/default', ':UserModule:Register:default');
+        $router->addRoute('lecture/add-lecture/default', ':LectureModule:AddNewLecture:default');
 
         $router->addRoute('user/register/admin', ':UserModule:CreateAdmin:default');
 

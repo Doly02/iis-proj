@@ -29,6 +29,9 @@ services:
 	- App\ReservationModule\Model\ReservationService
 	- App\TicketModule\Model\TicketService
 	- App\UserModule\Presenters\AuthenticationPresenter
+	- App\LectureModule\Controls\ConferenceSchedule\IConferenceScheduleControlFactory
+	- App\LectureModule\Controls\AddNewLecture\INewLectureFormControlFactory
+	- App\LectureModule\Model\LectureService
 	- App\PresentationModule\Controls\ListPresentation\IListPresentationControlFactory
 
 	# Forms
