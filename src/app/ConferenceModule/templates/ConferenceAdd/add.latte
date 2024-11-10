@@ -2,6 +2,20 @@
 <h1>Add conference</h1>
 
 {block content}
-    {control addConferenceForm}
+    <!-- Přehlednější datetime script -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            flatpickr("input[type=datetime-local]", {
+                enableTime: true,
+                dateFormat: "Y-m-d\\TH:i",
+                altInput: true,
+                altFormat: "d.m.Y H:i",
+                time_24hr: true,
+                minuteIncrement: 15
+            });
+        });
+    </script>
 
+    {control addConferenceForm}
 {/block}
