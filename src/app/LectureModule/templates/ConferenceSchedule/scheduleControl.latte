@@ -1,0 +1,40 @@
+<div class="container-schedule">
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="schedule-table table-bordered text-center">
+                    <thead>
+                    <tr>
+                        <th class="time-column">Time</th>
+                        {foreach $yItems as $yItem}
+                            <th>{$yItem}</th> <!-- Názov miestností v hlavičke -->
+                        {/foreach}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $xTimes as $index => $xTime}
+                        <tr>
+                            <td><strong>{$xTime}</strong></td> <!-- Zobrazuje len čas -->
+                            {foreach $yItems as $yItem}
+                                <td style="vertical-align: top;">
+                                    {foreach $scheduleItems as $scheduleItem}
+                                        {if $scheduleItem['time'] == $xItems[$index] && $scheduleItem['room'] == $yItem}
+                                            <div class="card text-center m-1" style="background-color: #f8f9fa;">
+                                                <div class="card-body p-2">
+                                                    <h6 class="card-title m-0">{$scheduleItem['room']}</h6>
+                                                    <p class="card-text small m-0">{$scheduleItem['room']}</p>
+                                                </div>
+                                            </div>
+                                        {/if}
+                                    {/foreach}
+                                </td>
+                            {/foreach}
+                        </tr>
+                    {/foreach}
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

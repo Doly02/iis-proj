@@ -18,19 +18,21 @@
 		{control headBar}
 	</header>
 
-	<main class="container">
-
+	<!-- Flash správy umiestnené priamo pod hlavičku -->
+	<div class="flash-messages">
 		<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+	</div>
 
-			<!-- Bočný panel -->
-			<aside>
-				{control sideBar}
-			</aside>
+	<main class="container">
+		<!-- Bočný panel -->
+		<aside>
+			{control sideBar}
+		</aside>
 
-			<!-- Obalový div pre block content -->
-			<div class="content-wrapper">
-				{include content}
-			</div>
+		<!-- Obalový div pre block content -->
+		<div class="content-wrapper">
+			{include content}
+		</div>
 
 		{block scripts}
 			<script src="https://unpkg.com/nette-forms@3"></script>
@@ -41,7 +43,7 @@
 	<footer class="footer">
 		{control footer}
 	</footer>
-
 </body>
+
 </html>
 

@@ -1,29 +1,34 @@
 /* Global Styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #ffffff; /* Biela farba pre pozadie */
-    color: #0c0c0c; /* Čierna farba pre text */
+    background-color: #ffffff;
+    color: #0c0c0c;
     margin: 0;
     padding: 0;
     line-height: 1.6;
 
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Celková výška stránky pokryje celé okno */
+    min-height: 100vh;
 }
 
 main {
-    flex: 1; /* Umožní hlavnému obsahu rásť a zaberať zostávajúci priestor */
+    flex: 1;
 }
 
 .container {
     display: flex;
     flex-direction: row;
-    margin-left: 250px; /* Posunie celkový obsah doprava o šírku sidebaru */
+    margin-left: 250px;
+}
+
+.container-schedule {
+    display: flex;
+    flex-direction: row;
 }
 
 .content-wrapper {
-    flex: 1; /* Zabezpečí, že obsah zaberie zostávajúci priestor */
+    flex: 1;
     padding: 20px;
     border-radius: 5px;
     box-sizing: border-box;
@@ -53,7 +58,7 @@ header {
     color: #ffffff;
     padding: 15px 0;
     text-align: center;
-    border-radius: 5px; 
+    margin-left: 200px;
 }
 
 header h1 {
@@ -68,7 +73,6 @@ footer {
     padding: 15px;
     text-align: right;
     font-size: 14px;
-    border-radius: 5px;
 }
 
 footer a {
@@ -145,19 +149,19 @@ table {
 
 /* Table Styles */
 table {
-    width: 100%; /* Zabezpečí, že tabuľka zaberie celú šírku */
-    border-collapse: collapse; /* Odstráni medzery medzi bunkami */
+    width: 100%;
+    border-collapse: collapse;
     margin: 20px 0;
     border-radius: 5px;
     overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Jemný tieň pre efekt hĺbky */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 th, td {
     border: 1px solid #dddddd;
     padding: 12px;
     text-align: left;
-    font-size: 14px; /* Mierne zmenšená veľkosť textu pre lepšiu čitateľnosť */
+    font-size: 14px;
 }
 
 th {
@@ -168,11 +172,11 @@ th {
 }
 
 tr:nth-child(even) {
-    background-color: #f8f9fa; /* Svetlejšie pozadie pre lepší kontrast */
+    background-color: #f8f9fa;
 }
 
 tr:hover {
-    background-color: #e6f2ff; /* Jemný efekt hoveru pre lepší zážitok */
+    background-color: #e6f2ff;
 }
 
 .wide-form {
@@ -181,41 +185,39 @@ tr:hover {
     margin: 0 auto;         /* Vycentruje formulář na stránce */
 }
 
-/* Cielenie na bunky tabuľky s tlačidlami */
 form table tr:last-child td {
     text-align: center;
-    background-color: #ffffff; /* Biele pozadie pre bunku */
-    padding-top: 10px; /* Priestor nad tlačidlom */
+    background-color: #ffffff;
+    padding-top: 10px;
 }
 
 table tr:last-of-type th {
-    background-color: #ffffff; /* Odstráni pozadie hlavičkovej bunky v poslednom riadku */
+    background-color: #ffffff;
 }
 
-/* Úprava samotného tlačidla */
+
 form .btn-primary {
-    display: block; /* Blokové zobrazenie pre lepšie zarovnanie */
-    width: auto; /* Automatická šírka */
-    margin: 0 auto; /* Centrálne zarovnanie */
+    display: block;
+    width: auto;
+    margin: 0 auto;
 }
-
 
 
 /* Form Styles */
 form {
     margin: 20px 0;
-    padding: 25px; /* Zvýšené vnútorné odsadenie pre lepšiu štruktúru */
-    background-color: #ffffff; /* Čistejšie pozadie */
+    padding: 25px;
+    background-color: #ffffff;
     border: 1px solid #dddddd;
-    border-radius: 8px; /* Viac zaoblené rohy pre modernejší vzhľad */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Jemný tieň pre efekt hĺbky */
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 form label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
-    color: #333333; /* Tmavší odtieň čiernej pre lepší kontrast */
+    color: #333333;
 }
 
 form input[type="text"],
@@ -229,9 +231,9 @@ form textarea {
     margin: 8px 0;
     border: 1px solid #cccccc;
     border-radius: 5px;
-    font-size: 15px; /* Mierne zmenšená veľkosť textu */
-    box-sizing: border-box; /* Zabezpečí správne vykresľovanie */
-    transition: border-color 0.3s; /* Plynulý prechod pri zmene farby rámu */
+    font-size: 15px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
 }
 
 form input[type="text"]:focus,
@@ -240,8 +242,8 @@ form input[type="email"]:focus,
 form input[type="number"]:focus,
 form select:focus,
 form textarea:focus {
-    border-color: #2d4bad; /* Zmena farby rámu pri zaostrení */
-    outline: none; /* Odstráni predvolené zvýraznenie */
+    border-color: #2d4bad;
+    outline: none;
 }
 
 form input[type="submit"],
@@ -250,41 +252,35 @@ form button {
     background-color: #2d4bad;
     color: #ffffff;
     border: none;
-    padding: 12px 25px; /* Väčšie tlačidlá pre lepšiu interakciu */
+    padding: 12px 25px;
     cursor: pointer;
     border-radius: 5px;
     font-size: 16px;
-    transition: background-color 0.3s, transform 0.2s; /* Pridanie efektu transformácie */
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 form input[type="submit"]:hover,
 form input[type="button"]:hover,
 form button:hover {
     background-color: #021e78;
-    transform: translateY(-2px); /* Jemný posun hore pri hover */
+    transform: translateY(-2px);
 }
 
-/* Dodatočný štýl pre tlačidlá pri kliknutí */
 form input[type="submit"]:active,
 form input[type="button"]:active,
 form button:active {
-    transform: translateY(0); /* Vrátenie späť pri kliknutí */
+    transform: translateY(0);
 }
 
-
-/* Card Styles */
-.card {
-    border: 1px solid #dddddd;
-    border-radius: 5px; 
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin: 15px 0;
-    background-color: #ffffff;
-}
-
-.card h2 {
-    margin-top: 0;
-    color: #2d4bad;
+.error {
+    color: #d9534f;
+    font-weight: bold;
+    margin-top: 5px;
+    padding: 10px;
+    background-color: #f2dede;
+    border: 1px solid #ebccd1;
+    border-radius: 5px;
+    list-style-type: none;
 }
 
 /* Flash Messages */
@@ -299,18 +295,21 @@ form button:active {
     background-color: #e6f2ff;
     color: #2d4bad;
     border-radius: 5px;
+    margin-left: 200px;
 }
 
 .flash.success {
     background-color: #d4edda;
     color: #155724;
     border-radius: 5px;
+    margin-left: 200px;
 }
 
 .flash.error {
     background-color: #f8d7da;
     color: #f28482;
     border-radius: 5px;
+    margin-left: 200px;
 }
 
 /* Data Grid styles*/
@@ -324,17 +323,17 @@ form button:active {
 }
 
 .datagrid input {
-    width: 100%; /* Filtracni pole zabere celou sirku */
+    width: 100%; ]
     box-sizing: border-box;
-    padding: 6px 10px; /* Snizeni vertikalniho odsazeni pro mensi vysku */
-    font-size: 14px;  /* Velikost pisma */
+    padding: 6px 10px;
+    font-size: 14px;
 }
 
 .datagrid .filter-row {
     display: flex;
-    justify-content: space-around; /* Vetsi rozlozeni po ose X */
-    align-items: center; /* Vyrovani na stred na ose Y */
-    gap: 15px; /* Zvetseny rozestup mezi filtry */
+    justify-content: space-around;
+    align-items: center;
+    gap: 15px;
 }
 
 .datagrid .filter-item {
@@ -348,46 +347,44 @@ form button:active {
 
 .datagrid th {
     text-align: left;
-    padding: 5px 10px; /* Snizeni vertikalniho odsazeni */
+    padding: 5px 10px;
     font-size: 14px;
 }
 
-/* Vylúčenie grid tabuľky z centrácie */
 .datagrid tr:last-child td {
-    text-align: left; /* Alebo iné zarovnanie podľa vašich potrieb */
+    text-align: left;
 }
-
 
 
 /* Styling for Total Price Section */
 .price-info {
-    text-align: center;                 /* Center the total price horizontally */
-    margin-top: 20px;                   /* Add some margin above */
-    font-size: 1.5em;                   /* Increase the font size for better visibility */
-    font-weight: bold;                  /* Make the text bold */
-    color: #2d4bad;                     /* Use a nice color to match the design */
-    background-color: #e6f2ff;          /* Add a light background color to highlight the section */
-    padding: 15px;                      /* Add padding for spacing */
-    border-radius: 10px;                /* Rounded corners for a nicer look */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for emphasis */
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #2d4bad;
+    background-color: #e6f2ff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .nav {
-    list-style-type: none; /* Odstráni odrážky */
-    padding-left: 0; /* Odstráni predvolené odsadenie */
+    list-style-type: none;
+    padding-left: 0;
 }
 
 .navbar-nav {
     color: #2d4bad;
-    display: flex; /* Usporiada položky horizontálne */
-    list-style-type: none; /* Odstráni odrážky zo zoznamu */
-    padding: 0; /* Odstráni predvolené odsadenie */
-    margin: 0; /* Odstráni predvolené okraje */
-    align-items: center; /* Zarovná položky vertikálne do stredu */
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    align-items: center;
 }
 
 .nav-item {
-    margin-left: 15px; /* Pridá medzeru medzi položky */
+    margin-left: 15px;
 }
 
 .nav-link {
@@ -404,21 +401,21 @@ form button:active {
 }
 
 .nav-container {
-    display: flex; /* Použije flexbox na rozloženie */
-    justify-content: flex-end; /* Posunie tlačidlá na pravú stranu */
-    align-items: center; /* Zarovná tlačidlá vertikálne */
-    width: 100%; /* Nastaví šírku na 100% */
-    max-width: 1200px; /* Môžeš prispôsobiť podľa potreby */
-    margin: 0 auto; /* Centrálne zarovnanie */
-    padding: 10px 20px; /* Prispôsobené odsadenie */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 20px;
 }
 
 .nav-sideitem {
-    display: block; /* Zabezpečí, že odkazy budú blokové prvky */
-    padding: 3px 15px; /* Odsadenie vo vnútri odkazu */
-    text-decoration: none; /* Odstráni podčiarknutie odkazu */
-    border-radius: 5px; /* Zaoblené rohy odkazu */
-    transition: background-color 0.3s; /* Prechod na zmenu pozadia */
+    display: block;
+    padding: 3px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
     text-align: center;
     font-size: 14px;
 }
@@ -441,14 +438,14 @@ form button:active {
 
 
 .sideBar {
-    background-color: #2d4bad; /* Svetlé pozadie */
-    height: 100vh; /* Výška sidebaru rovná výške okna prehliadača */
-    padding: 1rem; /* Padding na všetkých stranách */
-    box-sizing: border-box; /* Zabezpečí správne počítanie paddingu */
-    position: fixed; /* Sidebar zostane na mieste aj pri skrolovaní */
-    top: 0; /* Začiatok sidebaru na vrchu stránky */
-    left: 0; /* Zarovnanie sidebaru na ľavú stranu */
-    width: 200px; /* Nastavte šírku sidebaru */
+    background-color: #2d4bad;
+    height: 100vh;
+    padding: 1rem;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
 }
 
 .sideBar-text {
@@ -456,3 +453,67 @@ form button:active {
     font-size: 16px;
     text-align: center;
 }
+
+/* Schedule */
+/* Nastavenie základných štýlov pre tabuľku rozvrhu */
+.schedule-table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.schedule-table td {
+    padding: 5px;
+    vertical-align: top;
+}
+
+.schedule-table th {
+    text-align: center;
+    vertical-align: middle;
+    padding: 5px;
+}
+
+
+.schedule-table th.time-column,
+.schedule-table td.time-column {
+    width: 80px; /* Nastavte požadovanú šírku */
+    min-width: 80px; /* Uistite sa, že šírka zostane minimálne 80px */
+    max-width: 80px; /* Maximálna šírka 80px */
+    text-align: left;
+}
+
+
+/* Štýly pre karty */
+.schedule-table .card {
+    background-color: #2d4bad; /* Svetlé pozadie pre lepšiu čitateľnosť */
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Jemný tieň pre zvýraznenie */
+    margin: 5px 0; /* Priestor medzi kartami */
+}
+
+.schedule-table .card-body {
+    padding: 10px; /* Vnútorné odsadenie pre lepšiu čitateľnosť */
+    background-color: #acbffc;
+}
+
+.schedule-table .card-title {
+    font-size: 0.95em;
+    font-weight: bold;
+    color: #333; /* Tmavšia farba textu pre lepší kontrast */
+    margin-bottom: 5px; /* Oddelenie názvu od textu */
+}
+
+.schedule-table .card-text {
+    font-size: 0.85em;
+    color: #666; /* Svetlejšia farba textu pre menej výrazný text */
+}
+
+/* Zvýraznenie karty pri hover */
+.schedule-table .card:hover {
+    background-color: #e9ecef; /* Svetlejšie pozadie pri hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Zvýraznený tieň pri hover */
+    transition: all 0.3s ease; /* Plynulý prechod efektu */
+}
+
+
+
