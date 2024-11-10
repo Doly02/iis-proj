@@ -6,33 +6,38 @@
                     <thead>
                     <tr>
                         <th class="time-column">Time</th>
-                        {foreach $yItems as $yItem}
-                            <th>{$yItem}</th> <!-- Názov miestností v hlavičke -->
+                        {foreach $xItems as $xItem}
+                            <th>{$xItem}</th>
                         {/foreach}
                     </tr>
                     </thead>
                     <tbody>
-                    {foreach $xTimes as $index => $xTime}
+                    {foreach $yTimes as $yTime}
                         <tr>
-                            <td><strong>{$xTime}</strong></td> <!-- Zobrazuje len čas -->
-                            {foreach $yItems as $yItem}
-                                <td style="vertical-align: top;">
-                                    {foreach $scheduleItems as $scheduleItem}
-                                        {if $scheduleItem['time'] == $xItems[$index] && $scheduleItem['room'] == $yItem}
-                                            <div class="card text-center m-1" style="background-color: #f8f9fa;">
-                                                <div class="card-body p-2">
-                                                    <h6 class="card-title m-0">{$scheduleItem['room']}</h6>
-                                                    <p class="card-text small m-0">{$scheduleItem['room']}</p>
-                                                </div>
-                                            </div>
-                                        {/if}
-                                    {/foreach}
-                                </td>
+                            <td><strong>{$yTime}</strong></td>
+                            {foreach $xItems as $xItem}
+                                {var $rendered = false}
+                                {foreach $scheduleItems as $scheduleItem}
+                                    {if !$rendered && $scheduleItem['start'] == $yTime && $scheduleItem['room'] == $xItem}
+                                            <td rowspan="{$scheduleItem['rowspan']}" class="card-body">
+                                                <h6 class="card-title m-0">{$scheduleItem['name']}</h6>
+                                                <p class="card-name m-0"><em>{$scheduleItem['lecturer']}</em></p>
+                                                <p class="card-time m-0">{$scheduleItem['start']} - {$scheduleItem['end']}</p>
+                                                <p class="card-text small m-0">Room {$scheduleItem['room']}</p>
+                                            </td>
+                                        {var $rendered = true}
+                                    {elseif $scheduleItem['start'] <= $yTime && $scheduleItem['end'] > $yTime && $scheduleItem['room'] == $xItem}
+                                        {var $rendered = true}
+                                    {/if}
+                                {/foreach}
+
+                                {if !$rendered}
+                                    <td></td>
+                                {/if}
                             {/foreach}
                         </tr>
                     {/foreach}
                     </tbody>
-
                 </table>
             </div>
         </div>

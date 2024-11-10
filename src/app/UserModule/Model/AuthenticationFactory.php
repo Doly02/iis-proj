@@ -62,6 +62,8 @@ final class AuthenticationFactory
         $permission->addResource('reservationmodule.reservenonregistered');
         $permission->addResource('reservationmodule.reserveregistered');
         $permission->addResource('conferencemodule.conferenceadd');
+        $permission->addResource('lecturemodule.addnewlecture');
+        $permission->addResource('lecturemodule.conferenceschedule');
 
         // The Rest of The Code For Adding Other Resources
         foreach (Finder::findDirectories('*Module')->in($appDir) as $dir)
@@ -90,6 +92,7 @@ final class AuthenticationFactory
     {
         /* Role Guest Does Not Have Access To Any Action */
         $permission->deny(self::ROLE_GUEST, '*', '*');
+
 
         foreach ($roles as $role => $roleData) {
             if (!$permission->hasRole($role)) {

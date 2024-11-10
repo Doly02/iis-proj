@@ -33,19 +33,20 @@ class ConferenceSchedulePresenter extends SecurePresenter
             $this->error('Conference not found');
         }
 
+        $yItems = $this->lectureService->getLectureTimeMarkers($this->conferenceId);
+        $xItems = $this->lectureService->getRoomNames($this->conferenceId);
 
-        $xItems = $this->lectureService->getTimeSlots($this->conferenceId);
-        $yItems = $this->lectureService->getRoomNames($this->conferenceId);
 
-        $xTimes = array_map(function($item) {
+        $yTimes = array_map(function($item) {
             return (new DateTime($item))->format('H:i');
-        }, $xItems);
+        }, $yItems);
 
         $scheduleItems = $this->lectureService->getConferenceScheduleItems($this->conferenceId);
 
         $this->template->conferenceId = $id;
+        $this->template->conference = $conference;
         $this->template->xItems = $xItems;
-        $this->template->xTimes = $xTimes;
+        $this->template->yTimes = $yTimes;
         $this->template->yItems = $yItems;
         $this->template->scheduleItems = $scheduleItems;
 
@@ -55,12 +56,12 @@ class ConferenceSchedulePresenter extends SecurePresenter
     {
         $conferenceId = $this->template->conferenceId;
         $xItems = $this->template->xItems;
-        $xTimes = $this->template->xTimes;
+        $yTimes = $this->template->yTimes;
         $yItems = $this->template->yItems;
         $scheduleItems = $this->template->scheduleItems;
 
         return $this->conferenceScheduleControlFactory->create(
-            $conferenceId, $xItems, $xTimes, $yItems, $scheduleItems
+            $conferenceId, $xItems, $yTimes, $yItems, $scheduleItems
         );
     }
 }

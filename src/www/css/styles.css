@@ -454,65 +454,77 @@ form button:active {
     text-align: center;
 }
 
+
 /* Schedule */
-/* Nastavenie základných štýlov pre tabuľku rozvrhu */
 .schedule-table {
     width: 100%;
-    table-layout: fixed;
+    border-collapse: collapse;
+    background-color: white;
 }
 
+.schedule-table th,
 .schedule-table td {
-    padding: 5px;
-    vertical-align: top;
-}
-
-.schedule-table th {
-    text-align: center;
+    padding: 10px;
     vertical-align: middle;
-    padding: 5px;
 }
 
 
-.schedule-table th.time-column,
-.schedule-table td.time-column {
-    width: 80px; /* Nastavte požadovanú šírku */
-    min-width: 80px; /* Uistite sa, že šírka zostane minimálne 80px */
-    max-width: 80px; /* Maximálna šírka 80px */
-    text-align: left;
+.schedule-table .time-column {
+    font-weight: bold;
+    width: 100px;
 }
 
 
-/* Štýly pre karty */
+/* Vylepšené štýly pre karty v rozvrhu */
 .schedule-table .card {
-    background-color: #2d4bad; /* Svetlé pozadie pre lepšiu čitateľnosť */
     border: none;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Jemný tieň pre zvýraznenie */
-    margin: 5px 0; /* Priestor medzi kartami */
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    margin: 6px 0;
+    text-align: center;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.schedule-table .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    background-color: #e6efff;
 }
 
 .schedule-table .card-body {
-    padding: 10px; /* Vnútorné odsadenie pre lepšiu čitateľnosť */
     background-color: #acbffc;
+    border-radius: 6px;
+    padding: 10px;
+    text-align: left;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.schedule-table .card-body:hover {
+    background-color: #d4deff;
 }
 
 .schedule-table .card-title {
-    font-size: 0.95em;
+    font-size: 16px;
     font-weight: bold;
-    color: #333; /* Tmavšia farba textu pre lepší kontrast */
-    margin-bottom: 5px; /* Oddelenie názvu od textu */
+    color: black;
+}
+
+.schedule-table .card-name {
+    font-size: 14px;
+    color: #37434f;
+}
+
+.schedule-table .card-time {
+    font-size: 0.9em;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 2px;
 }
 
 .schedule-table .card-text {
     font-size: 0.85em;
-    color: #666; /* Svetlejšia farba textu pre menej výrazný text */
-}
-
-/* Zvýraznenie karty pri hover */
-.schedule-table .card:hover {
-    background-color: #e9ecef; /* Svetlejšie pozadie pri hover */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Zvýraznený tieň pri hover */
-    transition: all 0.3s ease; /* Plynulý prechod efektu */
+    color: #666;
 }
 
 

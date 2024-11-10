@@ -7,7 +7,7 @@ interface IConferenceScheduleControlFactory
     public function create(
         int $conferenceId,
         array $xItems,
-        array $xTimes,
+        array $yTimes,
         array $yItems,
         array $scheduleItems): ConferenceScheduleControl;
 }

@@ -18,13 +18,11 @@ class AddNewLecturePresenter extends SecurePresenter
 
     public function actionDefault(int $conferenceId): void
     {
-        //TODO$this->checkPrivilege();
         $this->template->conferenceId = $conferenceId;
     }
 
     protected function createComponentNewLectureForm(): NewLectureFormControl
     {
-        //TODO$this->checkPrivilege();
         $conferenceId = $this->getParameter('conferenceId');
         return $this->newLectureFormControlFactory->create($conferenceId);
     }

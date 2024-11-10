@@ -10,18 +10,18 @@ final class ConferenceScheduleControl extends Control
     private User $user;
     private int $conferenceId;
     private array $xItems = [];
-    private array $xTimes = [];
+    private array $yTimes = [];
     private array $yItems = [];
     private array $scheduleItems = [];
 
     public function __construct(
         User $user, int $conferenceId,
-        array $xItems, array $xTimes, array $yItems, array $scheduleItems)
+        array $xItems, array $yTimes, array $yItems, array $scheduleItems)
     {
         $this->user = $user;
         $this->conferenceId = $conferenceId;
         $this->xItems = $xItems;
-        $this->xTimes = $xTimes;
+        $this->yTimes = $yTimes;
         $this->yItems = $yItems;
         $this->scheduleItems = $scheduleItems;
     }
@@ -33,7 +33,7 @@ final class ConferenceScheduleControl extends Control
         $this->template->user = $this->user;
         $this->template->conferenceId = $this->conferenceId;
         $this->template->xItems = $this->xItems;
-        $this->template->xTimes = $this->xTimes;
+        $this->template->yTimes = $this->yTimes;
         $this->template->yItems = $this->yItems;
         $this->template->scheduleItems = $this->scheduleItems;
 
