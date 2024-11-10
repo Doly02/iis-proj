@@ -108,12 +108,12 @@ final class AddRoomToConferenceControl extends Control
 
         } catch (\Exception $e) {
             $err = 1;
-            $form->addError('An error occurred while adding the conference: ' . $e->getMessage());
+            $form->addError('An error occurred while adding rooms to the conference: ' . $e->getMessage());
         }
 
         if (null !== $presenter && $err !== 1) {
-            $this->flashMessage('Conference added successfully.', 'success');
-            $presenter->redirect(':CommonModule:Home:default');
+            $this->flashMessage('Rooms added to conference successfully.', 'success');
+            $presenter->redirect(':ConferenceModule:ConferenceDetail:default', ['id' => $this->conferenceId]);
         }
 
     }

@@ -106,10 +106,10 @@ final class ConferenceFormFactory
         }
 
         // Add multiselect field to the form
-        $form->addMultiSelect('rooms', 'Select Room:', $roomOptions)
+        $form->addCheckboxList('rooms', 'Select Rooms:', $roomOptions)
             ->setRequired('Please select at least one room.');
 
-        $form->addSubmit('send', 'Book Room')
+        $form->addSubmit('send', 'Book Rooms')
             ->setHtmlAttribute('class', 'btn btn-primary');
 
 
