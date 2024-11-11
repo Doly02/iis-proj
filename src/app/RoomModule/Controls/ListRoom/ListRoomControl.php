@@ -30,7 +30,7 @@ final class ListRoomControl extends Control
         $this->_dataGridControlFactory = $dataGridControlFactory;
     }
 
-    protected function createComponentListRoom(): DataGridControl
+    protected function createComponentListRoom() : DataGridControl
     {
         $grid = $this->_dataGridControlFactory->create($this->_roomService);
 
@@ -54,15 +54,12 @@ final class ListRoomControl extends Control
             ->setIcon('trash')
             ->setConfirmation(
                 new StringConfirmation('Do you really want to delete the room "%s"?', 'name')
-            )
-            ->setRenderer(function ($row) {
-                return '<a href="' . $this->link('delete!', ['id' => $row->id]) . '" class="btn btn-danger">Delete</a>';
-            });
+            );
 
         return $grid;
     }
 
-    public function handleDelete(int $id): void
+    public function handleDelete(int $id) : void
     {
         if ($this->_roomService->deleteRoomById($id)) {
             $this->flashMessage('Room Was Successfully Removed!', 'success');

@@ -29,7 +29,7 @@ final class EditUserControl extends Control
         $this->_userService = $userService;
     }
 
-    public function createComponentCreateAdminForm(): Form
+    public function createComponentEditUser(): Form
     {
         $form = new Form();
 
@@ -73,7 +73,7 @@ final class EditUserControl extends Control
         return $form;
     }
 
-    public function createAdminFormSucceeded(Form $form, \stdClass $values) : void
+    public function editUserFormSucceeded(Form $form, \stdClass $values) : void
     {
         try {
             $data = [

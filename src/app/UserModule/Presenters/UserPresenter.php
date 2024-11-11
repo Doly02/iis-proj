@@ -47,7 +47,8 @@ final class UserPresenter extends SecurePresenter
         Debugger::log("Creating EditUser component for user ID: $userId", Debugger::INFO);
         $user = $this->_userService->getUserById($userId);
 
-        if (!$user instanceof ActiveRow) {
+        if (!$user instanceof ActiveRow)
+        {
             Debugger::log("User with ID $userId not found.", Debugger::ERROR);
             throw new \Nette\Application\BadRequestException('User not found');
         }
