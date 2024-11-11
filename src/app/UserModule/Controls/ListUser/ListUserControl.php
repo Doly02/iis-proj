@@ -55,7 +55,7 @@ final class ListUserControl extends Control
                 'user' => 'User',
             ]);
 
-        $grid->addAction('edit', 'Edit', ':UserModule:User:edit')
+        $grid->addAction('edit', 'Edit', ':UserModule:User:editUser', ['userId' => 'id'])
             ->setIcon('edit')
             ->setClass('btn btn-primary btn-inline')
             ->setTitle('Edit User');
