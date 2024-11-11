@@ -28,19 +28,18 @@ final class ConferenceListUserPresenter extends SecurePresenter
         $this->_user = $user;
     }
 
-
     protected function createComponentConferenceGrid(): ListConferenceUserControl
     {
-        // Získání ID uživatele
+        /* Check User Permissions */
         $userId = $this->_user->getId();
         if (!$userId) {
             $this->flashMessage('User is not logged in.', 'error');
             $this->redirect(':UserModule:Auth:signIn');
         }
 
-        // Načtení kontroleru
+        /* Load Control */
         $control = $this->_listConferenceUserControlFactory->create();
-        $control->loadUserConferences(); // Ujistěte se, že konference jsou načteny
+        $control->loadUserConferences(); // Check if Conferences Are Loaded
         return $control;
     }
 

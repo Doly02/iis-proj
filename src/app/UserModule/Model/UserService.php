@@ -172,4 +172,9 @@ final class UserService extends BaseService implements Authenticator
         }
     }
 
+    public function getAllUsers(): Selection
+    {
+        return $this->getUserTable();
+    }
+
 }
