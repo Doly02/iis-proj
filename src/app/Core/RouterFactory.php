@@ -36,6 +36,8 @@ final class RouterFactory
 
         $router->addRoute('conference/add-room-to-conference/add', ':ConferenceModule:AddRoomToConference:add');
 
+        $router->addRoute('user/userlist/list', ':UserList:UserList:list');
+
         $router->addRoute('room/room-add/add', ':RoomModule:RoomAdd:add');
 
         $router->addRoute('room/room-edit/edit', ':RoomModule:EditRoom:editRoom');
@@ -56,6 +58,8 @@ final class RouterFactory
         $router->addRoute('user/authentication/sign-in', ':UserModule:Authentication:signIn');
 
         $router->addRoute('user/register/default', ':UserModule:Register:default');
+
+
         $router->addRoute('lecture/add-lecture/default', ':LectureModule:AddNewLecture:default');
 
         $router->addRoute('user/register/admin', ':UserModule:CreateAdmin:default');

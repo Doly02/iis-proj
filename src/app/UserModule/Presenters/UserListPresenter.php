@@ -42,7 +42,6 @@ final class UserListPresenter extends SecurePresenter
         return $this->_listUserControlFactory->create();
     }
 
-
     public function handleDelete(int $userId): void
     {
         $user = $this->_userService->getUserById($userId);

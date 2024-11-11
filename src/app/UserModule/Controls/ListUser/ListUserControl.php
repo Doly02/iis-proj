@@ -36,6 +36,7 @@ final class ListUserControl extends Control
     {
         $grid = $this->_dataGridControlFactory->create($this->_userService);
         $grid->setDataSource($this->_userService->getAllUsers());
+        $grid->setPagination(false);
 
         $grid->addColumnText('name', 'First Name')
             ->setSortable();
@@ -56,12 +57,12 @@ final class ListUserControl extends Control
 
         $grid->addAction('edit', 'Edit', ':UserModule:User:edit')
             ->setIcon('edit')
-            ->setClass('btn btn-primary btn-sm')
+            ->setClass('btn btn-primary btn-inline')
             ->setTitle('Edit User');
 
         $grid->addAction('delete', 'Delete', ':UserModule:UserList:delete')
             ->setIcon('trash')
-            ->setClass('btn btn-danger btn-sm')
+            ->setClass('btn btn-danger btn-inline')
             ->setConfirmation(
                 new StringConfirmation('Are you sure you want to delete the user "%s"?', 'email')
             );
