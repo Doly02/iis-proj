@@ -102,7 +102,7 @@ button, .btn {
 .btn-inline, .btn-danger {
     background-color: #2d4bad;  /* Základní modrá barva pro "btn-inline" */
     color: #ffffff;
-    display: inline-flex;       /* Zajistí stejné rozložení pro všechna tlačítka */
+    display: inline-flex !important;      /* Zajistí stejné rozložení pro všechna tlačítka */
     align-items: center;
     justify-content: center;
     margin-right: 20px;
@@ -128,8 +128,8 @@ button, .btn {
 }
 
 .btn-inline .icon, .btn-danger .icon {
-    margin-right: 5px; /* Rozestup mezi ikonou a textem */
-    font-size: 18px; /* Velikost ikony */
+    margin-right: 5px;      /* Rozestup mezi ikonou a textem */
+    font-size: 18px;        /* Velikost ikony */
 }
 
 button:hover, .btn:hover {
