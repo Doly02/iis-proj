@@ -44,6 +44,26 @@ final class ReservationService extends BaseService
         return max(0, $totalCapacity - $reservedTickets);
     }
 
+    public function getUserReservations(int $userId): array
+    {
+        /* Load Reservation of Specific User */
+        $reservations = $this->database->table('reservations')
+            ->where('customer_id', $userId);
+
+        $result = [];
+
+        foreach ($reservations as $reservation) {
+            /* Load Conferences Based on conference_id */
+            $conference = $this->database->table('conferences')->get($reservation->conference_id);
+
+            /* Open All Keys From Reservation And Add Conference Name */
+            $result[] = array_merge($reservation->toArray(), [
+                'conference_name' => $conference ? $conference->name : null,
+            ]);
+        }
+
+        return $result;
+    }
 
     public function reserveTickets(string $firstName, string $lastName, string $email, int $tickets, int $conferenceId, ?int $costumer_id) : void
     {

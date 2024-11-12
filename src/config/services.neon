@@ -27,6 +27,7 @@ services:
 	- App\ReservationModule\Controls\ReserveNonRegistered\IReserveNonRegisteredControlFactory
 	- App\ReservationModule\Controls\ReserveRegistered\IReserveRegisteredControlFactory
 	- App\ReservationModule\Controls\ListReservation\IListReservationControlFactory
+	- App\ReservationModule\Controls\ListReservationAttendant\IListReservationAttendantControlFactory
 	- App\ReservationModule\Model\ReservationService
 	- App\TicketModule\Model\TicketService
 	- App\UserModule\Presenters\AuthenticationPresenter

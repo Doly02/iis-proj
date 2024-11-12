@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\UserModule\Controls\ListUser;
 
 use App\CommonModule\Controls\DataGrid\IDataGridControlFactory;
-use App\ConferenceModule\Model\ConferenceService;
-use App\ReservationModule\Model\ReservationService;
 use App\UserModule\Model\UserService;
 use Nette\Application\UI\Control;
 use Nette\Database\Table\Selection;

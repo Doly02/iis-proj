@@ -34,7 +34,20 @@ final class ReservationDetailPresenter extends BasePresenter
 
         $reservationId = $id;
 
+        // Load Reservation
         $reservation = $this->reservationService->fetchById($reservationId);
+
+        // Check If Exists Reservation
+        if (!$reservation) {
+            $this->flashMessage('Reservation not found.', 'error');
+            $this->redirect(':CommonModule:Home:default');
+        }
+
+        // Check If Reservation Belong To Logged-In User
+        if ($reservation->customer_id != $this->user->getId()) {
+            $this->flashMessage('You do not have permission to view this reservation.', 'error');
+            $this->redirect(':CommonModule:Home:default');
+        }
 
         $this->template->reservation = $reservation;
         $this->template->conference = $this->conferenceService->fetchById($reservation->conference_id);

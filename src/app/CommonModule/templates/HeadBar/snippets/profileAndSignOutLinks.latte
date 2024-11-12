@@ -2,6 +2,10 @@
     <a class="nav-link" href="{plink :UserModule:UserDetail:default}">My Profile</a>
 </li>
 
+<li class="nav-item {$presenter->isLinkCurrent(':ReservationModule:ReservationListAttendant:list') ? 'active' : ''}">
+    <a class="nav-link" href="{plink :ReservationModule:ReservationListAttendant:list}">My Reservations</a>
+</li>
+
 <li class="nav-item">
     <a class="nav-link" href="{plink logout!}">
         Logout <i class="fa fa-sign-out" aria-hidden="true"></i>
