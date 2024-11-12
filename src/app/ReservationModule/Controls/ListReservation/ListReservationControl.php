@@ -61,9 +61,9 @@ final class ListReservationControl extends Control
             });
 
         $grid->addAction('detail', '', 'ReservationDetail:default')
-            ->setTitle('Show tickets')
+            ->setTitle('Show detail')
             ->setclass('')
-            ->setIcon('ticket');
+            ->setIcon('eye');
 
         return $grid;
     }

@@ -2,17 +2,19 @@
 
 {block content}
 
-    <h2>Tickets</h2>
+    <h2>{$conference->name}</h2>
+    <p><strong>Start:</strong> {$conference->start_time|date:'j. n. Y H:i'} <br>
+    <strong>End:</strong> {$conference->end_time|date:'j. n. Y H:i'}</p>
+    <p></p> <br>
+    <p><strong>Description:</strong> {$conference->description}</p>
 
-
-
+    <h3>Tickets</h3>
     {if !$reservation->is_paid}
-        <p>No tickets, complete their purchase.</p>
+        <p>No tickets yet, complete their purchase.</p>
     {else}
         {foreach $tickets as $ticket}
             <div class="ticket">
-                <p>{$conference->name} {$ticket->code}</p>
-
+                <p><i>CODE:</i> {$ticket->code}</p>
             </div>
         {/foreach}
     {/if}

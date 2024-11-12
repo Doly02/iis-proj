@@ -7,6 +7,7 @@ use App\ConferenceModule\Model\ConferenceService;
 use App\ReservationModule\Model\ReservationService;
 use App\TicketModule\Model\TicketService;
 use Nette\Security\User;
+use Tracy\Debugger;
 
 final class ReservationDetailPresenter extends BasePresenter
 {
@@ -33,15 +34,16 @@ final class ReservationDetailPresenter extends BasePresenter
         }
 
         $reservationId = $id;
-
-        // Load Reservation
         $reservation = $this->reservationService->fetchById($reservationId);
 
-        // Check If Exists Reservation
         if (!$reservation) {
             $this->flashMessage('Reservation not found.', 'error');
             $this->redirect(':CommonModule:Home:default');
         }
+
+        $conferenceId = $reservation->conference_id;
+        bdump($conferenceId);
+        $conference = $this->conferenceService->fetchById($conferenceId);
 
         // Check If Reservation Belong To Logged-In User
         if ($reservation->customer_id != $this->user->getId()) {
@@ -50,6 +52,7 @@ final class ReservationDetailPresenter extends BasePresenter
         }
 
         $this->template->reservation = $reservation;
+        $this->template->conference = $conference;
         $this->template->conference = $this->conferenceService->fetchById($reservation->conference_id);
         $this->template->reservationId = $reservationId;
         $this->template->tickets = $this->ticketService->getTicketsForPaidReservation($reservationId);
