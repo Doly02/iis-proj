@@ -3,5 +3,11 @@
 {block content}
     <h2> {$conference->name} - schedule</h2>
     {control schedule}
+
+    <br>
+    <a href="{link :LectureModule:AddNewLecture:default, conferenceId => $conference->id}" class="btn btn-primary">
+    Add new lecture
+    </a>
+    <br>
 {/block}
 

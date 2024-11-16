@@ -51,13 +51,13 @@ final class LectureService extends BaseService
     }
 
 
-    public function addLecture(int $conferenceAndRoomId, DateTime $startTime, DateTime $endTime): void
+    public function addLecture(int $conferenceAndRoomId, DateTime $startTime, DateTime $endTime): int
     {
-        $this->database->table('lectures')->insert([
+        return $this->database->table('lectures')->insert([
             'id_conference_has_rooms' => $conferenceAndRoomId,
             'start_time' => $startTime,
             'end_time' => $endTime,
-        ]);
+        ])->getPrimary();
     }
 
 

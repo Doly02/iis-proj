@@ -3,6 +3,7 @@
 namespace App\LectureModule\Controls\AddNewLecture;
 
 use App\LectureModule\Model\LectureService;
+use App\PresentationModule\Model\PresentationService;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
 use Nette\Security\User;
@@ -13,13 +14,15 @@ final class NewLectureFormControl extends Control
     private User $user;
     private int $conferenceId;
     private LectureService $lectureService;
+    private PresentationService $presentationService;
 
     public function __construct(
-        User $user, LectureService $lectureService, int $conferenceId
+        User $user, LectureService $lectureService, PresentationService $presentationService, int $conferenceId
     ) {
         $this->user = $user;
         $this->lectureService = $lectureService;
         $this->conferenceId = $conferenceId;
+        $this->presentationService = $presentationService;
     }
 
     protected function createComponentNewLectureForm(): Form
@@ -30,6 +33,13 @@ final class NewLectureFormControl extends Control
         $roomOptions = [];
         foreach ($rooms as $room) {
             $roomOptions[$room->id] = $room->name;
+        }
+
+        $presentations = $this->presentationService->getConferenceApprovedPresentations($this->conferenceId);
+        bdump($presentations);
+        $presentationOptions = [];
+        foreach ($presentations as $presentation) {
+            $presentationOptions[$presentation->id] = $presentation->name;
         }
 
         $form->addSelect('room_id', 'Room', $roomOptions)
@@ -69,6 +79,10 @@ final class NewLectureFormControl extends Control
             $form->addSelect('duration', 'Duration', $durationOptions)
                 ->setPrompt('Select duration')
                 ->setRequired('Select duration.');
+
+            $form->addSelect('presentation_id', 'Presentation', $presentationOptions)
+                ->setPrompt('Select presentation')
+                ->setRequired('Select presentation');
         }
 
         $form->addSubmit('send', 'Add new lecture');
@@ -104,10 +118,13 @@ final class NewLectureFormControl extends Control
             return;
         }
 
-        $this->lectureService->addLecture($conferenceAndRoomId, $startTime, $endTime);
+        $lectureId = $this->lectureService->addLecture($conferenceAndRoomId, $startTime, $endTime);
+
+        // assign presentation to lecture
+        $this->presentationService->updateLectureId($lectureId, $values->presentation_id);
 
         $this->presenter->flashMessage('The lecture has been successfully added.', 'success');
-        $this->presenter->redirect('this');
+        $this->presenter->redirect(':LectureModule:ConferenceSchedule:schedule', ['id' => $this->conferenceId]);
     }
 
 
