@@ -16,7 +16,7 @@ final class ListPresentationControl extends Control
     /** @var User */
     private $user;
     private PresentationService $PresentationService;
-    private int $conferenceId;
+    private ?int $conferenceId = null;
 
     public function __construct(User $user, PresentationService $PresentationService)
     {
@@ -35,7 +35,10 @@ final class ListPresentationControl extends Control
     protected function createComponentPresentationGrid(): DataGrid
     {
         $grid = new DataGrid;
-        $grid->setDataSource($this->PresentationService->getConferencePresentations($this->conferenceId));
+        if($this->conferenceId)
+            $grid->setDataSource($this->PresentationService->getConferencePresentations($this->conferenceId));
+        else
+            $grid->setDataSource($this->PresentationService->getOrganizerPresentations($this->user->getId()));
 
         $grid->setRefreshUrl(false);
         $grid->setAutoSubmit(false);
@@ -45,6 +48,10 @@ final class ListPresentationControl extends Control
         $grid->setDefaultPerPage(20);
         $grid->setPagination(false);
 
+        $grid->addColumnText('conference_name', 'Conference')
+            ->setSortable()
+            ->setFilterText()
+            ->setPlaceholder('Search by name');
 
         $grid->addColumnText('name', 'Name')
             ->setSortable()

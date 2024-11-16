@@ -28,10 +28,38 @@ final class PresentationService extends BaseService
         return $insertedRow instanceof ActiveRow ? $insertedRow : null;
     }
 
-    public function getConferencePresentations(int $conferenceId): Selection
+    public function getConferencePresentations(int $conferenceId): array
     {
-        return $this->getTable()
-            ->where('conference_id', $conferenceId);
+        $sql = "
+        SELECT 
+            presentations.*,
+            conferences.name AS conference_name
+        FROM 
+            presentations
+        JOIN 
+            conferences ON presentations.conference_id = conferences.id
+        WHERE 
+            presentations.conference_id = ?
+        ";
+
+        return $this->database->query($sql, $conferenceId)->fetchAll();
+    }
+
+    public function getOrganizerPresentations(int $userId): array
+    {
+        $sql = "
+        SELECT 
+            presentations.*,
+            conferences.name AS conference_name
+        FROM 
+            presentations
+        JOIN 
+            conferences ON presentations.conference_id = conferences.id
+        WHERE 
+            conferences.organiser_id = ?
+        ";
+
+        return $this->database->query($sql, $userId)->fetchAll();
     }
 
     public function approvePresentationById(int $id): bool

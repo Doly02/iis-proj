@@ -10,7 +10,7 @@ use Tracy\Debugger;
 final class PresentationListPresenter extends BasePresenter
 {
     private IListPresentationControlFactory $listPresentationControlFactory;
-    private int $conferenceId;
+    private ?int $conferenceId = null;
 
     public function __construct(IListPresentationControlFactory $listPresentationControlFactory)
     {
@@ -27,11 +27,18 @@ final class PresentationListPresenter extends BasePresenter
         Debugger::barDump($this->conferenceId);
     }
 
+    public function actionOrganizerList(): void
+    {
+        if (!$this->user->isLoggedIn()) {
+            $this->redirect(':CommonModule:Login:default');
+        }
+    }
+
     protected function createComponentPresentationGrid(): ListPresentationControl
     {
         $control = $this->listPresentationControlFactory->create();
-
-        $control->setConferenceId($this->conferenceId);
+        if($this->conferenceId)
+            $control->setConferenceId($this->conferenceId);
 
         return $control;
     }
