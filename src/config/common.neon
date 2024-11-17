@@ -26,6 +26,8 @@ latte:
 
 parameters:
     appDir: %appDir%
+    debugMode: false
+    productionMode: true
 
     roles:
         guest:

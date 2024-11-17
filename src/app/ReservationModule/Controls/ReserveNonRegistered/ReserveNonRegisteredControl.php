@@ -157,19 +157,15 @@ final class ReserveNonRegisteredControl extends Control
                 'success'
             );
 
-            try {
-                $this->presenter->redirect(':ConferenceModule:ConferenceList:list');
-            }
-            catch (\Nette\Application\AbortException $e)
-            {
-                // Ignore
-            } 
-            catch (\Exception $e)
-            {
-                \Tracy\Debugger::log($e, \Tracy\ILogger::EXCEPTION);
-                $form->addError('An unexpected error occurred: ' . $e->getMessage());
-            }
-        } catch (\Exception $e) {
+            $this->presenter->redirect(':CommonModule:Home:default');
+        }
+        catch (\Nette\Application\AbortException $e)
+        {
+            $this->presenter->redirect(':ConferenceModule:ConferenceList:list');
+            // Ignore This Type of Exception
+        }
+        catch (\Exception $e)
+        {
             \Tracy\Debugger::log($e, \Tracy\ILogger::EXCEPTION);
             $form->addError('An error occurred while processing your request: ' . $e->getMessage());
         }
