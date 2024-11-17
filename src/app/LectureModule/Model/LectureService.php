@@ -26,13 +26,18 @@ final class LectureService extends BaseService
             ->get($conferenceId);
     }
 
+    public function getLectureById(int $lectureId): ?ActiveRow
+    {
+        return $this->database->table('lectures')
+            ->get($lectureId);
+    }
+
     public function getConferenceRooms(int $conferenceId): array
     {
         return $this->database->table('rooms')
             ->where(':conference_has_rooms.conference_id', $conferenceId)
             ->fetchAll();
     }
-
 
     public function getConferenceAndRoomId(int $conferenceId, int $roomId): ?int
     {
@@ -69,6 +74,15 @@ final class LectureService extends BaseService
             ->fetch();
 
         return $conflictingLecture === null;
+    }
+
+    public function isTimeSlotAvailableForEdit(int $conferenceAndRoomId, DateTime $startTime, DateTime $endTime, int $lectureId): bool
+    {
+        return $this->database->table('lectures')
+                ->where('id_conference_has_rooms', $conferenceAndRoomId)
+                ->where('NOT (end_time <= ? OR start_time >= ?)', $startTime, $endTime)
+                ->where('id != ?', $lectureId)
+                ->fetch() === null;
     }
 
 
@@ -150,7 +164,6 @@ final class LectureService extends BaseService
         return 1;
     }
 
-
     public function getConferenceScheduleItems(int $conferenceId): array
     {
         $rooms = $this->getRooms($conferenceId);
@@ -218,7 +231,58 @@ final class LectureService extends BaseService
             'room' => $roomName,
             'presentation' => $presentation ? $presentation->name : 'No Presentation',
             'lecturer' => $presentation ? $this->getLecturerName($presentation->id) : 'Unknown Lecturer',
+            'description' => $presentation ? $presentation->description : "No description",
         ];
+    }
+
+    public function getConferenceByLectureId(int $lectureId): int
+    {
+        $lecture = $this->database->table('lectures')->get($lectureId);
+        if (!$lecture) {
+            throw new \Exception('Lecture not found.');
+        }
+
+        $conferenceRoom = $this->database->table('conference_has_rooms')->get($lecture->id_conference_has_rooms);
+        if (!$conferenceRoom) {
+            throw new \Exception('Conference room not found for the lecture.');
+        }
+
+        return $conferenceRoom->conference_id;
+    }
+
+    public function updateLecture(
+        int $lectureId,
+        int $conferenceAndRoomId,
+        DateTime $startTime,
+        DateTime $endTime,
+        ?int $presentationId = null
+    ): void {
+        $this->database->table('lectures')
+            ->where('id', $lectureId)
+            ->update([
+                'id_conference_has_rooms' => $conferenceAndRoomId,
+                'start_time' => $startTime,
+                'end_time' => $endTime,
+            ]);
+
+        if ($presentationId !== null) {
+            $this->database->table('presentations')
+                ->where('lecture_id', $lectureId)
+                ->update(['lecture_id' => null]);
+
+            $this->database->table('presentations')
+                ->where('id', $presentationId)
+                ->update(['lecture_id' => $lectureId]);
+        }
+    }
+
+
+    public function getConferenceApprovedPresentations(int $conferenceId): array
+    {
+        return $this->database->table('presentations')
+            ->where('conference_id', $conferenceId)
+            ->where('state', 'approved')
+            ->fetchAll();
     }
 
 

@@ -46,6 +46,14 @@ final class PresentationService extends BaseService
             ]);
     }
 
+    public function clearLectureId(int $lectureId): void
+    {
+        $this->database->table('presentations')
+            ->where('lecture_id', $lectureId)
+            ->update(['lecture_id' => null]);
+    }
+
+
     public function getConferencePresentations(int $conferenceId): array
     {
         $sql = "
@@ -94,6 +102,17 @@ final class PresentationService extends BaseService
     {
         $row = $this->getTable()->get($id);
 
-        return (bool) $row->update(['state' => $state]);
+        if (!$row) {
+            return false;
+        }
+
+        $updateData = ['state' => $state];
+
+        if ($state === 'denied') {
+            $updateData['lecture_id'] = null;
+        }
+
+        return (bool) $row->update($updateData);
     }
+
 }

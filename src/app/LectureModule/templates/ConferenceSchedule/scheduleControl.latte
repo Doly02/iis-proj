@@ -19,14 +19,20 @@
                                 {var $rendered = false}
                                 {foreach $scheduleItems as $scheduleItem}
                                     {if !$rendered && $scheduleItem['start'] == $yTime && $scheduleItem['room'] == $xItem}
-                                            <td rowspan="{$scheduleItem['rowspan']}" class="card-body">
-                                                <a href="{plink LectureModule:LectureDetail:detail, $scheduleItem['id']}" class="lecture-link">
+                                        <td rowspan="{$scheduleItem['rowspan']}" class="card-body">
+                                            <a href="{plink :LectureModule:LectureDetail:default, $scheduleItem['id']}" class="lecture-link">
+                                                {if $scheduleItem['name']}
                                                     {$scheduleItem['name']}
-                                                </a>
+                                                {else}
+                                                    Detail
+                                                {/if}
+                                            </a>
+                                            {if $scheduleItem['lecturer']}
                                                 <p class="card-name m-0"><em>{$scheduleItem['lecturer']}</em></p>
-                                                <p class="card-time m-0">{$scheduleItem['start']} - {$scheduleItem['end']}</p>
-                                                <p class="card-text small m-0">Room {$scheduleItem['room']}</p>
-                                            </td>
+                                            {/if}
+                                            <p class="card-time m-0">{$scheduleItem['start']} - {$scheduleItem['end']}</p>
+                                            <p class="card-text small m-0">Room {$scheduleItem['room']}</p>
+                                        </td>
                                         {var $rendered = true}
                                     {elseif $scheduleItem['start'] <= $yTime && $scheduleItem['end'] > $yTime && $scheduleItem['room'] == $xItem}
                                         {var $rendered = true}

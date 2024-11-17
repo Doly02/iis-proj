@@ -82,7 +82,7 @@ final class ListConferenceUserControl extends Control
             ->setPlaceholder('Search by name');
 
         $grid->addColumnDateTime('start_time', 'Start')
-            ->setFormat('d.m.Y H:i:s')
+            ->setFormat('d.m.Y H:i')
             ->setSortable()
             ->setFilterDateRange();
 

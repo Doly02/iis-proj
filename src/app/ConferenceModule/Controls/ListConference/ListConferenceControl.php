@@ -48,7 +48,7 @@ final class ListConferenceControl extends Control
             ->setPlaceholder('Search by interest');
 
         $grid->addColumnDateTime('start_time', 'Start')
-            ->setFormat('d.m.Y H:i:s')
+            ->setFormat('d.m.Y H:i')
             ->setSortable()
             ->setFilterDateRange();
 

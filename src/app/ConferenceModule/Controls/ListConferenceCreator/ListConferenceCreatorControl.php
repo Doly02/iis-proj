@@ -59,11 +59,11 @@ final class ListConferenceCreatorControl extends Control
             ->setFilterText();
 
         $grid->addColumnDateTime('start_time', 'Starts', 'start_time')
-            ->setFormat('d.m.Y H:i:s')
+            ->setFormat('d.m.Y H:i')
             ->setFilterDate();
 
         $grid->addColumnDateTime('end_time', 'Ends', 'end_time')
-            ->setFormat('d.m.Y H:i:s')
+            ->setFormat('d.m.Y H:i')
             ->setFilterDate();
 
         $grid->addColumnText('price', 'Price (Kč)', 'price')
