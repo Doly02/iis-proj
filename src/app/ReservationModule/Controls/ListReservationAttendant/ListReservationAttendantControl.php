@@ -54,7 +54,7 @@ final class ListReservationAttendantControl extends Control
 
         $grid->addAction('detail', '', ':ReservationModule:ReservationDetail:default', ['id' => 'id'])
             ->setIcon('ticket')
-            ->setClass('btn btn-primary btn-inline')
+            ->setClass('')
             ->setTitle('Show Reservation');
 
         // Cancel Reservation

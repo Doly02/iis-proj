@@ -7,7 +7,9 @@ use Nette\Database\Table\ActiveRow;
 use Nette\Security\User;
 use Ublaboo\DataGrid\DataGrid;
 use App\ConferenceModule\Model\ConferenceService;
+use Ublaboo\DataGrid\DataSource\ArrayDataSource;
 use Ublaboo\DataGrid\Exception\DataGridException;
+use Nette\Utils\Html;
 
 final class ListConferenceControl extends Control
 {
@@ -27,22 +29,23 @@ final class ListConferenceControl extends Control
     protected function createComponentConferenceGrid(): DataGrid
     {
         $grid = new DataGrid;
-        $grid->setDataSource($this->conferenceService->getConferenceTable());
+        $grid->setDataSource(new ArrayDataSource($this->conferenceService->getConferenceTableWithCapacity()));
 
         $grid->setRefreshUrl(false);
         $grid->setAutoSubmit(false);
         $grid->setRememberState(false);
 
-
         $grid->setDefaultPerPage(20);
         $grid->setPagination(false);
-
 
         $grid->addColumnText('name', 'Name')
             ->setSortable()
             ->setFilterText()
             ->setPlaceholder('Search by name');
 
+        $grid->addColumnText('area_of_interest', 'Area of Interest')
+            ->setFilterText()
+            ->setPlaceholder('Search by interest');
 
         $grid->addColumnDateTime('start_time', 'Start')
             ->setFormat('d.m.Y H:i:s')
@@ -53,8 +56,31 @@ final class ListConferenceControl extends Control
             ->setSortable()
             ->setFilterRange();
 
-        $grid->addColumnText('capacity', 'Capacity')
-            ->setSortable();
+        $grid->addColumnText('capacity', 'Total capacity')
+            ->setRenderer(function ($row) {
+                $html = Html::el('span')
+                    ->setHtml(sprintf('%d / <b>%d</b>', $row['occupied_capacity'], $row['capacity']));
+                return $html;
+            })
+            ->setSortable()
+            ->setFilterSelect([
+                '' => 'All',
+                'full' => 'Full capacity',
+                'free' => 'Available',
+            ], 'Availability')
+            ->setCondition(function ($data, $value) {
+                if ($value === 'full') {
+                    return array_filter($data, function ($row) {
+                        return $row['occupied_capacity'] === $row['capacity'];
+                    });
+                } elseif ($value === 'free') {
+                    return array_filter($data, function ($row) {
+                        return $row['occupied_capacity'] < $row['capacity'];
+                    });
+                }
+                return $data;
+            });
+
 
         $grid->addAction('detail', '', 'ConferenceDetail:default')
             ->setTitle('Show detail')

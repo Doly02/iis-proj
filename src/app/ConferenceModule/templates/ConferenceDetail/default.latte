@@ -8,7 +8,11 @@
         <p><strong>Start Time:</strong> {$start_time_formatted}</p>
         <p><strong>End Time:</strong> {$end_time_formatted}</p>
         <p><strong>Price:</strong> {$conference->price}</p>
-        <p><strong>Capacity:</strong> {$conference->capacity}</p>
+        <p><strong>Capacity:</strong> {$occupiedCapacity} / <strong>{$conference->capacity}</strong></p>
+
+        {if $occupiedCapacity == $conference->capacity}
+            <p style="color: #dc0000; font-weight: bold;">The capacity of the conference is full</p>
+        {/if}
     </div>
 
 {if $user->isLoggedIn()}

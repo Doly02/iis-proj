@@ -39,6 +39,9 @@ final class ConferenceDetailPresenter extends BasePresenter
         $this->template->conference = $conference;
         $this->template->start_time_formatted = $start_time_formatted;
         $this->template->end_time_formatted = $end_time_formatted;
+
+        $occupiedCapacity = $this->conferenceService->getOccupiedCapacity()[$conference->id] ?? 0;
+        $this->template->occupiedCapacity = $occupiedCapacity;
     }
 
 }
