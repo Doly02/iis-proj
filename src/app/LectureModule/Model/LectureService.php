@@ -165,6 +165,7 @@ final class LectureService extends BaseService
         $scheduleItems = [];
 
         foreach ($lectures as $lecture) {
+            $lectureId = $lecture->id;
             $lectureRoomId = $lecture->room_id;
             $lectureStart = new \DateTime($lecture->start_time);
             $lectureEnd = new \DateTime($lecture->end_time);
@@ -181,6 +182,7 @@ final class LectureService extends BaseService
             $rowspan = $this->calculateRowspan($start, $end, $timeMarkers);
 
             $item = [
+                'id' => $lectureId,
                 'time' => $lectureStart->format('Y-m-d H:i'),
                 'room' => $lectureRoomName,
                 'start' => $lectureStart->format('H:i'),
