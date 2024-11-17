@@ -15,9 +15,13 @@
 </head>
 <body>
 
+{block content}
+
 <div class="form-group">
     {control reserveNonRegisteredForm}
 </div>
+
+<div id="total-price-container"></div>
 
 <script>
     let currentTickets = 1;
@@ -37,13 +41,20 @@
 
     function updateTotalPrice() {
         const ticketPrice = {$ticketPrice}; // From DB
+        const container = document.getElementById('total-price-container'); // Find Container For Total Price View
+
+        if (!container) {
+            console.error('Total price container not found!');
+            return;
+        }
+
         let totalPriceElement = document.getElementById('total-price');
 
         if (!totalPriceElement) {
             const priceInfoDiv = document.createElement('div');
             priceInfoDiv.className = 'price-info';
             priceInfoDiv.innerHTML = '<p>Total Price: <span id="total-price"></span> Kč</p>';
-            document.body.appendChild(priceInfoDiv);
+            container.appendChild(priceInfoDiv); // Add To Container
             totalPriceElement = document.getElementById('total-price');
         }
 
@@ -72,13 +83,15 @@
             });
         }
 
-        // Inicializace stavu
+        // Initialization of State
         togglePasswordFields();
 
-        // Posluchač změn checkboxu
+        // React To The Changes Of Checkbox
         registerCheckbox.addEventListener('change', togglePasswordFields);
     });
 </script>
+
+{/block}
 
 </body>
 </html>

@@ -92,24 +92,26 @@ final class ReserveNonRegisteredControl extends Control
             ->setRequired('Please select a payment method.')
             ->setHtmlAttribute('class', 'form-check');
 
-        $form->addCheckbox('register', 'Register me as a user')
+        // Register Checkbox
+        $registerCheckbox = $form->addCheckbox('register', 'Register me as a user')
             ->setHtmlAttribute('class', 'form-check-input')
-            ->setHtmlId('register-checkbox')
-            ->addCondition(Form::EQUAL, true) // Dynamické zobrazení
-            ->toggle('password-fields');
+            ->setHtmlId('register-checkbox');
 
-        // Password field
-        $form->addPassword('password', 'Password')
+        // Password Field
+        $passwordField = $form->addPassword('password', 'Password')
             ->setHtmlAttribute('class', 'form-control password-fields')
-            ->addConditionOn($form['register'], Form::EQUAL, true) // Povinné, pokud je checkbox zaškrtnut
+            ->addConditionOn($registerCheckbox, [$registerCheckbox, 'isFilled'])
             ->setRequired('Please enter a password.');
 
-        // Confirm password field
+        // Confirm Password Field
         $form->addPassword('passwordConfirm', 'Confirm Password')
             ->setHtmlAttribute('class', 'form-control password-fields')
-            ->addConditionOn($form['register'], Form::EQUAL, true)
+            ->addConditionOn($registerCheckbox, [$registerCheckbox, 'isFilled'])
             ->setRequired('Please confirm your password.')
-            ->addRule($form::EQUAL, 'Passwords do not match.', $form['password']);
+            ->addRule(function ($control) use ($form) {
+                return $control->value === $form['password']->value;
+            }, 'Passwords do not match.');
+
 
         /* Submission */
         $form->addSubmit('submit', 'Reserve Tickets')
