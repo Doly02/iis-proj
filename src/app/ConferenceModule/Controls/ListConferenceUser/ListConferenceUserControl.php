@@ -90,11 +90,9 @@ final class ListConferenceUserControl extends Control
             ->setSortable()
             ->setFilterRange();
 
-        $grid->addColumnText('capacity', 'Capacity')
-            ->setSortable();
-
         $grid->addAction('detail', '', 'ConferenceDetail:default')
             ->setTitle('Show detail')
+            ->setclass('')
             ->setIcon('eye');
 
         return $grid;
