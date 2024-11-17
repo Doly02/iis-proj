@@ -3,9 +3,9 @@
 namespace App\ReservationModule\Controls\ReserveNonRegistered;
 
 use App\ReservationModule\Model\ReservationService;
+use App\UserModule\Model\UserService;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
-use Nette\Utils\Html;
 use Nette\Utils\Validators;
 
 final class ReserveNonRegisteredControl extends Control
@@ -15,11 +15,13 @@ final class ReserveNonRegisteredControl extends Control
     private $_availableTickets;
     private $_ticketPrice;
 
+    private UserService $_userService;
     public function __construct(
-        ReservationService $reservationService
-    )
-    {
+        ReservationService $reservationService,
+        UserService $userService
+    ) {
         $this->_reservationService = $reservationService;
+        $this->_userService = $userService;
     }
 
     public function setConferenceId(int $conferenceId) : void
@@ -90,28 +92,26 @@ final class ReserveNonRegisteredControl extends Control
             ->setRequired('Please select a payment method.')
             ->setHtmlAttribute('class', 'form-check');
 
-        /* Register Checkbox */
         $form->addCheckbox('register', 'Register me as a user')
             ->setHtmlAttribute('class', 'form-check-input')
-            ->setHtmlId('register-checkbox');
+            ->setHtmlId('register-checkbox')
+            ->addCondition(Form::EQUAL, true) // Dynamické zobrazení
+            ->toggle('password-fields');
 
-        // Password Fields Group
-        $form->addGroup('Registration Details')
-            ->setOption('container', Html::el('div')->setAttribute('id', 'password-fields-wrapper')->addAttributes(['class' => 'hidden']));
-
+        // Password field
         $form->addPassword('password', 'Password')
-            ->setHtmlAttribute('class', 'form-control')
-            ->addConditionOn($form['register'], Form::EQUAL, true)
+            ->setHtmlAttribute('class', 'form-control password-fields')
+            ->addConditionOn($form['register'], Form::EQUAL, true) // Povinné, pokud je checkbox zaškrtnut
             ->setRequired('Please enter a password.');
 
+        // Confirm password field
         $form->addPassword('passwordConfirm', 'Confirm Password')
-            ->setHtmlAttribute('class', 'form-control')
+            ->setHtmlAttribute('class', 'form-control password-fields')
             ->addConditionOn($form['register'], Form::EQUAL, true)
             ->setRequired('Please confirm your password.')
-            ->addRule(Form::EQUAL, 'Passwords do not match.', $form['password']);
+            ->addRule($form::EQUAL, 'Passwords do not match.', $form['password']);
 
-        // Submit Button
-        $form->setCurrentGroup(null); // Reset to default group
+        /* Submission */
         $form->addSubmit('submit', 'Reserve Tickets')
             ->setHtmlAttribute('class', 'btn btn-primary');
 
@@ -121,14 +121,10 @@ final class ReserveNonRegisteredControl extends Control
 
     public function onSuccessReserveForm(Form $form, \stdClass $values): void
     {
-        try
-        {
+        try {
             $isPaid = $values->paymentMethod === 'online' ? 1 : 0;
 
-            if ($values->register)
-            {
-                $userService = $this->presenter->context->getByType(\App\UserModule\Model\UserService::class);
-
+            if ($values->register) {
                 $registrationData = [
                     'name' => $values->firstName,
                     'lastName' => $values->lastName,
@@ -136,7 +132,10 @@ final class ReserveNonRegisteredControl extends Control
                     'password' => $values->password,
                 ];
 
-                $userService->registrateUser(\Nette\Utils\ArrayHash::from($registrationData), \App\UserModule\Enums\Role::USER);
+                $this->_userService->registrateUser(
+                    \Nette\Utils\ArrayHash::from($registrationData),
+                    \App\UserModule\Enums\Role::USER
+                );
             }
 
             $this->_reservationService->reserveTickets(
@@ -144,10 +143,11 @@ final class ReserveNonRegisteredControl extends Control
                 $values->lastName,
                 $values->email,
                 $values->tickets,
-                (int) $values->conferenceId,
+                $this->_conferenceId,
                 null,
                 $isPaid
             );
+
             $this->presenter->flashMessage(
                 $isPaid
                     ? 'Your tickets have been reserved and paid online successfully.'
@@ -155,17 +155,21 @@ final class ReserveNonRegisteredControl extends Control
                 'success'
             );
 
-            $this->presenter->redirect(':ConferenceModule:ConferenceList:list');
-        }
-        catch (\Nette\Application\AbortException $e)
-        {
-           /* This Exception Is Part Of Application Flow, So Do Not Bother */
-           throw $e;
-        }
-        catch (\Exception $e)
-        {
+            try {
+                $this->presenter->redirect(':ConferenceModule:ConferenceList:list');
+            }
+            catch (\Nette\Application\AbortException $e)
+            {
+                // Ignore
+            } 
+            catch (\Exception $e)
+            {
+                \Tracy\Debugger::log($e, \Tracy\ILogger::EXCEPTION);
+                $form->addError('An unexpected error occurred: ' . $e->getMessage());
+            }
+        } catch (\Exception $e) {
             \Tracy\Debugger::log($e, \Tracy\ILogger::EXCEPTION);
-            $form->addError('An error occurred while reserving tickets2: ' . $e->getMessage());
+            $form->addError('An error occurred while processing your request: ' . $e->getMessage());
         }
     }
 

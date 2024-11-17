@@ -63,18 +63,19 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         const registerCheckbox = document.getElementById('register-checkbox');
-        const passwordFieldsWrapper = document.getElementById('password-fields-wrapper');
+        const passwordFields = document.querySelectorAll('.password-fields');
 
+        // Funkce pro skrytí/zobrazení polí hesel
         function togglePasswordFields() {
-            if (passwordFieldsWrapper) {
-                passwordFieldsWrapper.classList.toggle('hidden', !registerCheckbox.checked);
-            }
+            passwordFields.forEach(field => {
+                field.classList.toggle('hidden', !registerCheckbox.checked);
+            });
         }
 
-        // Initialize visibility
+        // Inicializace stavu
         togglePasswordFields();
 
-        // Listen for changes on the checkbox
+        // Posluchač změn checkboxu
         registerCheckbox.addEventListener('change', togglePasswordFields);
     });
 </script>
