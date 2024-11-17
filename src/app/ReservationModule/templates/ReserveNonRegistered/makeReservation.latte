@@ -7,6 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{$basePath}/css/styles.css">
     <title>{$title}</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 
@@ -54,6 +59,24 @@
             updateTotalPrice();
         });
         updateTotalPrice();
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const registerCheckbox = document.getElementById('register-checkbox');
+        const passwordFields = document.querySelectorAll('.password-fields');
+
+        // Funkce pro skrytí/zobrazení polí hesel
+        function togglePasswordFields() {
+            passwordFields.forEach(field => {
+                field.classList.toggle('hidden', !registerCheckbox.checked);
+            });
+        }
+
+        // Inicializace stavu
+        togglePasswordFields();
+
+        // Posluchač změn checkboxu
+        registerCheckbox.addEventListener('change', togglePasswordFields);
     });
 </script>
 

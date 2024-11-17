@@ -89,6 +89,25 @@ final class ReserveNonRegisteredControl extends Control
             ->setRequired('Please select a payment method.')
             ->setHtmlAttribute('class', 'form-check');
 
+        $form->addCheckbox('register', 'Register me as a user')
+            ->setHtmlAttribute('class', 'form-check-input')
+            ->setHtmlId('register-checkbox')
+            ->addCondition(Form::EQUAL, true) // Dynamické zobrazení
+            ->toggle('password-fields');
+
+        // Password field
+        $form->addPassword('password', 'Password')
+            ->setHtmlAttribute('class', 'form-control password-fields')
+            ->addConditionOn($form['register'], Form::EQUAL, true) // Povinné, pokud je checkbox zaškrtnut
+            ->setRequired('Please enter a password.');
+
+        // Confirm password field
+        $form->addPassword('passwordConfirm', 'Confirm Password')
+            ->setHtmlAttribute('class', 'form-control password-fields')
+            ->addConditionOn($form['register'], Form::EQUAL, true)
+            ->setRequired('Please confirm your password.')
+            ->addRule($form::EQUAL, 'Passwords do not match.', $form['password']);
+
         /* Submission */
         $form->addSubmit('submit', 'Reserve Tickets')
             ->setHtmlAttribute('class', 'btn btn-primary');
@@ -102,6 +121,20 @@ final class ReserveNonRegisteredControl extends Control
         try
         {
             $isPaid = $values->paymentMethod === 'online' ? 1 : 0;
+
+            if ($values->register)
+            {
+                $userService = $this->presenter->context->getByType(\App\UserModule\Model\UserService::class);
+
+                $registrationData = [
+                    'name' => $values->firstName,
+                    'lastName' => $values->lastName,
+                    'email' => $values->email,
+                    'password' => $values->password,
+                ];
+
+                $userService->registrateUser(\Nette\Utils\ArrayHash::from($registrationData), \App\UserModule\Enums\Role::USER);
+            }
 
             $this->_reservationService->reserveTickets(
                 $values->firstName,
