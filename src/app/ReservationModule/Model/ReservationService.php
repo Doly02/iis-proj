@@ -65,7 +65,7 @@ final class ReservationService extends BaseService
         return $result;
     }
 
-    public function reserveTickets(string $firstName, string $lastName, string $email, int $tickets, int $conferenceId, ?int $costumer_id) : void
+    public function reserveTickets(string $firstName, string $lastName, string $email, int $tickets, int $conferenceId, ?int $costumer_id, int $isPaid) : void
     {
         $this->database->beginTransaction();
         $errorMessage = 'Reservation could not be completed.';
@@ -95,6 +95,7 @@ final class ReservationService extends BaseService
                 'created_date' => new \DateTime(),  // Actual Date
                 'created_time' => new \DateTime(),  // Actual Time
                 'price_to_pay' => $totalPrice,
+                'is_paid' => $isPaid,
                 'conference_id' => $conferenceId,
                 'num_reserved_tickets' => $tickets,
                 'customer_id' => $costumer_id

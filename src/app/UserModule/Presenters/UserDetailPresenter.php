@@ -22,7 +22,6 @@ final class UserDetailPresenter extends SecurePresenter
         if (!$userId) {
             $this->flashMessage('You need to be logged in to view this page.', 'error');
             $this->redirect(':UserModule:Auth:signIn');
-            return;
         }
 
         $userRow = $this->_userService->getUserById($userId);
@@ -30,7 +29,6 @@ final class UserDetailPresenter extends SecurePresenter
         if (!$userRow) {
             $this->flashMessage('User not found.', 'error');
             $this->redirect('Homepage:default');
-            return;
         }
 
         $userData = (object) [
@@ -39,7 +37,7 @@ final class UserDetailPresenter extends SecurePresenter
             'surname' => $userRow->surname
         ];
 
-        $this->template->userData = $userData; // Změna názvu proměnné
+        $this->template->userData = $userData;
     }
 
 }

@@ -20,7 +20,9 @@
                                 {foreach $scheduleItems as $scheduleItem}
                                     {if !$rendered && $scheduleItem['start'] == $yTime && $scheduleItem['room'] == $xItem}
                                             <td rowspan="{$scheduleItem['rowspan']}" class="card-body">
-                                                <h6 class="card-title m-0">{$scheduleItem['name']}</h6>
+                                                <a href="{plink LectureModule:LectureDetail:detail, $scheduleItem['id']}" class="lecture-link">
+                                                    {$scheduleItem['name']}
+                                                </a>
                                                 <p class="card-name m-0"><em>{$scheduleItem['lecturer']}</em></p>
                                                 <p class="card-time m-0">{$scheduleItem['start']} - {$scheduleItem['end']}</p>
                                                 <p class="card-text small m-0">Room {$scheduleItem['room']}</p>

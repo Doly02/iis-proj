@@ -196,6 +196,29 @@ final class LectureService extends BaseService
         return $scheduleItems;
     }
 
+    public function getLectureDetail(int $lectureId): ?array
+    {
+        $lecture = $this->database->table('lectures')->get($lectureId);
+
+        if (!$lecture) {
+            return null;
+        }
+
+        $presentation = $this->getPresentationByLectureId($lectureId);
+        $conferenceRoom = $this->database->table('conference_has_rooms')->get($lecture->id_conference_has_rooms);
+
+        $roomName = $conferenceRoom ? $this->database->table('rooms')->get($conferenceRoom->room_id)->name : 'Unknown Room';
+
+        return [
+            'id' => $lecture->id,
+            'start_time' => $lecture->start_time,
+            'end_time' => $lecture->end_time,
+            'room' => $roomName,
+            'presentation' => $presentation ? $presentation->name : 'No Presentation',
+            'lecturer' => $presentation ? $this->getLecturerName($presentation->id) : 'Unknown Lecturer',
+        ];
+    }
+
 
 
 

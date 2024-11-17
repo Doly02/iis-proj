@@ -65,7 +65,7 @@ final class ReserveNonRegisteredControl extends Control
             ->addRule(function ($control) {
                 $value = (int) $control->getValue();
                 return Validators::isNumeric($control->getValue()) && $value >= 1 && $value <= $this->_availableTickets;
-            }, 'You must reserve at least 1 ticket and no more than ' . $this->_availableTickets . ' tickets.')
+            }, 'You must reserve at least 1 ticket, the current number of available tickets is ' . $this->_availableTickets . ' tickets.')
             ->setHtmlAttribute('class', 'form-control')
             ->setHtmlAttribute('id', 'ticket-quantity');
 
@@ -81,6 +81,14 @@ final class ReserveNonRegisteredControl extends Control
 
         $form->addHidden('conferenceId', (string) $this->_conferenceId);
 
+        $form->addRadioList('paymentMethod', 'Payment Method', [
+            'online' => 'Pay Online',
+            'on_site' => 'Pay on Site',
+        ])
+            ->setDefaultValue('on_site')
+            ->setRequired('Please select a payment method.')
+            ->setHtmlAttribute('class', 'form-check');
+
         /* Submission */
         $form->addSubmit('submit', 'Reserve Tickets')
             ->setHtmlAttribute('class', 'btn btn-primary');
@@ -91,16 +99,26 @@ final class ReserveNonRegisteredControl extends Control
 
     public function onSuccessReserveForm(Form $form, \stdClass $values): void
     {
-        try {
+        try
+        {
+            $isPaid = $values->paymentMethod === 'online' ? 1 : 0;
+
             $this->_reservationService->reserveTickets(
                 $values->firstName,
                 $values->lastName,
                 $values->email,
                 $values->tickets,
                 (int) $values->conferenceId,
-                null
+                null,
+                $isPaid
             );
-            $this->presenter->flashMessage('Your tickets have been reserved successfully.', 'success');
+            $this->presenter->flashMessage(
+                $isPaid
+                    ? 'Your tickets have been reserved and paid online successfully.'
+                    : 'Your tickets have been reserved. Please pay on site.',
+                'success'
+            );
+
             $this->presenter->redirect(':ConferenceModule:ConferenceList:list');
         }
         catch (\Nette\Application\AbortException $e)

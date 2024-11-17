@@ -54,7 +54,7 @@ final class ReserveRegisteredControl extends Control
             ->addRule(function ($control) {
                 $value = (int) $control->getValue();
                 return Validators::isNumeric($control->getValue()) && $value >= 1 && $value <= $this->_availableTickets;
-            }, 'You must reserve at least 1 ticket and no more than ' . $this->_availableTickets . ' tickets.')
+            }, 'You must reserve at least 1 ticket, the current number of available tickets is ' . $this->_availableTickets . ' tickets.')
             ->setHtmlAttribute('class', 'form-control')
             ->setHtmlAttribute('id', 'ticket-quantity');
 
@@ -68,6 +68,14 @@ final class ReserveRegisteredControl extends Control
             ->setHtmlAttribute('class', 'btn btn-secondary')
             ->setHtmlAttribute('onclick', 'adjustTicketCount(-1)');
 
+        $form->addRadioList('paymentMethod', 'Payment Method', [
+            'online' => 'Pay Online',
+            'on_site' => 'Pay on Site',
+        ])
+            ->setDefaultValue('on_site')
+            ->setRequired('Please select a payment method.')
+            ->setHtmlAttribute('class', 'form-check');
+
         $form->addSubmit('submit', 'Reserve')
             ->setHtmlAttribute('class', 'btn btn-primary');
 
@@ -79,6 +87,8 @@ final class ReserveRegisteredControl extends Control
     {
         try
         {
+            $isPaid = $values->paymentMethod === 'online' ? 1 : 0;
+
             $userId = $this->_user->getId();
             $user = $this->_userService->getUserById($userId);
             if (!$user) {
@@ -95,7 +105,8 @@ final class ReserveRegisteredControl extends Control
                 $email,
                 (int) $values->tickets,
                 (int) $this->_conferenceId,
-                $userId
+                $userId,
+                $isPaid
             );
 
             $this->presenter->flashMessage('Your tickets have been reserved successfully.', 'success');
