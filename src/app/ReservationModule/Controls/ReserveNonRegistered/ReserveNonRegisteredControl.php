@@ -5,6 +5,7 @@ namespace App\ReservationModule\Controls\ReserveNonRegistered;
 use App\ReservationModule\Model\ReservationService;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
+use Nette\Utils\Html;
 use Nette\Utils\Validators;
 
 final class ReserveNonRegisteredControl extends Control
@@ -89,26 +90,28 @@ final class ReserveNonRegisteredControl extends Control
             ->setRequired('Please select a payment method.')
             ->setHtmlAttribute('class', 'form-check');
 
+        /* Register Checkbox */
         $form->addCheckbox('register', 'Register me as a user')
             ->setHtmlAttribute('class', 'form-check-input')
-            ->setHtmlId('register-checkbox')
-            ->addCondition(Form::EQUAL, true) // Dynamické zobrazení
-            ->toggle('password-fields');
+            ->setHtmlId('register-checkbox');
 
-        // Password field
+        // Password Fields Group
+        $form->addGroup('Registration Details')
+            ->setOption('container', Html::el('div')->setAttribute('id', 'password-fields-wrapper')->addAttributes(['class' => 'hidden']));
+
         $form->addPassword('password', 'Password')
-            ->setHtmlAttribute('class', 'form-control password-fields')
-            ->addConditionOn($form['register'], Form::EQUAL, true) // Povinné, pokud je checkbox zaškrtnut
+            ->setHtmlAttribute('class', 'form-control')
+            ->addConditionOn($form['register'], Form::EQUAL, true)
             ->setRequired('Please enter a password.');
 
-        // Confirm password field
         $form->addPassword('passwordConfirm', 'Confirm Password')
-            ->setHtmlAttribute('class', 'form-control password-fields')
+            ->setHtmlAttribute('class', 'form-control')
             ->addConditionOn($form['register'], Form::EQUAL, true)
             ->setRequired('Please confirm your password.')
-            ->addRule($form::EQUAL, 'Passwords do not match.', $form['password']);
+            ->addRule(Form::EQUAL, 'Passwords do not match.', $form['password']);
 
-        /* Submission */
+        // Submit Button
+        $form->setCurrentGroup(null); // Reset to default group
         $form->addSubmit('submit', 'Reserve Tickets')
             ->setHtmlAttribute('class', 'btn btn-primary');
 
