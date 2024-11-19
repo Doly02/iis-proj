@@ -99,7 +99,7 @@ button, .btn {
     background-color: #e06666 !important;
 }
 
-.btn-inline, .btn-danger {
+.btn-inline{
     background-color: #2d4bad;  /* Základní modrá barva pro "btn-inline" */
     color: #ffffff;
     display: inline-flex !important;      /* Zajistí stejné rozložení pro všechna tlačítka */
