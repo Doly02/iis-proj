@@ -7,3 +7,5 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 # All Requests Routed on index.php
 RewriteRule ^ index.php [L]
+
+AddHandler application/x-httpd-php82 .php

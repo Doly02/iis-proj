@@ -2,31 +2,27 @@
 
 declare(strict_types=1);
 
-namespace App;
+use Nette\Configurator;
 
-use Nette\Bootstrap\Configurator;
+require __DIR__ . '/../vendor/autoload.php';
 
+$configurator = new Configurator;
 
-class Bootstrap
-{
-	public static function boot(): Configurator
-	{
-		$configurator = new Configurator;
-		$rootDir = dirname(__DIR__);
+// Enable Tracy debugger (set to false or remove in production)
+$configurator->setDebugMode(true);
+$configurator->enableTracy(__DIR__ . '/../log');
 
-        $configurator->setDebugMode(true);
-		//$configurator->setDebugMode('secret@23.75.345.200'); // enable for your remote IP
-		$configurator->enableTracy($rootDir . '/log');
+// Set the temporary directory for cache and other temporary files
+$configurator->setTempDirectory(__DIR__ . '/../temp');
 
-		$configurator->setTempDirectory($rootDir . '/temp');
+// Register RobotLoader for automatic class loading
+$configurator->createRobotLoader()
+    ->addDirectory(__DIR__)
+    ->register();
 
-		$configurator->createRobotLoader()
-			->addDirectory(__DIR__)
-			->register();
+// Load your configuration files
+$configurator->addConfig(__DIR__ . '/../config/common.neon');
+$configurator->addConfig(__DIR__ . '/../config/services.neon');
 
-		$configurator->addConfig($rootDir . '/config/common.neon');
-		$configurator->addConfig($rootDir . '/config/services.neon');
-
-		return $configurator;
-	}
-}
+// Create and return the DI container
+return $configurator->createContainer();

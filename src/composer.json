@@ -28,8 +28,8 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"App\\": "app",
-			"Others\\": "others"
+			"App\\": "app/",
+			"Others\\": "others/"
 		}
 	},
 	"minimum-stability": "stable",
