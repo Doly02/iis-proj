@@ -347,6 +347,22 @@ final class LectureService extends BaseService
         return $dates;
     }
 
+    public function getRoomNameByLectureId(int $lectureId): ?string
+    {
+        $sql = "
+        SELECT rooms.name
+        FROM lectures
+        JOIN conference_has_rooms ON conference_has_rooms.id = lectures.id_conference_has_rooms
+        JOIN rooms ON rooms.id = conference_has_rooms.room_id
+        WHERE lectures.id = ?
+    ";
+
+        return $this->database->fetchField($sql, $lectureId) ?: null;
+    }
+
+
+
+
     public function getLecturerScheduleItems(int $lecturerId): array
     {
         $lectures = $this->getLecturesByLecturerId($lecturerId);
@@ -361,13 +377,21 @@ final class LectureService extends BaseService
 
             $rowspan = $this->calculateLecturerRowspan($start, $end, $timeMarkers);
 
+            $conferenceId = $this->getConferenceByLectureId($lecture->id);
+            $conference = $this->getConferenceById($conferenceId);
+            $room = $this->getRoomNameByLectureId($lecture->id);
+
             $scheduleItems[] = [
                 'id' => $lecture->id,
                 'date' => (new DateTime($lecture->start_time))->format('d.m.Y'),
                 'start' => (new DateTime($lecture->start_time))->format('H:i'),
                 'end' => (new DateTime($lecture->end_time))->format('H:i'),
                 'name' => $presentation ? $presentation['name'] : 'No Presentation',
-                'rowspan' => $rowspan
+                'rowspan' => $rowspan,
+                'conference' => $conference->name,
+                'room' => $room
+
+
             ];
         }
         return $scheduleItems;

@@ -517,7 +517,11 @@ form button:active {
     padding: 10px;
     text-align: left;
     transition: background-color 0.3s, box-shadow 0.3s;
+    width: 150px; /* Nastav pevná šírka */
+    word-wrap: break-word; /* Zalomenie dlhého textu */
+    white-space: normal; /* Povolenie zalamovania textu */
 }
+
 
 .schedule-table .card-body:hover {
     background-color: #d4deff;
@@ -545,6 +549,37 @@ form button:active {
     font-size: 0.85em;
     color: #666;
 }
+
+.conference-name {
+    font-size: 12px; /* Väčšie písmo */
+    text-align: center; /* Centrovanie textu */
+    color: #333333; /* Prípadne zmeň farbu, ak chceš */
+    margin-bottom: 10px; /* Oddeľ text od ostatných častí */
+}
+
+.presentation-name {
+    font-style: italic; /* Kurzíva */
+    font-size: 14px; /* Väčšie písmo */
+    font-weight: bold; /* Tučné písmo pre lepšiu viditeľnosť */
+    text-align: center; /* Centrovanie textu */
+    color: #2d4bad; /* Prípadne zmeň farbu, ak chceš */
+    margin-bottom: 10px; /* Oddeľ text od ostatných častí */
+}
+
+.room-name {
+    font-size: 13px; /* Väčšie písmo */
+    text-align: left; /* Centrovanie textu */
+    color: #222222; /* Prípadne zmeň farbu, ak chceš */
+    margin-bottom: 5px; /* Oddeľ text od ostatných častí */
+    margin-top: 30px;
+}
+
+.date-name {
+    font-size: 11px; /* Väčšie písmo */
+    color: #333333; /* Prípadne zmeň farbu, ak chceš */
+    margin-bottom: 5px; /* Oddeľ text od ostatných častí */
+}
+
 
 
 

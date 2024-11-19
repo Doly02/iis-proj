@@ -22,12 +22,15 @@
                                     {foreach $scheduleItems as $scheduleItem}
                                         {if !$rendered && $scheduleItem['date'] == $xItem && $scheduleItem['start'] == $yItem}
                                             <td rowspan="{$scheduleItem['rowspan']}" class="card-body">
-                                                <a href="{plink :LectureModule:LectureDetail:default, $scheduleItem['id']}" class="lecture-link">
-                                                    {$scheduleItem['name']}
-                                                </a>
-                                                <p>{$scheduleItem['date']}</p>
+                                                <p class="conference-name">{$scheduleItem['conference']}</p>
+                                                <p class="presentation-name"><a href="{plink :LectureModule:LectureDetail:default, $scheduleItem['id']}">
+                                                        <strong>{$scheduleItem['name']}</strong>
+                                                    </a></p>
+                                                <p class="room-name"><strong>Room {$scheduleItem['room']}</strong></p>
                                                 <p class="card-time m-0">{$scheduleItem['start']} - {$scheduleItem['end']}</p>
+                                                <p class="date-name">{$scheduleItem['date']}</p>
                                             </td>
+
                                             {var $rendered = true}
                                             {for $i = 1; $i < $scheduleItem['rowspan']; $i++}
                                                 {var $occupiedRowsByDate[$xItem][$yItems[array_search($yItem, $yItems) + $i]] = true}
