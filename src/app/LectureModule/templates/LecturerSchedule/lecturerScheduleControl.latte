@@ -1,0 +1,49 @@
+<div class="container-schedule">
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="schedule-table table-bordered text-center">
+                    <thead>
+                    <tr>
+                        <th class="time-column">Time</th>
+                        {foreach $xItems as $xItem}
+                            <th>{$xItem}</th>
+                        {/foreach}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {var $occupiedRowsByDate = []}
+                    {foreach $yItems as $yItem}
+                        <tr>
+                            <td><strong>{$yItem}</strong></td>
+                            {foreach $xItems as $xItem}
+                                {if !isset($occupiedRowsByDate[$xItem][$yItem])}
+                                    {var $rendered = false}
+                                    {foreach $scheduleItems as $scheduleItem}
+                                        {if !$rendered && $scheduleItem['date'] == $xItem && $scheduleItem['start'] == $yItem}
+                                            <td rowspan="{$scheduleItem['rowspan']}" class="card-body">
+                                                <a href="{plink :LectureModule:LectureDetail:default, $scheduleItem['id']}" class="lecture-link">
+                                                    {$scheduleItem['name']}
+                                                </a>
+                                                <p>{$scheduleItem['date']}</p>
+                                                <p class="card-time m-0">{$scheduleItem['start']} - {$scheduleItem['end']}</p>
+                                            </td>
+                                            {var $rendered = true}
+                                            {for $i = 1; $i < $scheduleItem['rowspan']; $i++}
+                                                {var $occupiedRowsByDate[$xItem][$yItems[array_search($yItem, $yItems) + $i]] = true}
+                                            {/for}
+                                        {/if}
+                                    {/foreach}
+                                    {if !$rendered}
+                                        <td></td>
+                                    {/if}
+                                {/if}
+                            {/foreach}
+                        </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

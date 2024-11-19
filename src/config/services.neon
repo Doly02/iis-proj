@@ -32,6 +32,7 @@ services:
 	- App\TicketModule\Model\TicketService
 	- App\UserModule\Presenters\AuthenticationPresenter
 	- App\LectureModule\Controls\ConferenceSchedule\IConferenceScheduleControlFactory
+	- App\LectureModule\Controls\LecturerSchedule\ILecturerScheduleControlFactory
 	- App\LectureModule\Controls\AddNewLecture\INewLectureFormControlFactory
 	- App\LectureModule\Controls\EditLecture\IEditLectureFormControlFactory
 	- App\LectureModule\Model\LectureService

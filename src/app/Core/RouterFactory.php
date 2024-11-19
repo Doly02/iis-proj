@@ -66,9 +66,7 @@ final class RouterFactory
 
         $router->addRoute('user/register/admin', ':UserModule:CreateAdmin:default');
         $router->addRoute('lecture/detail/<lectureId>', 'LectureModule:LectureDetail:default');
-
-
-
+        $router->addRoute('lecturer/lecturer-schedule/schedule', ':LectureModule:LecturerSchedule:lecturerSchedule');
 
 
 

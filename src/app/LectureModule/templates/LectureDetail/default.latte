@@ -15,13 +15,13 @@
         <p><strong>Description:</strong> {$lectureData['description']}</p>
     </div>
 
-    <a href="{plink :LectureModule:EditLecture:default, lectureId => $lectureData['id']}" class="btn">Edit Lecture</a>
-    <a href="{link :LectureModule:EditLecture:delete, lectureid => $lectureData['id']}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this lecture?');">
-        Delete Lecture
-    </a>
-
-
-
-
+    <div class="btn-group-inline">
+        <a href="{plink :LectureModule:EditLecture:default, lectureId => $lectureData['id']}" class="btn">
+            Edit Lecture
+        </a>
+        <a href="{link :LectureModule:EditLecture:delete, lectureid => $lectureData['id']}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this lecture?');">
+            Delete Lecture
+        </a>
+    </div>
 
 {/block}

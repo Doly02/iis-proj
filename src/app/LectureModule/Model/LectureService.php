@@ -171,6 +171,18 @@ final class LectureService extends BaseService
         return 1;
     }
 
+    function calculateLecturerRowspan($start, $end, $times): int
+    {
+        $startIndex = array_search($start, $times);
+        $endIndex = array_search($end, $times);
+
+        if ($startIndex !== false && $endIndex !== false) {
+            return $endIndex - $startIndex;
+        }
+
+        return 1;
+    }
+
     public function getConferenceScheduleItems(int $conferenceId): array
     {
         $rooms = $this->getRooms($conferenceId);
@@ -291,6 +303,79 @@ final class LectureService extends BaseService
             ->where('state', 'approved')
             ->fetchAll();
     }
+
+    public function getLecturesByLecturerId(int $lecturerId): array
+    {
+        return $this->database->query('
+        SELECT lectures.*
+        FROM lectures
+        JOIN presentations ON lectures.id = presentations.lecture_id
+        WHERE presentations.lecturer_id = ?
+    ', $lecturerId)->fetchAll();
+    }
+
+    public function getLectureTimeMarkersByLecturerId(int $lecturerId): array
+    {
+        $lectures = $this->getLecturesByLecturerId($lecturerId);
+        $timeMarkers = [];
+
+        foreach ($lectures as $lecture) {
+            $startTime = (new \DateTime($lecture->start_time))->format('H:i');
+            $endTime = (new \DateTime($lecture->end_time))->format('H:i');
+            $timeMarkers[$startTime] = $startTime;
+            $timeMarkers[$endTime] = $endTime;
+        }
+
+        asort($timeMarkers);
+
+        return array_values($timeMarkers);
+    }
+
+    public function getLectureDatesByLecturerId(int $lecturerId): array
+    {
+        $lectures = $this->getLecturesByLecturerId($lecturerId);
+
+        $dates = [];
+        foreach ($lectures as $lecture) {
+            $date = (new DateTime($lecture->start_time))->format('d.m.Y');
+            if (!in_array($date, $dates)) {
+                $dates[] = $date;
+            }
+        }
+
+        sort($dates);
+        return $dates;
+    }
+
+    public function getLecturerScheduleItems(int $lecturerId): array
+    {
+        $lectures = $this->getLecturesByLecturerId($lecturerId);
+        $timeMarkers = $this->getLectureTimeMarkersByLecturerId($lecturerId);
+
+        $scheduleItems = [];
+        foreach ($lectures as $lecture) {
+            $presentation = $this->getPresentationByLectureId($lecture->id);
+
+            $start = (new \DateTime($lecture->start_time))->format('H:i');
+            $end = (new \DateTime($lecture->end_time))->format('H:i');
+
+            $rowspan = $this->calculateLecturerRowspan($start, $end, $timeMarkers);
+
+            $scheduleItems[] = [
+                'id' => $lecture->id,
+                'date' => (new DateTime($lecture->start_time))->format('d.m.Y'),
+                'start' => (new DateTime($lecture->start_time))->format('H:i'),
+                'end' => (new DateTime($lecture->end_time))->format('H:i'),
+                'name' => $presentation ? $presentation['name'] : 'No Presentation',
+                'rowspan' => $rowspan
+            ];
+        }
+        return $scheduleItems;
+    }
+
+
+
+
 
 
 
