@@ -24,6 +24,10 @@ final class LectureDetailPresenter extends SecurePresenter
             $this->redirect(':UserModule:Auth:signIn');
         }
 
+        $conferenceId = $this->_lectureService->getConferenceByLectureId($lectureId);
+        $conference = $this->_lectureService->getConferenceById($conferenceId);
+        $organiserId = $conference->organiser_id;
+
         $lectureData = $this->_lectureService->getLectureDetail($lectureId);
 
         if (!$lectureData) {
@@ -32,6 +36,8 @@ final class LectureDetailPresenter extends SecurePresenter
         }
 
         $this->template->lectureData = $lectureData;
+        $this->template->userId = $userId;
+        $this->template->organiserId = $organiserId;
     }
 
 }
