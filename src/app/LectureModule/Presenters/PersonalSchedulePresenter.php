@@ -64,7 +64,7 @@ class PersonalSchedulePresenter extends SecurePresenter
         $scheduleItems = $this->template->scheduleItems;
 
         return $this->personalScheduleControlFactory->create(
-            $conferenceId, $xItems, $yTimes, $yItems, $scheduleItems
+            $conferenceId, $xItems, $yTimes, $yItems, $scheduleItems, $this->lectureService
         );
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\LectureModule\Controls\PersonalSchedule;
 
+use App\LectureModule\Model\LectureService;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
 use Nette\Security\User;
@@ -14,10 +15,11 @@ final class PersonalScheduleControl extends Control
     private array $yTimes = [];
     private array $yItems = [];
     private array $scheduleItems = [];
+    private LectureService $lectureService;
 
     public function __construct(
         User $user, int $conferenceId,
-        array $xItems, array $yTimes, array $yItems, array $scheduleItems)
+        array $xItems, array $yTimes, array $yItems, array $scheduleItems, LectureService $lectureService)
     {
         $this->user = $user;
         $this->conferenceId = $conferenceId;
@@ -25,6 +27,7 @@ final class PersonalScheduleControl extends Control
         $this->yTimes = $yTimes;
         $this->yItems = $yItems;
         $this->scheduleItems = $scheduleItems;
+        $this->lectureService = $lectureService;
     }
 
     public function render(): void
@@ -58,6 +61,10 @@ final class PersonalScheduleControl extends Control
 
     public function processScheduleForm(Form $form, \stdClass $values): void
     {
+        $userId = $this->user->getId();
+        // all
+        $allLectures = array_column($this->scheduleItems, 'id');
+        // selected
         $selectedLectures = [];
         foreach ($values as $key => $value) {
             if ($value) {
@@ -67,5 +74,8 @@ final class PersonalScheduleControl extends Control
         }
 
         bdump($selectedLectures, 'Selected Lectures');
+        bdump($allLectures, 'All Lectures');
+        // updating selection
+        $this->lectureService->saveSelectedLectures($userId, $selectedLectures, $allLectures);
     }
 }

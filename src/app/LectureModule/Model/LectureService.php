@@ -397,11 +397,19 @@ final class LectureService extends BaseService
         return $scheduleItems;
     }
 
+    public function saveSelectedLectures(int $userId, array $lectureIds, array $allLectures): void
+    {
+        // Projdeme všechny dostupné přednášky a rozhodneme, jestli jsou vybrané nebo ne
+        foreach ($allLectures as $lectureId) {
+            $isSelected = in_array($lectureId, $lectureIds) ? 1 : 0;
 
-
-
-
-
-
+            // Vložíme nebo aktualizujeme záznam v tabulce selected_lectures
+            $this->database->query('
+            INSERT INTO selected_lectures (id_lecture, id_user, is_selected)
+            VALUES (?, ?, ?)
+            ON DUPLICATE KEY UPDATE is_selected = VALUES(is_selected)
+        ', $lectureId, $userId, $isSelected);
+        }
+    }
 
 }
