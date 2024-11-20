@@ -14,6 +14,7 @@ class PersonalSchedulePresenter extends SecurePresenter
     private IPersonalScheduleControlFactory $personalScheduleControlFactory;
     private LectureService $lectureService;
     private User $user;
+    private int $conferenceId;
 
     public function __construct(
         IPersonalScheduleControlFactory $personalScheduleControlFactory,
@@ -26,27 +27,44 @@ class PersonalSchedulePresenter extends SecurePresenter
         $this->user = $user;
     }
 
-    public function actionPersonalSchedule(): void
+    public function actionPersonalSchedule($id): void
     {
-        $userId = $this->user->getId();
+        $this->conferenceId = $id;
 
-        /*$xItems = $this->lectureService->getLectureDatesByPersonalId($userId);
-        $yItems = $this->lectureService->getLectureTimeMarkersByPersonalId($userId);
-        $scheduleItems = $this->lectureService->getPersonalScheduleItems($userId);
+        $conference = $this->lectureService->getConferenceById($this->conferenceId);
 
+        if (!$conference) {
+            $this->error('Conference not found');
+        }
+
+        $yItems = $this->lectureService->getLectureTimeMarkers($this->conferenceId);
+        $xItems = $this->lectureService->getRoomNames($this->conferenceId);
+
+
+        $yTimes = array_map(function($item) {
+            return (new DateTime($item))->format('H:i');
+        }, $yItems);
+
+        $scheduleItems = $this->lectureService->getConferenceScheduleItems($this->conferenceId);
+
+        $this->template->conferenceId = $id;
+        $this->template->conference = $conference;
         $this->template->xItems = $xItems;
+        $this->template->yTimes = $yTimes;
         $this->template->yItems = $yItems;
-        $this->template->scheduleItems = $scheduleItems;*/
+        $this->template->scheduleItems = $scheduleItems;
     }
 
     protected function createComponentPersonalSchedule(): PersonalScheduleControl
     {
+        $conferenceId = $this->template->conferenceId;
         $xItems = $this->template->xItems;
+        $yTimes = $this->template->yTimes;
         $yItems = $this->template->yItems;
         $scheduleItems = $this->template->scheduleItems;
 
         return $this->personalScheduleControlFactory->create(
-            $xItems, $yItems, $scheduleItems
+            $conferenceId, $xItems, $yTimes, $yItems, $scheduleItems
         );
     }
 }
