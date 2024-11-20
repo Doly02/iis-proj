@@ -6,5 +6,6 @@ namespace App\CommonModule\Controls\SideBar;
 
 interface ISideBarControlFactory
 {
-    function create(): SideBarControl;
+    public function create(string $accountType): SideBarControl;
+
 }

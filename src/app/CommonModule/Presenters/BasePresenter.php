@@ -89,6 +89,6 @@ abstract class BasePresenter extends Presenter
 
     protected function createComponentSideBar(): SideBarControl
     {
-        return $this->sideBarControlFactory->create();
+        return $this->sideBarControlFactory->create($this->accountType);
     }
 }

@@ -6,6 +6,11 @@
                 {else}
                         {include snippets/guestLinks.latte}
                 {/if}
+                {if $user->isLoggedIn()}
+                        {if $accountType === 'admn'}
+                                {include snippets/adminLinks.latte}
+                        {/if}
+                {/if}
         </ul>
 </nav>
 

@@ -1,0 +1,26 @@
+{if $user->isLoggedIn()}
+    {if $accountType === 'admn'}
+        <li class="sideBar-text" style="margin-top: 10px;">Administrator</li>
+        <hr style="border: 1px solid white; width: 80%; margin: auto;">
+        <li class="nav-sideitem">
+            <a class="nav-sidelink" href="{plink :RoomModule:RoomAdd:addRoom}">
+                Add Room
+            </a>
+        </li>
+        <li class="nav-sideitem">
+            <a class="nav-sidelink" href="{plink :RoomModule:RoomList:list}">
+                See Rooms
+            </a>
+        </li>
+        <li class="nav-sideitem">
+            <a class="nav-sidelink" href="{plink :UserModule:CreateAdmin:default}">
+                Create Admin
+            </a>
+        </li>
+        <li class="nav-sideitem">
+            <a class="nav-sidelink" href="{plink :UserModule:UserList:list}">
+                Manage Users
+            </a>
+        </li>
+    {/if}
+{/if}
