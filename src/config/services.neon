@@ -33,6 +33,7 @@ services:
 	- App\UserModule\Presenters\AuthenticationPresenter
 	- App\LectureModule\Controls\ConferenceSchedule\IConferenceScheduleControlFactory
 	- App\LectureModule\Controls\LecturerSchedule\ILecturerScheduleControlFactory
+	- App\LectureModule\Controls\PersonalSchedule\IPersonalScheduleControlFactory
 	- App\LectureModule\Controls\AddNewLecture\INewLectureFormControlFactory
 	- App\LectureModule\Controls\EditLecture\IEditLectureFormControlFactory
 	- App\LectureModule\Model\LectureService

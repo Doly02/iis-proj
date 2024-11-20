@@ -52,35 +52,6 @@ class ConferenceSchedulePresenter extends SecurePresenter
 
     }
 
-    public function actionPersonalSchedule(int $id): void
-    {
-        $this->conferenceId = $id;
-
-        $conference = $this->lectureService->getConferenceById($this->conferenceId);
-
-        if (!$conference) {
-            $this->error('Conference not found');
-        }
-
-        $yItems = $this->lectureService->getLectureTimeMarkers($this->conferenceId);
-        $xItems = $this->lectureService->getRoomNames($this->conferenceId);
-
-
-        $yTimes = array_map(function($item) {
-            return (new DateTime($item))->format('H:i');
-        }, $yItems);
-
-        $scheduleItems = $this->lectureService->getConferenceScheduleItems($this->conferenceId);
-
-        $this->template->conferenceId = $id;
-        $this->template->conference = $conference;
-        $this->template->xItems = $xItems;
-        $this->template->yTimes = $yTimes;
-        $this->template->yItems = $yItems;
-        $this->template->scheduleItems = $scheduleItems;
-
-    }
-
     protected function createComponentSchedule(): ConferenceScheduleControl
     {
         $conferenceId = $this->template->conferenceId;
