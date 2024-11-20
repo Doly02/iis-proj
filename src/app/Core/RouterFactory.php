@@ -74,9 +74,9 @@ final class RouterFactory
 
 
         $router[] = new \Nette\Application\Routers\Route('[<module>[/<presenter>[/<action>[/<id \d+>]]]]', [
-            'module' => 'CommonModule',
-            'presenter' => 'Home',
-            'action' => 'default',
+            'module' => 'ConferenceModule',
+            'presenter' => 'ConferenceList',
+            'action' => 'list',
         ]);
 
         return $router;
