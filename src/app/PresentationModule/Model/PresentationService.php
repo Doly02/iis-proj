@@ -37,7 +37,7 @@ final class PresentationService extends BaseService
             ->fetchAll();
     }
 
-    public function updateLectureId(int $lectureId, int $presentationId) : void
+    public function updateLectureId(int $lectureId, int $presentationId = null) : void
     {
         $this->getTable()
             ->where('id', $presentationId)

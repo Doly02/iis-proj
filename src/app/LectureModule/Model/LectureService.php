@@ -67,11 +67,23 @@ final class LectureService extends BaseService
 
     public function deleteLectureById(int $id): void
     {
-        $this->database->table('lectures')
-            ->where('id', $id)
-            ->delete();
-    }
+        $this->database->beginTransaction();
 
+        try {
+            $this->database->table('presentations')
+                ->where('lecture_id', $id)
+                ->update(['lecture_id' => null]);
+
+            $this->database->table('lectures')
+                ->where('id', $id)
+                ->delete();
+
+            $this->database->commit();
+        } catch (\Exception $e) {
+            $this->database->rollBack();
+            throw $e;
+        }
+    }
 
     public function isTimeSlotAvailable(int $conferenceAndRoomId, DateTime $startTime, DateTime $endTime): bool
     {

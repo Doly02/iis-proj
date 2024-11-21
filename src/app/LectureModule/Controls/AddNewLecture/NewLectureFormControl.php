@@ -119,6 +119,7 @@ final class NewLectureFormControl extends Control
 
         $lectureId = $this->lectureService->addLecture($conferenceAndRoomId, $startTime, $endTime);
 
+
         // assign presentation to lecture
         $this->presentationService->updateLectureId($lectureId, $values->presentation_id);
 
