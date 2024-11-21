@@ -59,6 +59,7 @@ final class AddConferenceControl extends Control
             $conferenceId = $this->conferenceService->addConference([
                 'name' => $values->name,
                 'description' => $values->description,
+                'area_of_interest' => $values->area_of_interest,
                 'start_time' => $values->start_time,
                 'end_time' => $values->end_time,
                 'price' => $values->price,

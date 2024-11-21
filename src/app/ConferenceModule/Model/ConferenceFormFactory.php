@@ -42,6 +42,10 @@ final class ConferenceFormFactory
             ->setRequired('Enter a description for the conference.')
             ->setHtmlAttribute('class', 'form-control');
 
+        $form->addTextArea('area_of_interest', 'Area of interest:')
+            ->setRequired('Enter an area of interest for the conference.')
+            ->setHtmlAttribute('class', 'form-control');
+
         // User-friendly selection of date and time
         $form->addDateTime('start_time', 'Conference start:')
             ->setRequired('Enter the start date.')
@@ -85,6 +89,7 @@ final class ConferenceFormFactory
             $form->setDefaults([
                 'name' => $conference->name,
                 'description' => $conference->description,
+                'area_of_interest' => $conference->area_of_interest,
                 'start_time' => $conference->start_time,
                 'end_time' => $conference->end_time,
                 'price' => $conference->price,
