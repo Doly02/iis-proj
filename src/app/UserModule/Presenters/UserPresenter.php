@@ -46,6 +46,18 @@ final class UserPresenter extends SecurePresenter
         $this->template->userData = $user;
     }
 
+    public function actionEditAdmin(int $userId): void
+    {
+        $this->checkPrivilege();
+
+        $user = $this->_userService->getUserById($userId);
+        if (!$user instanceof ActiveRow) {
+            $this->flashMessage('User not found.', 'error');
+            $this->redirect(':CommonModule:Home:default');
+        }
+        $this->template->userData = $user;
+    }
+
     protected function createComponentEditUser(): Control
     {
         $userId = $this->getParameter('userId') ?? $this->_user->getId();
@@ -58,6 +70,20 @@ final class UserPresenter extends SecurePresenter
             throw new \Nette\Application\BadRequestException('User not found');
         }
 
-        return $this->_editUserControlFactory->create($user);
+        return $this->_editUserControlFactory->create($user, false);
+    }
+
+    protected function createComponentEditUserAdmin(): Control
+    {
+        $userId = $this->getParameter('userId') ?? $this->_user->getId();
+        $user = $this->_userService->getUserById($userId);
+
+        if (!$user instanceof ActiveRow)
+        {
+            Debugger::log("User with ID $userId not found.", Debugger::ERROR);
+            throw new \Nette\Application\BadRequestException('User not found');
+        }
+
+        return $this->_editUserControlFactory->create($user, true);
     }
 }

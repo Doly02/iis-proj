@@ -18,17 +18,20 @@ final class EditUserControl extends Control
 
     private $_userService;
 
-    private $_list = false;
+    private bool $adminEdit;
+
 
     public function __construct(
         UserFormFactory $userFormFactory,
         UserService $userService,
-        ActiveRow $user
+        ActiveRow $user,
+        Bool $adminEdit
     )
     {
         $this->_user = $user;
         $this->_userFormFactory = $userFormFactory;
         $this->_userService = $userService;
+        $this->adminEdit = $adminEdit;
     }
 
     public function setList()
@@ -106,9 +109,11 @@ final class EditUserControl extends Control
         } catch (\Exception $e) {
             $form->addError('An error occurred while updating user information: ' . $e->getMessage());
         }
-
-        $this->presenter->redirect(':UserModule:UserDetail:default');
-
+        bdump($this->adminEdit);
+        if(!$this->adminEdit)
+            $this->presenter->redirect(':UserModule:UserDetail:default');
+        else
+            $this->presenter->redirect(':UserModule:UserList:list');
     }
 
     public function render(): void

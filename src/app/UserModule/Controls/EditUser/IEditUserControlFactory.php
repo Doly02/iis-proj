@@ -8,5 +8,5 @@ use Nette\Database\Table\ActiveRow;
 
 interface IEditUserControlFactory
 {
-    public function create(ActiveRow $user): EditUserControl;
+    public function create(ActiveRow $user, bool $adminEdit): EditUserControl;
 }
