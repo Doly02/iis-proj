@@ -10,7 +10,7 @@
 
     <h3>Tickets</h3>
     {if !$reservation->is_paid}
-        <p>No tickets yet, complete their purchase.</p>
+        <p>Tickets are not available at the moment, payment on the spot has been chosen.</p>
     {else}
         {foreach $tickets as $ticket}
             <div class="ticket">

@@ -66,7 +66,7 @@ final class PresentationAddPresenter extends BasePresenter
 
             $this->flashMessage('Presentation added successfully.', 'success');
 
-            $this->redirect(destination: ':CommonModule:Home:default'); // not working
+            $this->redirect(destination: ':ConferenceModule:ConferenceList:list'); // not working
 
 
         } catch (AbortException $e) {
