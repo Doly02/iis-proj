@@ -18,12 +18,11 @@ final class PresentationService extends BaseService
 
     public function getTableName(): string
     {
-        return 'Presentations';
+        return 'presentations';
     }
 
     public function addPresentation(array $data): ?ActiveRow
     {
-        dump($data);
         $insertedRow = $this->getTable()->insert($data);
 
         return $insertedRow instanceof ActiveRow ? $insertedRow : null;
