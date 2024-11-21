@@ -399,17 +399,26 @@ final class LectureService extends BaseService
 
     public function saveSelectedLectures(int $userId, array $lectureIds, array $allLectures): void
     {
-        // Projdeme všechny dostupné přednášky a rozhodneme, jestli jsou vybrané nebo ne
         foreach ($allLectures as $lectureId) {
             $isSelected = in_array($lectureId, $lectureIds) ? 1 : 0;
 
-            // Vložíme nebo aktualizujeme záznam v tabulce selected_lectures
-            $this->database->query('
-            INSERT INTO selected_lectures (id_lecture, id_user, is_selected)
-            VALUES (?, ?, ?)
-            ON DUPLICATE KEY UPDATE is_selected = VALUES(is_selected)
-        ', $lectureId, $userId, $isSelected);
+            $existingRecord = $this->database->table('selected_lectures')
+                ->where('id_lecture', $lectureId)
+                ->where('id_user', $userId)
+                ->fetch();
+
+            if ($existingRecord) {
+                $this->database->table('selected_lectures')
+                    ->where('id_lecture', $lectureId)
+                    ->where('id_user', $userId)
+                    ->update(['is_selected' => $isSelected]);
+            } else {
+                $this->database->table('selected_lectures')->insert([
+                    'id_lecture' => $lectureId,
+                    'id_user' => $userId,
+                    'is_selected' => $isSelected,
+                ]);
+            }
         }
     }
-
 }

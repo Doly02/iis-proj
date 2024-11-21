@@ -69,6 +69,7 @@ final class RouterFactory
         $router->addRoute('lecturer/lecturer-schedule/schedule', ':LectureModule:LecturerSchedule:lecturerSchedule');
 
         $router->addRoute('lecture/personal-schedule/schedule', ':LectureModule:PersonalSchedule:personalSchedule');
+        $router->addRoute('lecture/personal-schedule-view/schedule', ':LectureModule:PersonalScheduleView:personalScheduleView');
 
 
 
