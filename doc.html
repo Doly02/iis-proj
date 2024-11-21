@@ -105,6 +105,7 @@
                     </li>
                 </ul>
             </li>
+            <br>
             <li><strong>UserModule/</strong>
                 <em>- obsahuje základní definice, např. BasePresenter, SecurePresenter, BaseService</em>
                 <ul>
@@ -132,26 +133,40 @@
                     </li>
                     <li><strong>Presenters/</strong>
                         <ul>
-                            <li>AuthenticationPresenter.php</li> <em>presentér pro autentizaci uživatelů</em>
+                            <li>
+                                AuthenticationPresenter.php <em>presentér pro autentizaci uživatelů</em>
+                            </li>
                         </ul>
                         <ul>
-                            <li>RegisterPresenter.php</li> <em>presentér pro registraci uživatelů</em>
+                            <li>
+                                RegisterPresenter.php <em>presentér pro registraci uživatelů</em>
+                            </li>
                         </ul>
                         <ul>
-                            <li>UserListPresenter.php</li> <em>presentér pro admina, zobrazuje seznam všech uživatelů, implementuje odstranění/upravení uživatelů</em>
+                            <li>
+                                UserListPresenter.php <em>presentér pro admina, zobrazuje seznam všech uživatelů, implementuje odstranění/upravení uživatelů</em>
+                            </li>
                         </ul>
                         <ul>
-                            <li>UserPresenter.php</li> <em>presentér pro uživatele, umožňuje úpravu účtu uživatele (změna hesla, jména, příjmení)</em>
+                            <li>
+                                UserPresenter.php <em>presentér pro uživatele, umožňuje úpravu účtu uživatele (změna hesla, jména, příjmení)</em>
+                            </li>
                         </ul>
                         <ul>
-                            <li>CreateAdminPresenter.php</li> <em>presentér pro admina, umožňuje výtvářet další  administrátorské účty</em>
+                            <li>
+                                CreateAdminPresenter.php <em>presentér pro admina, umožňuje výtvářet další  administrátorské účty</em>
+                            </li>
                         </ul>
                     </li>
                     <li><strong>templates/</strong>
                         <em>- obsahuje šablony k jednotlivým presentérům.</em>
                     </li>
+                    <li><strong>Controls/</strong>
+                        <em>- obsahuje kontroléry k jednotlivým presentérům</em>
+                    </li>
                 </ul>
             </li>
+            <br>
             <li><strong>ReservationModule/</strong>
                 <em>- implementuje logiku práce s rezervacemi uživatelů</em>
                 <ul>
@@ -181,11 +196,15 @@
                             </li>
                         </ul>
                     </li>
+                    <li><strong>templates/</strong>
+                        <em>- obsahuje šablony k jednotlivým presentérům.</em>
+                    </li>
                     <li><strong>Controls/</strong>
-                    <em>- obsahuje kontroléry k jednotlivým presentérům</em>
+                        <em>- obsahuje kontroléry k jednotlivým presentérům</em>
                     </li>
                 </ul>
             </li>
+            <br>
             <li><strong>PresentationModule/</strong>
                 <em>- implementuje logiku práce s prezentacemi od uživatelů k jednotlivým přednáškám</em>
                 <ul>
@@ -212,12 +231,15 @@
                             </li>
                         </ul>
                     </li>
+                    <li><strong>templates/</strong>
+                    </li>
+                    <em>- obsahuje šablony k jednotlivým presentérům.</em>  
                     <li><strong>Controls/</strong>
-                    <em>- obsahuje kontroléry k jednotlivým presentérům</em>
-
+                        <em>- obsahuje kontroléry k jednotlivým presentérům</em>
                     </li>
                 </ul>
             </li>
+            <br>
             <li><strong>LectureModule/</strong>
                 <em>- implementuje logiku práce s přednáškami jednotlivých konferencí</em>
                 <ul>
@@ -241,12 +263,15 @@
                             </li>
                         </ul>
                     </li>
+                    <li><strong>templates/</strong>
+                        <em>- obsahuje šablony k jednotlivým presentérům.</em>
+                    </li>
                     <li><strong>Controls/</strong>
-                    <em>(obsahuje základní rozložení stránky - datagrid, footer, headbar, sidebar)</em>
-
+                        <em>- obsahuje kontroléry k jednotlivým presentérům</em>
                     </li>
                 </ul>
             </li>
+            <br>
             <li><strong>ConferenceModule/</strong>
                 <em>- implementuje logiku práce s jednotlivými konferencemi</em>
                 <ul>
@@ -282,12 +307,15 @@
                             </li>
                         </ul>
                     </li>
+                    <li><strong>templates/</strong>
+                        <em>- obsahuje šablony k jednotlivým presentérům.</em>
+                    </li>
                     <li><strong>Controls/</strong>
-                    <em>(obsahuje základní rozložení stránky - datagrid, footer, headbar, sidebar)</em>
-
+                        <em>- obsahuje kontroléry k jednotlivým presentérům</em>
                     </li>
                 </ul>
             </li>
+            <br>
             <li><strong>ConferenceHasRoomsModule/</strong>
                 <em>- implementuje vazby mezi jednotlými místnosti a konferencemi</em>
                 <ul>
@@ -300,6 +328,7 @@
                     </li>
                 </ul>
             </li>
+            <br>
             <li><strong>RoomsModule/</strong>
                 <em>- implementuje logiku práce s místnostmi</em>
                 <ul>
@@ -329,6 +358,7 @@
                     </li>
                 </ul>
             </li>
+            <br>
             <li><strong>Core/</strong>
                 <em>- implementuje logiku routovani</em>
                     <ul>
@@ -337,6 +367,7 @@
                         </li>
                     </ul>
             </li>
+            <br>
             <li><strong>css/</strong>
                 <em>- implementuje logiku routovani</em>
                     <ul>
@@ -345,6 +376,7 @@
                         </li>
                     </ul>
             </li>
+            <br>
             <li><strong>www/</strong>
                 <ul>
                     <li>
@@ -352,6 +384,7 @@
                     </li>
                 </ul>
             </li>
+            <br>
             <li><strong>others/</strong>
                 <em>- obsahuje nezávislé komponenty</em>
                     <ul>
@@ -364,6 +397,7 @@
                         </li>
                     </ul>
             </li>
+            <br>
             <li><strong>data/</strong>
                 <em>- obsahuje SQL databázový skript</em>
                     <ul>
