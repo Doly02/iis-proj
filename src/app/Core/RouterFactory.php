@@ -71,7 +71,7 @@ final class RouterFactory
         $router->addRoute('lecture/personal-schedule/schedule', ':LectureModule:PersonalSchedule:personalSchedule');
         $router->addRoute('lecture/personal-schedule-view/schedule', ':LectureModule:PersonalScheduleView:personalScheduleView');
 
-
+        $router->addRoute('lecture/my-schedule/schedule', ':LectureModule:MySchedule:mySchedule');
 
 
         $router[] = new \Nette\Application\Routers\Route('[<module>[/<presenter>[/<action>[/<id \d+>]]]]', [

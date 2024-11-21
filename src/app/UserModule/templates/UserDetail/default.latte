@@ -12,8 +12,6 @@
         {if $user->isLoggedIn()}
             <p>
                 <a href="{plink :UserModule:User:editUser, userId => $user->id}" class="btn btn-primary">Edit Profile</a>
-                <a href="{plink :ConferenceModule:ConferenceListUser:list, userId => $user->id}" class="btn btn-primary">View My Conferences</a>
-                <a href="{plink :ReservationModule:ReservationList:list}" class="btn btn-primary">View My Reservations</a>
             </p>
         {/if}
     </div>
