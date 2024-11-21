@@ -11,17 +11,9 @@
 <body>
 
     {block content}
-
-            {if $flashes}
-                {foreach $flashes as $flash}
-                    <div class="flash {$flash->type}">{$flash->message}</div>
-                {/foreach}
-            {/if}
-
         <div class="form-group">
             {control conferenceGrid}
         </div>
-
     {/block}
 
 </body>

@@ -1,0 +1,50 @@
+{default $title = 'Conference detail'}
+
+{block content}
+    <h2>{$conference->name}</h2>
+
+    <div>
+        <p><strong>Area of interest:</strong> {$conference->area_of_interest}</p>
+        <p><strong>Description:</strong> {$conference->description}</p>
+        <p><strong>Start Time:</strong> {$start_time_formatted}</p>
+        <p><strong>End Time:</strong> {$end_time_formatted}</p>
+        <p><strong>Price:</strong> {$conference->price}</p>
+        <p><strong>Capacity:</strong> {$occupiedCapacity} / <strong>{$conference->capacity}</strong></p>
+
+        {if $occupiedCapacity == $conference->capacity}
+            <p style="color: #dc0000; font-weight: bold;">The capacity of the conference is full</p>
+        {/if}
+    </div>
+
+    <br>
+
+    {if ($userId === $organiserId)}
+        <div class="btn-group-inline">
+            <a href="{link :LectureModule:ConferenceSchedule:schedule, id => $conference->id}" class="btn btn-primary">
+                Conference schedule
+            </a>
+            <a href="{link :ConferenceModule:EditConference:edit, id => $conference->id}" class="btn btn-primary">
+                Edit conference
+            </a>
+            <a href="{link ':ConferenceModule:AddRoomToConference:add', id => $conference->id}" class="btn btn-primary">
+                Add rooms to conference
+            </a>
+            <a href="{link :ConferenceModule:EditConference:delete, id => $conference->id}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this conference?');">
+                Delete conference
+            </a>
+        </div>
+
+        <br>
+
+        <div class="btn-group-inline">
+            <a href="{link ':PresentationModule:PresentationList:list', id => $conference->id}" class="btn btn-primary">
+                Manage presentations
+            </a>
+            <a href="{link ':ReservationModule:ReservationListOrganizer:list', conferenceId => $conference->id}" class="btn btn-primary">
+                Manage reservations
+            </a>
+        </div>
+    {/if}
+
+
+{/block}

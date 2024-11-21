@@ -7,7 +7,7 @@ use App\ConferenceModule\Model\ConferenceService;
 use Nette\Security\User;
 use Tracy\Debugger;
 
-final class ConferenceDetailPresenter extends BasePresenter
+final class ConferenceCreatorDetailPresenter extends BasePresenter
 {
     private $conferenceService;
     private $user;
@@ -18,7 +18,7 @@ final class ConferenceDetailPresenter extends BasePresenter
         $this->user = $user;
     }
 
-    public function renderDefault(int $id): void
+    public function renderDefaultOrganizer(int $id): void
     {
         $conference = $this->conferenceService->getConferenceById($id);
         $userId = $this->user->getId();

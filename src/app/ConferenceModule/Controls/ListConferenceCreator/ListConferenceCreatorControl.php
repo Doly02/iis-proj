@@ -94,7 +94,7 @@ final class ListConferenceCreatorControl extends Control
                 return $data;
             });
 
-        $grid->addAction('detail', '', 'ConferenceDetail:default')
+        $grid->addAction('detail', '', 'ConferenceCreatorDetail:defaultOrganizer')
             ->setTitle('Show detail')
             ->setclass('')
             ->setIcon('eye');
