@@ -81,8 +81,7 @@ final class NewLectureFormControl extends Control
                 ->setRequired('Select duration.');
 
             $form->addSelect('presentation_id', 'Presentation', $presentationOptions)
-                ->setPrompt('Select presentation')
-                ->setRequired('Select presentation');
+                ->setPrompt('Select presentation');
         }
 
         $form->addSubmit('send', 'Add new lecture');
