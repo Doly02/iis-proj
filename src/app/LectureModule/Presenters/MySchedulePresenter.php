@@ -3,35 +3,35 @@
 namespace App\LectureModule\Presenters;
 
 use App\CommonModule\Presenters\SecurePresenter;
-use App\LectureModule\Controls\LecturerSchedule\LecturerScheduleControl;
-use App\LectureModule\Controls\LecturerSchedule\ILecturerScheduleControlFactory;
+use App\LectureModule\Controls\MySchedule\IMyScheduleControlFactory;
+use App\LectureModule\Controls\MySchedule\MyScheduleControl;
 use App\LectureModule\Model\LectureService;
 use Nette\Database\DateTime;
 use Nette\Security\User;
 
-class LecturerSchedulePresenter extends SecurePresenter
+class MySchedulePresenter extends SecurePresenter
 {
-    private ILecturerScheduleControlFactory $lecturerScheduleControlFactory;
+    private IMyScheduleControlFactory $myScheduleControlFactory;
     private LectureService $lectureService;
     private User $user;
 
     public function __construct(
-        ILecturerScheduleControlFactory $lecturerScheduleControlFactory,
+        IMyScheduleControlFactory $myScheduleControlFactory,
         LectureService $lectureService,
         User $user
     ) {
         parent::__construct();
-        $this->lecturerScheduleControlFactory = $lecturerScheduleControlFactory;
+        $this->myScheduleControlFactory = $myScheduleControlFactory;
         $this->lectureService = $lectureService;
         $this->user = $user;
     }
 
-    public function actionLecturerSchedule(): void
+    public function actionMySchedule(): void
     {
         $userId = $this->user->getId();
 
-        $xItems = $this->lectureService->getLectureDatesByLecturerId($userId);
-        $yItems = $this->lectureService->getLectureTimeMarkersByLecturerId($userId);
+        $xItems = $this->lectureService->getLectureDatesByUserId($userId);
+        $yItems = $this->lectureService->getLectureTimeMarkersByUserId($userId);
         $scheduleItems = $this->lectureService->getLecturerScheduleItems($userId);
 
         $today = new DateTime();
@@ -66,7 +66,9 @@ class LecturerSchedulePresenter extends SecurePresenter
         $this->template->sunday = $sunday;
     }
 
-    protected function createComponentLecturerSchedule(): LecturerScheduleControl
+
+
+    protected function createComponentMySchedule(): MyScheduleControl
     {
         $xItems = $this->template->xItems;
         $yItems = $this->template->yItems;
@@ -77,11 +79,9 @@ class LecturerSchedulePresenter extends SecurePresenter
         $sunday = $this->template->sunday;
 
 
-        return $this->lecturerScheduleControlFactory->create(
+        return $this->myScheduleControlFactory->create(
             $xItems, $yItems, $scheduleItems, $week, $year, $monday, $sunday
         );
     }
+
 }
-
-
-

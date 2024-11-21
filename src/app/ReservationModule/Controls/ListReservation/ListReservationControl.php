@@ -45,7 +45,6 @@ final class ListReservationControl extends Control
 
         // TODO reservation needs datetime created
 
-
         $grid->addColumnText('price_to_pay', 'Total price (kč)')
             ->setSortable()
             ->setFilterRange();

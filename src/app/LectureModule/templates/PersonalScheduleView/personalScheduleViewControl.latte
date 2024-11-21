@@ -1,0 +1,53 @@
+<div class="container-schedule">
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="schedule-table table-bordered text-center">
+                    <thead>
+                    <tr>
+                        <th class="time-column">Time</th>
+                        {foreach $xItems as $xItem}
+                            <th>{$xItem}</th>
+                        {/foreach}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $yTimes as $yTime}
+                        <tr>
+                            <td><strong>{$yTime}</strong></td>
+                            {foreach $xItems as $xItem}
+                                {var $rendered = false}
+                                {foreach $scheduleItems as $scheduleItem}
+                                    {if !$rendered && $scheduleItem['start'] == $yTime && $scheduleItem['room'] == $xItem}
+                                        <td rowspan="{$scheduleItem['rowspan']}" class="card-body">
+                                            <a href="{plink :LectureModule:LectureDetail:default, $scheduleItem['id']}" class="lecture-link">
+                                                {if $scheduleItem['name']}
+                                                    {$scheduleItem['name']}
+                                                {else}
+                                                    Detail
+                                                {/if}
+                                            </a>
+                                            {if $scheduleItem['lecturer']}
+                                                <p class="card-name m-0"><em>{$scheduleItem['lecturer']}</em></p>
+                                            {/if}
+                                            <p class="card-time m-0">{$scheduleItem['start']} - {$scheduleItem['end']}</p>
+                                            <p class="card-text small m-0">Room {$scheduleItem['room']}</p>
+                                        </td>
+                                        {var $rendered = true}
+                                    {elseif $scheduleItem['start'] <= $yTime && $scheduleItem['end'] > $yTime && $scheduleItem['room'] == $xItem}
+                                        {var $rendered = true}
+                                    {/if}
+                                {/foreach}
+
+                                {if !$rendered}
+                                    <td></td>
+                                {/if}
+                            {/foreach}
+                        </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

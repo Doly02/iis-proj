@@ -1,0 +1,70 @@
+<div class="week-navigation">
+    <form class="week-navigation-form" method="get" action="{plink :LectureModule:MySchedule:MySchedule}">
+        <input type="hidden" name="week" value="{$monday->modify('-1 week')->format('W')}" />
+        <input type="hidden" name="year" value="{$monday->modify('-1 week')->format('o')}" />
+        <button type="submit" class="btn btn-secondary">Previous week</button>
+    </form>
+
+    <span class="current-week">
+        <strong>Week:</strong> {$monday->format('d.m.Y')} - {$sunday->format('d.m.Y')}
+    </span>
+
+    <form class="week-navigation-form" method="get" action="{plink :LectureModule:MySchedule:MySchedule}">
+        <input type="hidden" name="week" value="{$monday->modify('+1 week')->format('W')}" />
+        <input type="hidden" name="year" value="{$monday->modify('+1 week')->format('o')}" />
+        <button type="submit" class="btn btn-secondary">Next week</button>
+    </form>
+</div>
+
+<div class="container-schedule">
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="schedule-table table-bordered text-center">
+                    <thead>
+                    <tr>
+                        <th class="time-column">Time</th>
+                        {foreach $xItems as $xItem}
+                            <th>{$xItem}</th>
+                        {/foreach}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {var $occupiedRowsByDate = []}
+                    {foreach $yItems as $yItem}
+                        <tr>
+                            <td><strong>{$yItem}</strong></td>
+                            {foreach $xItems as $xItem}
+                                {if !isset($occupiedRowsByDate[$xItem][$yItem])}
+                                    {var $rendered = false}
+                                    {foreach $scheduleItems as $scheduleItem}
+                                        {if !$rendered && $scheduleItem['date'] == $xItem && $scheduleItem['start'] == $yItem}
+                                            <td rowspan="{$scheduleItem['rowspan']}" class="card-body">
+                                                <p class="conference-name">{$scheduleItem['conference']}</p>
+                                                <p class="presentation-name"><a href="{plink :LectureModule:LectureDetail:default, $scheduleItem['id']}">
+                                                        <strong>{$scheduleItem['name']}</strong>
+                                                    </a></p>
+                                                <p class="room-name"><strong>Room {$scheduleItem['room']}</strong></p>
+                                                <p class="card-time m-0">{$scheduleItem['start']} - {$scheduleItem['end']}</p>
+                                                <p class="date-name">{$scheduleItem['date']}</p>
+                                            </td>
+
+                                            {var $rendered = true}
+                                            {for $i = 1; $i < $scheduleItem['rowspan']; $i++}
+                                                {var $occupiedRowsByDate[$xItem][$yItems[array_search($yItem, $yItems) + $i]] = true}
+                                            {/for}
+                                        {/if}
+                                    {/foreach}
+                                    {if !$rendered}
+                                        <td></td>
+                                    {/if}
+                                {/if}
+                            {/foreach}
+                        </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
