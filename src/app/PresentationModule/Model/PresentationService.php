@@ -28,6 +28,19 @@ final class PresentationService extends BaseService
         return $insertedRow instanceof ActiveRow ? $insertedRow : null;
     }
 
+    public function updatePresentation(int $presentationId, array $data): ?ActiveRow
+    {
+        $presentation = $this->getTable()->get($presentationId);
+
+        if (!$presentation) {
+            throw new \Exception("Presentation with ID $presentationId not found.");
+        }
+
+        $updated = $presentation->update($data);
+
+        return $updated ? $presentation : null;
+    }
+
     public function getConferenceApprovedPresentations(int $conferenceId): array
     {
         return $this->getTable()

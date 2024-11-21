@@ -57,6 +57,8 @@ final class RouterFactory
 
         $router->addRoute('presentation/presentation-detail/default', ':PresentationModule:PresentationDetail:default');
 
+        $router->addRoute('presentation/lecturer-presentation-detail/default', ':PresentationModule:LecturerPresentationDetail:default');
+
         // $router->addRoute('user/edit-user', ':UserModule:EditUser:editUser');
 
         $router->addRoute('user/authentication/sign-in', ':UserModule:Authentication:signIn');

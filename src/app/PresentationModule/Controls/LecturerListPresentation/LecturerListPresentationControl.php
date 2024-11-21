@@ -59,7 +59,7 @@ final class LecturerListPresentationControl extends Control
         $grid->addColumnText('state', 'State')
             ->setSortable();
 
-        $grid->addAction('detail', '', 'PresentationDetail:default')
+        $grid->addAction('detail', '', 'LecturerPresentationDetail:default')
             ->setTitle('Show detail')
             ->setclass('')
             ->setIcon('edit');
