@@ -40,6 +40,7 @@ services:
 	- App\LectureModule\Controls\EditLecture\IEditLectureFormControlFactory
 	- App\LectureModule\Model\LectureService
 	- App\PresentationModule\Controls\ListPresentation\IListPresentationControlFactory
+	- App\PresentationModule\Controls\LecturerListPresentation\ILecturerListPresentationControlFactory
 
 	# Forms
 	- App\UserModule\Model\UserFormFactory

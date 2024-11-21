@@ -88,6 +88,23 @@ final class PresentationService extends BaseService
         return $this->database->query($sql, $userId)->fetchAll();
     }
 
+    public function getLecturerPresentations(int $userId): array
+    {
+        $sql = "
+        SELECT 
+            presentations.*,
+            conferences.name AS conference_name
+        FROM 
+            presentations
+        JOIN 
+            conferences ON presentations.conference_id = conferences.id
+        WHERE 
+            presentations.lecturer_id = ?
+        ";
+
+        return $this->database->query($sql, $userId)->fetchAll();
+    }
+
     public function approvePresentationById(int $id): bool
     {
         return $this->updatePresentationState($id, 'approved');

@@ -51,6 +51,8 @@ final class RouterFactory
 
         $router->addRoute('presentation/presentation-list/list', ':PresentationModule:PresentationList:list');
 
+        $router->addRoute('presentation/lecturer-presentation-list/lecturer-list', ':PresentationModule:LecturerPresentationList:list');
+
         $router->addRoute('presentation/presentation-list/organizer-list', ':PresentationModule:PresentationList:organizerList');
 
         $router->addRoute('presentation/presentation-detail/default', ':PresentationModule:PresentationDetail:default');
