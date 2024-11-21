@@ -18,6 +18,8 @@ final class EditUserControl extends Control
 
     private $_userService;
 
+    private $_list = false;
+
     public function __construct(
         UserFormFactory $userFormFactory,
         UserService $userService,
@@ -29,9 +31,16 @@ final class EditUserControl extends Control
         $this->_userService = $userService;
     }
 
+    public function setList()
+    {
+        $this->_list = true;
+    }
+
     public function createComponentEditUser(): Form
     {
         $form = new Form();
+
+        $form->addHidden('userId', $this->_user->id);
 
         /* First Name */
         $form->addText('name', 'First Name')
@@ -78,7 +87,7 @@ final class EditUserControl extends Control
         try {
             $data = [
                 'name' => $values->name,
-                'lastName' => $values->lastName,
+                'surname' => $values->lastName,
                 'email' => $values->email,
             ];
 
@@ -88,14 +97,18 @@ final class EditUserControl extends Control
                 $data['password'] = $passwords->hash($values->password);
             }
 
+            $userId = $values->userId;
             // Update User In Database
-            $this->_userService->editUser($this->_user, $data);
+            $this->_userService->editUserById($userId, $data);
 
             $this->presenter->flashMessage('User information updated successfully.', 'success');
-            $this->presenter->redirect('this');
+
         } catch (\Exception $e) {
             $form->addError('An error occurred while updating user information: ' . $e->getMessage());
         }
+
+        $this->presenter->redirect(':UserModule:UserDetail:default');
+
     }
 
     public function render(): void

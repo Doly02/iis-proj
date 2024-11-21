@@ -135,9 +135,7 @@ final class UserService extends BaseService implements Authenticator
         }
         return null;
     }
-    /*
-     * TODO: User Does Not Have Address or Telephone Number?
-     */
+
     public function editUser(ArrayHash $data) : void
     {
         $this->database->beginTransaction();
@@ -150,6 +148,16 @@ final class UserService extends BaseService implements Authenticator
         $this->updateUser($data, Role::USER);
 
         $this->database->commit();
+    }
+
+    public function editUserById(int $userId, array $data): void
+    {
+        $user = $this->getUserById($userId);
+        if (!$user instanceof ActiveRow) {
+            throw new \Exception("User not found");
+        }
+
+        $user->update($data);
     }
 
     public function editAdmin(ArrayHash $data) : void

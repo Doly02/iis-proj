@@ -8,24 +8,29 @@ use App\UserModule\Model\UserService;
 use Nette\Application\UI\Control;
 use Nette\Database\Table\ActiveRow;
 use Tracy\Debugger;
+use Nette\Security\User;
 
 final class UserPresenter extends SecurePresenter
 {
     private $_editUserControlFactory;
     private $_userService;
+    private User $_user;
 
     public function __construct(
         IEditUserControlFactory $editUserControlFactory,
-        UserService $userService
+        UserService $userService,
+        User $user
         )
     {
         parent::__construct();
         $this->_editUserControlFactory = $editUserControlFactory;
         $this->_userService = $userService;
+        $this->_user = $user;
     }
     public function actionList(): void
     {
         $this->checkPrivilege();
+        bdump("list");
     }
     public function actionEdit(int $userId): void
     {
@@ -43,7 +48,7 @@ final class UserPresenter extends SecurePresenter
 
     protected function createComponentEditUser(): Control
     {
-        $userId = $this->getParameter('userId');
+        $userId = $this->getParameter('userId') ?? $this->_user->getId();
         Debugger::log("Creating EditUser component for user ID: $userId", Debugger::INFO);
         $user = $this->_userService->getUserById($userId);
 
