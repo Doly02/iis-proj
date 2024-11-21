@@ -32,7 +32,7 @@ class MySchedulePresenter extends SecurePresenter
 
         $xItems = $this->lectureService->getLectureDatesByUserId($userId);
         $yItems = $this->lectureService->getLectureTimeMarkersByUserId($userId);
-        $scheduleItems = $this->lectureService->getLecturerScheduleItems($userId);
+        $scheduleItems = $this->lectureService->getUserScheduleItems($userId);
 
         $today = new DateTime();
 
