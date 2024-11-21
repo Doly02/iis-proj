@@ -45,4 +45,18 @@ final class PresentationEditPresenter extends BasePresenter
         $this->redirect(':PresentationModule:PresentationList:list', ['id' => $conferenceId]);
     }
 
+    public function actionDelete(int $id): void
+    {
+        try {
+            $this->PresentationService->deletePresentation($id);
+            $this->flashMessage('Presentation deleted successfully.', 'success');
+        } catch (\Exception $e) {
+            $this->flashMessage('Error deleting Presentation: ' . $e->getMessage(), 'error');
+        }
+
+        // Redirect to the list of Presentations
+        $this->redirect(':PresentationModule:LecturerPresentationList:list');
+    }
+
+
 }

@@ -41,6 +41,17 @@ final class PresentationService extends BaseService
         return $updated ? $presentation : null;
     }
 
+    public function deletePresentation(int $presentationId): void
+    {
+        $presentation = $this->getTable()->get($presentationId);
+
+        if (!$presentation) {
+            throw new \Exception("Presentation with ID $presentationId not found.");
+        }
+
+        $presentation->delete();
+    }
+
     public function getConferenceApprovedPresentations(int $conferenceId): array
     {
         return $this->getTable()
