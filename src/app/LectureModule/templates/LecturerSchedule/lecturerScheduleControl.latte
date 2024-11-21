@@ -1,3 +1,21 @@
+<div class="week-navigation">
+    <form class="week-navigation-form" method="get" action="{plink :LectureModule:LecturerSchedule:LecturerSchedule}">
+        <input type="hidden" name="week" value="{$monday->modify('-1 week')->format('W')}" />
+        <input type="hidden" name="year" value="{$monday->modify('-1 week')->format('o')}" />
+        <button type="submit" class="btn btn-secondary">Previous week</button>
+    </form>
+
+    <span class="current-week">
+        <strong>Week:</strong> {$monday->format('d.m.Y')} - {$sunday->format('d.m.Y')}
+    </span>
+
+    <form class="week-navigation-form" method="get" action="{plink :LectureModule:LecturerSchedule:LecturerSchedule}">
+        <input type="hidden" name="week" value="{$monday->modify('+1 week')->format('W')}" />
+        <input type="hidden" name="year" value="{$monday->modify('+1 week')->format('o')}" />
+        <button type="submit" class="btn btn-secondary">Next week</button>
+    </form>
+</div>
+
 <div class="container-schedule">
     <div class="row">
         <div class="col-12">

@@ -580,6 +580,28 @@ form button:active {
     margin-bottom: 5px; /* Oddeľ text od ostatných častí */
 }
 
+.week-navigation {
+    display: flex;
+    align-items: center; /* Zarovná tlačidlá a text vertikálne na stred */
+    justify-content: center; /* Prvky budú v strede rámčeka */
+    gap: 20px; /* Medzera medzi tlačidlami a textom */
+    padding: 10px; /* Vnútorné odsadenie rámčeka */
+    border: 1px solid #ccc; /* Rámček okolo celej navigácie */
+    border-radius: 8px; /* Zaoblené rohy */
+    background-color: #f9f9f9; /* Svetlé pozadie pre rámček */
+}
+
+.week-navigation-form {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+
+
+
 
 
 
