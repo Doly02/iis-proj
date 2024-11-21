@@ -230,6 +230,56 @@ final class LectureService extends BaseService
         return $scheduleItems;
     }
 
+    public function getPersonalViewScheduleItems(int $conferenceId, int $userId): array
+    {
+        $rooms = $this->getRooms($conferenceId);
+
+        // Načíst pouze přednášky, které jsou vybrané pro daného uživatele
+        $lectures = $this->database->query('
+            SELECT lectures.*, conference_has_rooms.room_id
+            FROM lectures
+            JOIN conference_has_rooms ON lectures.id_conference_has_rooms = conference_has_rooms.id
+            JOIN selected_lectures ON selected_lectures.id_lecture = lectures.id
+            WHERE conference_has_rooms.conference_id = ?
+              AND selected_lectures.id_user = ?
+              AND selected_lectures.is_selected = 1
+        ', $conferenceId, $userId)->fetchAll();
+
+        $scheduleItems = [];
+
+        foreach ($lectures as $lecture) {
+            $lectureId = $lecture->id;
+            $lectureRoomId = $lecture->room_id;
+            $lectureStart = new \DateTime($lecture->start_time);
+            $lectureEnd = new \DateTime($lecture->end_time);
+            $presentation = $this->getPresentationByLectureId($lecture->id);
+
+            $lectureRoomName = $rooms[$lectureRoomId] ?? 'Unknown Room';
+
+            $timeMarkers = $this->getLectureTimeMarkers($conferenceId);
+
+            $start = (new \DateTime($lecture->start_time))->format('Y-m-d H:i');
+            $end = (new \DateTime($lecture->end_time))->format('Y-m-d H:i');
+
+            $rowspan = $this->calculateRowspan($start, $end, $timeMarkers);
+
+            $item = [
+                'id' => $lectureId,
+                'time' => $lectureStart->format('Y-m-d H:i'),
+                'room' => $lectureRoomName,
+                'start' => $lectureStart->format('H:i'),
+                'end' => $lectureEnd->format('H:i'),
+                'rowspan' => $rowspan,
+                'name' => $presentation ? $presentation['name'] : "",
+                'lecturer' => $presentation ? $this->getLecturerName($presentation->id) : "",
+            ];
+
+            $scheduleItems[] = $item;
+        }
+
+        return $scheduleItems;
+    }
+
     public function getLectureDetail(int $lectureId): ?array
     {
         $lecture = $this->database->table('lectures')->get($lectureId);
@@ -420,5 +470,15 @@ final class LectureService extends BaseService
                 ]);
             }
         }
+    }
+
+    public function getSelectedLectures(int $userId): array
+    {
+        $selectedLectures = $this->database->table('selected_lectures')
+            ->where('id_user', $userId)
+            ->where('is_selected', 1)
+            ->fetchAll();
+
+        return array_column($selectedLectures, 'id_lecture');
     }
 }

@@ -2,7 +2,13 @@
 
 {block content}
     <h2> {$conference->name}</h2>
-    <h3>View schedule</h3>
+    <h3>Schedule</h3>
+
+
+    <a href="{link :LectureModule:PersonalSchedule:personalSchedule, id => $conference->id}" class="btn btn-primary">
+        Edit
+    </a>
+    <br>
 
     {control personalScheduleView}
 {/block}

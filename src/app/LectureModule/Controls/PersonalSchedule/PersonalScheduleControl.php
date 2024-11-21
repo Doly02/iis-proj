@@ -77,5 +77,6 @@ final class PersonalScheduleControl extends Control
         bdump($allLectures, 'All Lectures');
         // updating selection
         $this->lectureService->saveSelectedLectures($userId, $selectedLectures, $allLectures);
+        $this->presenter->redirect(':LectureModule:PersonalScheduleView:personalScheduleView', ['id' => $this->conferenceId]);
     }
 }

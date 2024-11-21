@@ -45,7 +45,8 @@ class PersonalScheduleViewPresenter extends SecurePresenter
             return (new DateTime($item))->format('H:i');
         }, $yItems);
 
-        $scheduleItems = $this->lectureService->getConferenceScheduleItems($this->conferenceId);
+        $userId = $this->user->getId();
+        $scheduleItems = $this->lectureService->getPersonalViewScheduleItems($this->conferenceId, $userId);
 
         $this->template->conferenceId = $id;
         $this->template->conference = $conference;
