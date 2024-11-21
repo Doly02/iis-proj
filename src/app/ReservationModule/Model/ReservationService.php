@@ -133,6 +133,19 @@ final class ReservationService extends BaseService
         }
     }
 
+    public function getReservationsByConferenceId(int $conferenceId): array
+    {
+        $sql = "
+        SELECT reservations.*, conferences.name AS conference_name
+        FROM reservations
+        JOIN conferences ON reservations.conference_id = conferences.id
+        WHERE reservations.conference_id = ?
+    ";
+
+        return $this->database->query($sql, $conferenceId)->fetchAll();
+    }
+
+
     /**
      * Get User's Reserved Conferences
      *
@@ -144,6 +157,20 @@ final class ReservationService extends BaseService
         return $this->database->table($this->getTableName())
             ->where('customer_id', $userId)
             ->select('conference_id');
+    }
+
+    public function deleteReservationsByUserId(int $userId): void
+    {
+        $this->database->table($this->getTableName())
+            ->where('customer_id', $userId)
+            ->delete();
+    }
+
+    public function approveReservation(int $reservationId): void
+    {
+        $this->database->table('reservations')
+            ->where('id', $reservationId)
+            ->update(['is_paid' => 1]);
     }
 
     /**
