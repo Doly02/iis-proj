@@ -29,7 +29,7 @@ final class PresentationEditPresenter extends BasePresenter
         }
 
         // Redirect to the list of Presentations
-        $this->redirect(':PresentationModule:PresentationList:list', ['id' => $conferenceId]);
+        $this->redirect(':PresentationModule:PresentationList:organizerList');
     }
 
     public function actionApprove(int $id, int $conferenceId): void
@@ -42,7 +42,7 @@ final class PresentationEditPresenter extends BasePresenter
         }
 
         // Redirect to the list of Presentations
-        $this->redirect(':PresentationModule:PresentationList:list', ['id' => $conferenceId]);
+        $this->redirect(':PresentationModule:PresentationList:organizerList');
     }
 
     public function actionDelete(int $id): void
