@@ -200,7 +200,7 @@ form table tr:last-child td {
 }
 
 table tr:last-of-type th {
-    background-color: #ffffff;
+    background-color: #acbffc;
 }
 
 
@@ -368,10 +368,12 @@ box-sizing: border-box;
     text-align: left;
     padding: 5px 10px;
     font-size: 14px;
+
 }
 
 .datagrid tr:last-child td {
     text-align: left;
+    background-color: #acbffc;
 }
 
 
