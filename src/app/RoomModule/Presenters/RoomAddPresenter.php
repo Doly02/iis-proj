@@ -60,12 +60,11 @@ final class RoomAddPresenter extends BasePresenter
                 $this->flashMessage('Room added successfully.', 'success');
             }
 
-            $this->redirect(':ConferenceModule:ConferenceList:list');
-
         } catch (AbortException $e) {
             // Allow AbortException silently (no action needed)
         } catch (\Exception $e) {
             $form->addError('An error occurred while adding the room: ' . $e->getMessage());
         }
+        $this->redirect(':RoomModule:RoomList:list');
     }
 }
