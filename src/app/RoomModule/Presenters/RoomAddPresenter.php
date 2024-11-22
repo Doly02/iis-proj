@@ -60,7 +60,7 @@ final class RoomAddPresenter extends BasePresenter
                 $this->flashMessage('Room added successfully.', 'success');
             }
 
-            $this->redirect(':CommonModule:Home:default');
+            $this->redirect(':ConferenceModule:ConferenceList:list');
 
         } catch (AbortException $e) {
             // Allow AbortException silently (no action needed)

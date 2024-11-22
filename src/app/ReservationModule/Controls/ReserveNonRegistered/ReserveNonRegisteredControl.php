@@ -157,7 +157,7 @@ final class ReserveNonRegisteredControl extends Control
                 'success'
             );
 
-            $this->presenter->redirect(':CommonModule:Home:default');
+            $this->presenter->redirect(':ConferenceModule:ConferenceList:list');
         }
         catch (\Nette\Application\AbortException $e)
         {

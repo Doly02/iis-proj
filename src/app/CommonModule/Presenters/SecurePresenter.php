@@ -68,14 +68,11 @@ abstract class SecurePresenter extends BasePresenter
 
     public function checkPrivilege(?string $resource = null, ?string $privilege = null) : bool
     {
-        Debugger::log("Reached checkPrivilege", 'info');
         /* Default Action, If Privilege Is Not Defined */
         $privilege = $privilege ?? $this->getAction();
 
         /* Use Default Source Based On Module & Presenter If Resource Is Not Defined */
         $resource = $resource ?? $this->getModuleName() . '.' . $this->getPresenterName();
-
-        Debugger::log("Checking privilege for resource: $resource and action: $privilege", Debugger::INFO);
 
         /* Check If User Has Privileges For This Source And Action */
         if (false === $this->getUser()->isAllowed($resource, $privilege))
@@ -84,7 +81,7 @@ abstract class SecurePresenter extends BasePresenter
             $this->flashMessage(sprintf('Permission Denied To "%s" on Resource "%s".', $privilege, $resource), 'error');
             try
             {
-                $this->redirect(':CommonModule:Home:default');
+                $this->redirect(':ConferenceModule:ConferenceList:list');
             } catch (AbortException $e)
             {
                 // Můžete například zalogovat nebo ji ignorovat
@@ -98,12 +95,9 @@ abstract class SecurePresenter extends BasePresenter
         $user = $this->getUser();
         $session = $this->getSession('user_activity');
 
-        Debugger::log("Checking if user is logged in.", Debugger::INFO);
-
         /* Check of Unactivity -> If User Has No Activity Durring 30 Minutes Then He/She Will Be Logged Out
          * 30 min. == 1800 sec.
          */
-        \Tracy\Debugger::log('Sec. User activity recorded at: ' . date('Y-m-d H:i:s', $session->lastActivity), \Tracy\ILogger::INFO);
 
         if (isset($session->lastActivity) && (time() - $session->lastActivity > 1800))
         {
@@ -116,7 +110,7 @@ abstract class SecurePresenter extends BasePresenter
             $cache->clean([Cache::ALL => true]); // Clear All Cache
 
             Debugger::enable('production'); // TODO: Maybe To Be Deleted?
-            $this->redirect(':CommonModule:Home:default');
+            $this->redirect(':ConferenceModule:ConferenceList:list');
 
         }
 

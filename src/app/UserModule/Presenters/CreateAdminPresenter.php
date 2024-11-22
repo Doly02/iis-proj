@@ -23,11 +23,11 @@ final class CreateAdminPresenter extends SecurePresenter
     {
         if ($this->getUser()->isLoggedIn() === false)
         {
-            $this->redirect(':CommonModule:Home:default');
+            $this->redirect(':ConferenceModule:ConferenceList:list');
         }
         else if ($this->getUser()->isLoggedIn() === true && $this->template->accountType !== 'admn')
         {
-            $this->redirect(':CommonModule:Home:default');
+            $this->redirect(':ConferenceModule:ConferenceList:list');
         }
     }
 

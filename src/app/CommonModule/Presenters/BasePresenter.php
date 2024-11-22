@@ -58,7 +58,7 @@ abstract class BasePresenter extends Presenter
     {
         $this->getUser()->logout(true);
         $this->flashMessage('You Have Been Logged Out.', 'info');
-        $this->redirect(':CommonModule:Home:default');
+        $this->redirect(':ConferenceModule:ConferenceList:list');
     }
 
 
