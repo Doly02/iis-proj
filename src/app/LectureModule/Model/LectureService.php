@@ -389,6 +389,7 @@ final class LectureService extends BaseService
     public function getLectureTimeMarkersByLecturerId(int $lecturerId): array
     {
         $lectures = $this->getLecturesByLecturerId($lecturerId);
+
         $timeMarkers = [];
 
         foreach ($lectures as $lecture) {
@@ -406,6 +407,7 @@ final class LectureService extends BaseService
     public function getLectureTimeMarkersByUserId(int $userId): array
     {
         $lectures = $this->getLecturesByUserId($userId);
+
         $timeMarkers = [];
 
         foreach ($lectures as $lecture) {
@@ -449,6 +451,7 @@ final class LectureService extends BaseService
         }
 
         sort($dates);
+
         return $dates;
     }
 
@@ -526,6 +529,7 @@ final class LectureService extends BaseService
                 'room' => $room
             ];
         }
+
         return $scheduleItems;
     }
 
