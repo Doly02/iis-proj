@@ -34,10 +34,11 @@ final class RoomAddPresenter extends BasePresenter
         $form = new Form;
 
         $form->addText('name', 'Name:')
-            ->setRequired('Enter the room name.')
-            ->addRule($form::MaxLength, 'Name can be at most 30 characters long.', 30);
+            ->setRequired('Enter the room name.');
 
-        $form->addInteger('capacity', 'Capacity:');
+        $form->addInteger('capacity', 'Capacity:')
+            ->setRequired('Enter the room capacity.')
+            ->addRule($form::Min, 'Capacity must be greater than 0.', 1);
 
         $form->addSubmit('send', 'Add');
 
