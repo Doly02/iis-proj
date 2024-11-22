@@ -51,8 +51,9 @@ final class ListReservationOrganizerControl extends Control
         $grid->addColumnText('conference_name', 'Conference Name')
             ->setSortable();
 
-        $grid->addColumnText('created_date', 'Reservation Date')
-            ->setSortable();
+        $grid->addColumnDateTime('created_date', 'Reservation Date')
+            ->setSortable()
+            ->setFormat('d.m.Y');
 
         $grid->addColumnText('num_reserved_tickets', 'Tickets Reserved')
             ->setSortable();
