@@ -75,6 +75,7 @@ final class ListConferenceUserControl extends Control
 
         $grid->setDefaultPerPage(20);
         $grid->setPagination(false);
+        $grid->setAutoSubmit(false);
 
         $grid->addColumnText('name', 'Name')
             ->setSortable()

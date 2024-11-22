@@ -49,11 +49,21 @@ final class LecturerListPresentationControl extends Control
         $grid->addColumnText('conference_name', 'Conference')
             ->setSortable()
             ->setFilterText()
+            ->setCondition(function ($data, $value) {
+                return array_filter($data, function ($row) use ($value) {
+                    return stripos($row['conference_name'], $value) !== false;
+                });
+            })
             ->setPlaceholder('Search by name');
 
         $grid->addColumnText('name', 'Name')
             ->setSortable()
             ->setFilterText()
+            ->setCondition(function ($data, $value) {
+                return array_filter($data, function ($row) use ($value) {
+                    return stripos($row['name'], $value) !== false;
+                });
+            })
             ->setPlaceholder('Search by name');
 
         $grid->addColumnText('state', 'State')

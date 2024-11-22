@@ -35,6 +35,7 @@ final class ListUserControl extends Control
         $grid = $this->_dataGridControlFactory->create($this->_userService);
         $grid->setDataSource($this->_userService->getAllUsers());
         $grid->setPagination(false);
+        $grid->setAutoSubmit(false);
 
         $grid->addColumnText('name', 'First Name')
             ->setSortable();

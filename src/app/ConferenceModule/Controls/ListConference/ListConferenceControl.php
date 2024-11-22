@@ -41,10 +41,20 @@ final class ListConferenceControl extends Control
         $grid->addColumnText('name', 'Name')
             ->setSortable()
             ->setFilterText()
+            ->setCondition(function ($data, $value) {
+                return array_filter($data, function ($row) use ($value) {
+                    return stripos($row['name'], $value) !== false;
+                });
+            })
             ->setPlaceholder('Search by name');
 
         $grid->addColumnText('area_of_interest', 'Area of Interest')
             ->setFilterText()
+            ->setCondition(function ($data, $value) {
+                return array_filter($data, function ($row) use ($value) {
+                    return stripos($row['area_of_interest'], $value) !== false;
+                });
+            })
             ->setPlaceholder('Search by interest');
 
         $grid->addColumnDateTime('start_time', 'Start')

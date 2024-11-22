@@ -41,9 +41,13 @@ final class ListReservationControl extends Control
         $grid->addColumnText('conference_name', 'Conference name')
             ->setSortable()
             ->setFilterText()
+            ->setCondition(function ($data, $value) {
+                return array_filter($data, function ($row) use ($value) {
+                    return stripos($row['conference_name'], $value) !== false;
+                });
+            })
             ->setPlaceholder('Search by conference');
 
-        // TODO reservation needs datetime created
 
         $grid->addColumnText('price_to_pay', 'Total price (kč)')
             ->setSortable()

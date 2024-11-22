@@ -53,10 +53,20 @@ final class ListConferenceCreatorControl extends Control
         $grid->removeColumn('id');
 
         $grid->addColumnText('name', 'Conference Name', 'name')
-            ->setFilterText();
+            ->setFilterText()
+            ->setCondition(function ($data, $value) {
+                return array_filter($data, function ($row) use ($value) {
+                    return stripos($row['name'], $value) !== false;
+                });
+            });
 
         $grid->addColumnText('area_of_interest', 'Area of Interest', 'area_of_interest')
-            ->setFilterText();
+            ->setFilterText()
+            ->setCondition(function ($data, $value) {
+                return array_filter($data, function ($row) use ($value) {
+                    return stripos($row['area_of_interest'], $value) !== false;
+                });
+            });
 
         $grid->addColumnDateTime('start_time', 'Starts', 'start_time')
             ->setFormat('d.m.Y H:i')
