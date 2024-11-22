@@ -36,7 +36,7 @@ final class UserListPresenter extends SecurePresenter
         }
         if ($this->template->accountType !== 'admn') {
             $this->flashMessage('You do not have permission.', 'error');
-            $this->redirect(':CommonModule:Home:default');
+            $this->redirect(':ConferenceModule:ConferenceList:list');
         }
 
         return $this->_listUserControlFactory->create();

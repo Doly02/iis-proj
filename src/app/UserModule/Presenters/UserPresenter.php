@@ -36,13 +36,11 @@ final class UserPresenter extends SecurePresenter
     {
         $this->checkPrivilege();
 
-        Debugger::log("Editing user with ID: $userId", Debugger::INFO);
         $user = $this->_userService->getUserById($userId);
         if (!$user instanceof ActiveRow) {
             $this->flashMessage('User not found.', 'error');
-            $this->redirect(':CommonModule:Home:default');
+            $this->redirect(':ConferenceModule:ConferenceList:list');
         }
-        Debugger::barDump($user, 'User Information');
         $this->template->userData = $user;
     }
 
@@ -53,7 +51,7 @@ final class UserPresenter extends SecurePresenter
         $user = $this->_userService->getUserById($userId);
         if (!$user instanceof ActiveRow) {
             $this->flashMessage('User not found.', 'error');
-            $this->redirect(':CommonModule:Home:default');
+            $this->redirect(':ConferenceModule:ConferenceList:list');
         }
         $this->template->userData = $user;
     }
@@ -66,7 +64,6 @@ final class UserPresenter extends SecurePresenter
 
         if (!$user instanceof ActiveRow)
         {
-            Debugger::log("User with ID $userId not found.", Debugger::ERROR);
             throw new \Nette\Application\BadRequestException('User not found');
         }
 
@@ -80,7 +77,6 @@ final class UserPresenter extends SecurePresenter
 
         if (!$user instanceof ActiveRow)
         {
-            Debugger::log("User with ID $userId not found.", Debugger::ERROR);
             throw new \Nette\Application\BadRequestException('User not found');
         }
 

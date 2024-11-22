@@ -24,7 +24,7 @@ final class RegisterPresenter extends BasePresenter
     {
         if ($this->getUser()->isLoggedIn())
         {
-            $this->redirect(':CommonModule:Home:default');
+            $this->redirect(':ConferenceModule:ConferenceList:list');
         }
     }
     protected function createComponentRegisterForm(): RegisterControl

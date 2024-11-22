@@ -22,7 +22,7 @@ final class AuthenticationPresenter extends BasePresenter
         \Tracy\Debugger::log('SignIn action loaded');
         if ($this->getUser()->isLoggedIn())
         {
-            $this->redirect(':CommonModule:Home:default');
+            $this->redirect(':ConferenceModule:ConferenceList:list');
         }
     }
 
@@ -30,7 +30,7 @@ final class AuthenticationPresenter extends BasePresenter
     {
         $this->getUser()->logout(true);
         $this->flashMessage('You have been logged out.', 'info');
-        $this->redirect(':CommonModule:Home:default');
+        $this->redirect(':ConferenceModule:ConferenceList:list');
     }
     // Creates Sign-In Form
     protected function createComponentSignInForm(): \App\UserModule\Controls\Login\LoginControl

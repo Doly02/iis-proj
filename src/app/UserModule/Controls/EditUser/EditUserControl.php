@@ -106,10 +106,11 @@ final class EditUserControl extends Control
 
             $this->presenter->flashMessage('User information updated successfully.', 'success');
 
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e)
+        {
             $form->addError('An error occurred while updating user information: ' . $e->getMessage());
         }
-        bdump($this->adminEdit);
         if(!$this->adminEdit)
             $this->presenter->redirect(':UserModule:UserDetail:default');
         else
