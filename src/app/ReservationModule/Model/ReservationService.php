@@ -166,11 +166,13 @@ final class ReservationService extends BaseService
             ->delete();
     }
 
-    public function approveReservation(int $reservationId): void
+    public function approveReservation(int $reservationId): int
     {
         $this->database->table('reservations')
             ->where('id', $reservationId)
             ->update(['is_paid' => 1]);
+        $reservation = $this->database->table('reservations')->get($reservationId);
+        return $reservation->conference_id;
     }
 
     /**

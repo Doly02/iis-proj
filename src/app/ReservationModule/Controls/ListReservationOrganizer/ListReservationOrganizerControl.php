@@ -81,10 +81,10 @@ final class ListReservationOrganizerControl extends Control
     }
     public function handleApprove(int $id): void
     {
-        $this->_reservationService->approveReservation($id);
+        $conferenceId = $this->_reservationService->approveReservation($id);
 
         $this->getPresenter()->flashMessage('Reservation approved successfully.', 'success');
-        $this->redirect('this');
+        $this->presenter->redirect(':ReservationModule:ReservationListOrganizer:list', ['conferenceId' => $conferenceId]);
     }
 
     public function render(): void
