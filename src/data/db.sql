@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hostiteľ: 127.0.0.1
--- Čas generovania: Sun 17.Nov 2024, 13:33
+-- Čas generovania: Pi 22.Nov 2024, 16:37
 -- Verzia serveru: 10.4.32-MariaDB
 -- Verzia PHP: 8.2.12
 
@@ -48,8 +48,7 @@ INSERT INTO `conferences` (`id`, `name`, `area_of_interest`, `description`, `sta
 (7, 'Konference o umělé inteligenci', 'Umělá inteligence, strojové učení', 'Na této konferenci budou odborníci z celého světa prezentovat nové metody a výzkumy v oblasti umělé inteligence, včetně praktických aplikací strojového učení a etických otázek.', '2024-11-09 09:00:00', '2024-11-09 17:00:00', 150, 12, 5),
 (8, 'Technologie ve zdravotnictví', 'Digitální zdravotnictví, biotechnologie', 'Konference zaměřená na technologické inovace ve zdravotnictví, od umělé inteligence v diagnostice po nejnovější biotechnologické pokroky.', '2024-11-15 10:00:00', '2024-11-15 18:00:00', 195, 16, 5),
 (9, 'Udržitelná energie a životní prostředí', 'Obnovitelné zdroje, klimatické změny', 'Diskuse a přednášky o udržitelných energetických řešeních a způsobech, jak bojovat proti klimatickým změnám, s důrazem na inovace a environmentální politiku.', '2024-11-05 08:30:00', '2024-11-09 16:30:00', 200, 10, 6),
-(10, 'Moderní trendy v softwarovém inženýrství', 'Vývoj softwaru, DevOps', 'Praktické workshopy a přednášky o moderních praktikách vývoje softwaru, včetně mikroservisních architektur, cloudových řešení a automatizace v DevOps.', '2024-11-12 10:00:00', '2024-11-12 17:00:00', 195, 10, 6),
-(11, 'Skuska rozvrhu', '', 'skuska', '2024-11-25 06:07:00', '2024-11-25 22:14:00', 100, 56, 6);
+(10, 'Moderní trendy v softwarovém inženýrství', 'Vývoj softwaru, DevOps', 'Praktické workshopy a přednášky o moderních praktikách vývoje softwaru, včetně mikroservisních architektur, cloudových řešení a automatizace v DevOps.', '2024-11-12 10:00:00', '2024-11-12 17:00:00', 195, 10, 6);
 
 -- --------------------------------------------------------
 
@@ -77,14 +76,7 @@ INSERT INTO `conference_has_rooms` (`id`, `conference_id`, `room_id`, `booking_s
 (14, 8, 16, '2024-11-15 10:00:00', '2024-11-15 18:00:00'),
 (15, 8, 18, '2024-11-15 10:00:00', '2024-11-15 18:00:00'),
 (16, 10, 14, '2024-11-12 10:00:00', '2024-11-12 17:00:00'),
-(17, 10, 17, '2024-11-12 10:00:00', '2024-11-12 17:00:00'),
-(18, 11, 14, '2024-11-25 06:07:00', '2024-11-25 22:14:00'),
-(19, 11, 15, '2024-11-25 06:07:00', '2024-11-25 22:14:00'),
-(20, 11, 16, '2024-11-25 06:07:00', '2024-11-25 22:14:00'),
-(21, 11, 17, '2024-11-25 06:07:00', '2024-11-25 22:14:00'),
-(22, 11, 18, '2024-11-25 06:07:00', '2024-11-25 22:14:00'),
-(23, 11, 19, '2024-11-25 06:07:00', '2024-11-25 22:14:00'),
-(24, 11, 20, '2024-11-25 06:07:00', '2024-11-25 22:14:00');
+(17, 10, 17, '2024-11-12 10:00:00', '2024-11-12 17:00:00');
 
 -- --------------------------------------------------------
 
@@ -104,14 +96,26 @@ CREATE TABLE `lectures` (
 --
 
 INSERT INTO `lectures` (`id`, `id_conference_has_rooms`, `start_time`, `end_time`) VALUES
-(22, 19, '2024-11-25 07:00:00', '2024-11-25 08:00:00'),
-(23, 21, '2024-11-25 12:00:00', '2024-11-25 17:00:00'),
-(24, 24, '2024-11-25 13:05:00', '2024-11-25 14:05:00'),
-(25, 19, '2024-11-25 10:45:00', '2024-11-25 13:45:00'),
-(26, 10, '2024-11-12 10:25:00', '2024-11-12 11:10:00'),
-(27, 10, '2024-11-12 13:30:00', '2024-11-12 15:00:00'),
-(28, 11, '2024-11-12 14:17:00', '2024-11-12 16:47:00'),
-(29, 24, '2024-11-25 08:05:00', '2024-11-25 11:05:00');
+(28, 12, '2024-11-09 09:00:00', '2024-11-09 12:00:00'),
+(29, 12, '2024-11-09 13:00:00', '2024-11-09 14:30:00'),
+(30, 12, '2024-11-09 14:45:00', '2024-11-09 16:45:00'),
+(31, 14, '2024-11-15 10:00:00', '2024-11-15 14:00:00'),
+(32, 14, '2024-11-15 15:00:00', '2024-11-15 18:00:00'),
+(33, 15, '2024-11-15 11:30:00', '2024-11-15 14:30:00'),
+(34, 15, '2024-11-15 14:30:00', '2024-11-15 15:30:00'),
+(35, 15, '2024-11-15 16:15:00', '2024-11-15 17:45:00'),
+(36, 10, '2024-11-12 10:00:00', '2024-11-12 12:00:00'),
+(37, 10, '2024-11-12 12:30:00', '2024-11-12 14:00:00'),
+(38, 10, '2024-11-12 14:00:00', '2024-11-12 17:00:00'),
+(39, 11, '2024-11-12 11:10:00', '2024-11-12 16:10:00'),
+(40, 11, '2024-11-12 16:15:00', '2024-11-12 17:00:00'),
+(41, 13, '2024-11-09 08:45:00', '2024-11-09 10:45:00'),
+(42, 13, '2024-11-09 13:40:00', '2024-11-09 15:40:00'),
+(43, 16, '2024-11-12 10:00:00', '2024-11-12 13:00:00'),
+(44, 16, '2024-11-12 14:00:00', '2024-11-12 17:00:00'),
+(45, 17, '2024-11-12 10:45:00', '2024-11-12 11:45:00'),
+(46, 17, '2024-11-12 12:00:00', '2024-11-12 14:00:00'),
+(47, 17, '2024-11-12 15:00:00', '2024-11-12 17:00:00');
 
 -- --------------------------------------------------------
 
@@ -129,13 +133,6 @@ CREATE TABLE `presentations` (
   `lecture_id` int(11) DEFAULT NULL,
   `conference_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Sťahujem dáta pre tabuľku `presentations`
---
-
-INSERT INTO `presentations` (`id`, `name`, `description`, `state`, `attachment`, `lecturer_id`, `lecture_id`, `conference_id`) VALUES
-(17, 'Skusobna prezentacia', 'Toto je skusobna prezentacia.', 'approved', 'Tu je osnova.', 5, 22, 11);
 
 -- --------------------------------------------------------
 
@@ -167,13 +164,14 @@ INSERT INTO `reservations` (`id`, `created_date`, `created_time`, `price_to_pay`
 (29, '2024-11-03', '22:34:12', 180, 0, NULL, 6, 'Milan', 'Vačko', 'milo55@gmail.com', 1),
 (30, '2024-11-03', '22:35:06', 975, 0, 9, 10, 'Martinko', 'Klingáčik', 'martin@azet.cz', 5),
 (31, '2024-11-03', '22:35:19', 180, 0, 9, 6, 'Martinko', 'Klingáčik', 'martin@azet.cz', 1),
-(32, '2024-11-03', '22:35:28', 450, 0, 9, 7, 'Martinko', 'Klingáčik', 'martin@azet.cz', 3),
-(33, '2024-11-03', '22:37:17', 360, 0, 10, 6, 'Hana', 'Gregorová', 'hana1@gmail.com', 2),
+(32, '2024-11-03', '22:35:28', 450, 1, 9, 7, 'Martinko', 'Klingáčik', 'martin@azet.cz', 3),
+(33, '2024-11-03', '22:37:17', 360, 1, 10, 6, 'Hana', 'Gregorová', 'hana1@gmail.com', 2),
 (34, '2024-11-03', '22:37:23', 150, 0, 10, 7, 'Hana', 'Gregorová', 'hana1@gmail.com', 1),
-(35, '2024-11-03', '22:37:31', 195, 0, 10, 8, 'Hana', 'Gregorová', 'hana1@gmail.com', 1),
-(36, '2024-11-03', '22:38:33', 195, 0, 6, 8, 'Jana', 'Nováková', 'novakova@seznam.cz', 1),
-(37, '2024-11-03', '22:38:41', 390, 0, 6, 8, 'Jana', 'Nováková', 'novakova@seznam.cz', 2),
-(38, '2024-11-03', '22:38:49', 150, 0, 6, 7, 'Jana', 'Nováková', 'novakova@seznam.cz', 1);
+(35, '2024-11-03', '22:37:31', 195, 1, 10, 8, 'Hana', 'Gregorová', 'hana1@gmail.com', 1),
+(36, '2024-11-03', '22:38:33', 195, 1, 6, 8, 'Jana', 'Nováková', 'novakova@seznam.cz', 1),
+(37, '2024-11-03', '22:38:41', 390, 1, 6, 8, 'Jana', 'Nováková', 'novakova@seznam.cz', 2),
+(38, '2024-11-03', '22:38:49', 150, 0, 6, 7, 'Jana', 'Nováková', 'novakova@seznam.cz', 1),
+(39, '2024-11-22', '00:06:37', 780, 0, 9, 8, 'Martinko', 'Klingáčik', 'martin@azet.cz', 4);
 
 -- --------------------------------------------------------
 
@@ -213,6 +211,51 @@ CREATE TABLE `selected_lectures` (
   `id_user` int(11) NOT NULL,
   `is_selected` tinyint(4) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Sťahujem dáta pre tabuľku `selected_lectures`
+--
+
+INSERT INTO `selected_lectures` (`id`, `id_lecture`, `id_user`, `is_selected`) VALUES
+(1, 28, 6, 1),
+(2, 29, 6, 0),
+(3, 30, 6, 1),
+(4, 31, 6, 0),
+(5, 32, 6, 1),
+(6, 33, 6, 1),
+(7, 34, 6, 0),
+(8, 35, 6, 0),
+(9, 36, 9, 1),
+(10, 37, 9, 0),
+(11, 38, 9, 0),
+(12, 39, 9, 0),
+(13, 40, 9, 1),
+(14, 28, 9, 0),
+(15, 29, 9, 1),
+(16, 30, 9, 0),
+(17, 43, 9, 0),
+(18, 44, 9, 0),
+(19, 45, 9, 0),
+(20, 46, 9, 1),
+(21, 47, 9, 0),
+(22, 31, 9, 0),
+(23, 32, 9, 1),
+(24, 33, 9, 1),
+(25, 34, 9, 0),
+(26, 35, 9, 0),
+(27, 36, 10, 1),
+(28, 37, 10, 0),
+(29, 38, 10, 0),
+(30, 39, 10, 0),
+(31, 40, 10, 1),
+(32, 28, 10, 0),
+(33, 29, 10, 1),
+(34, 30, 10, 1),
+(35, 31, 10, 0),
+(36, 32, 10, 0),
+(37, 33, 10, 1),
+(38, 34, 10, 1),
+(39, 35, 10, 1);
 
 -- --------------------------------------------------------
 
@@ -282,10 +325,10 @@ INSERT INTO `tickets` (`id`, `price`, `code`, `conference_id`, `reservation_id`)
 (118, 195, '0ZBDD8E6LB', 8, 36),
 (119, 195, 'G6Q4KZ2AYS', 8, 37),
 (120, 195, '0GOPI5HXSE', 8, 37),
-(121, 195, '2ABZR4Q1LM', 8, NULL),
-(122, 195, 'QVMSM5LW8P', 8, NULL),
-(123, 195, 'ZK4T1PPVP5', 8, NULL),
-(124, 195, 'EOHRW9WX56', 8, NULL),
+(121, 195, '2ABZR4Q1LM', 8, 39),
+(122, 195, 'QVMSM5LW8P', 8, 39),
+(123, 195, 'ZK4T1PPVP5', 8, 39),
+(124, 195, 'EOHRW9WX56', 8, 39),
 (125, 195, 'P78VWH6LBD', 8, NULL),
 (126, 195, '6IZVZXO8JH', 8, NULL),
 (127, 195, 'UJ4PSJE6HR', 8, NULL),
@@ -298,63 +341,7 @@ INSERT INTO `tickets` (`id`, `price`, `code`, `conference_id`, `reservation_id`)
 (134, 195, 'QTGS24Y1GS', 10, 30),
 (135, 195, 'KD2U4NMJFO', 10, NULL),
 (136, 195, 'ZJH06802BC', 10, NULL),
-(137, 195, '8ZXHVPJ0SM', 10, NULL),
-(138, 100, '2J58PCPMSQ', 11, NULL),
-(139, 100, 'RLAZUD1ZHS', 11, NULL),
-(140, 100, '1HJI8W4JB4', 11, NULL),
-(141, 100, 'CN30OQCOK7', 11, NULL),
-(142, 100, 'JXYXJ5U7ET', 11, NULL),
-(143, 100, 'WCICL7HZM8', 11, NULL),
-(144, 100, '9OK4L698OI', 11, NULL),
-(145, 100, 'L9IE1H8NSL', 11, NULL),
-(146, 100, '1HM5V8HU0X', 11, NULL),
-(147, 100, 'LNG7JQVH0K', 11, NULL),
-(148, 100, 'T7GG411SY3', 11, NULL),
-(149, 100, 'NNRLBH9LPM', 11, NULL),
-(150, 100, 'AMOK14WLMD', 11, NULL),
-(151, 100, 'T05Y9PKTDH', 11, NULL),
-(152, 100, 'E020972VSV', 11, NULL),
-(153, 100, 'I42WM89SIL', 11, NULL),
-(154, 100, '2WY1WMI7W2', 11, NULL),
-(155, 100, 'RHKQAYE0RO', 11, NULL),
-(156, 100, 'JZY72N9NV2', 11, NULL),
-(157, 100, 'A6CM1HMJTO', 11, NULL),
-(158, 100, 'J1KJ0HFNAY', 11, NULL),
-(159, 100, 'JE873PAVL6', 11, NULL),
-(160, 100, 'G6PKUVG38B', 11, NULL),
-(161, 100, '5EMNDJF2VC', 11, NULL),
-(162, 100, 'IA4AFK6DG5', 11, NULL),
-(163, 100, 'L3RO369G55', 11, NULL),
-(164, 100, 'TQJZGTE3IV', 11, NULL),
-(165, 100, '17TY9AJKE9', 11, NULL),
-(166, 100, 'DNY423RR2E', 11, NULL),
-(167, 100, 'N5XZVEK5YB', 11, NULL),
-(168, 100, 'C910B2KJHN', 11, NULL),
-(169, 100, 'SUYZHRIUWC', 11, NULL),
-(170, 100, 'LTCI5VX0CI', 11, NULL),
-(171, 100, '9LR4GV0E9X', 11, NULL),
-(172, 100, '6ZBUE0TDP8', 11, NULL),
-(173, 100, '55ZL1O7J73', 11, NULL),
-(174, 100, 'WET2O5961M', 11, NULL),
-(175, 100, '68B87L0DSR', 11, NULL),
-(176, 100, 'LLW7PH2R6A', 11, NULL),
-(177, 100, 'P64TKIWOCL', 11, NULL),
-(178, 100, 'FZQRUGJ9MS', 11, NULL),
-(179, 100, 'Y9ZEYVHSAV', 11, NULL),
-(180, 100, '0MDSUD66YY', 11, NULL),
-(181, 100, 'TNC64O6RNF', 11, NULL),
-(182, 100, '05CT79ZS5O', 11, NULL),
-(183, 100, 'U3U7UJEDDO', 11, NULL),
-(184, 100, 'L7GGFLKYHO', 11, NULL),
-(185, 100, 'RGM73O1D8Z', 11, NULL),
-(186, 100, 'N33PXNEBA9', 11, NULL),
-(187, 100, '3AFD73PJM2', 11, NULL),
-(188, 100, 'LURFXVG6J0', 11, NULL),
-(189, 100, 'H2JGFK8UXB', 11, NULL),
-(190, 100, 'ASCHKA6CS1', 11, NULL),
-(191, 100, 'W9WGKF5JI2', 11, NULL),
-(192, 100, 'G7E96HAUSA', 11, NULL),
-(193, 100, 'WMUAKQ5M4H', 11, NULL);
+(137, 195, '8ZXHVPJ0SM', 10, NULL);
 
 -- --------------------------------------------------------
 
@@ -376,7 +363,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `surname`, `email`, `password`, `account_type`) VALUES
-(4, 'admin', 'admin', 'admin@local.cz', '$2y$10$N1LXY8shBk2jwdlfox7fOeLGZg76vIhFyUhgE6owM3610UuQC6ovG', 'user'),
+(4, 'admin', 'admin', 'admin@local.cz', '$2y$10$N1LXY8shBk2jwdlfox7fOeLGZg76vIhFyUhgE6owM3610UuQC6ovG', 'admn'),
 (5, 'Alojz', 'Žufánek', 'alojz11@seznam.cz', '$2y$10$6PlnXsZQM4yl84p228sMle86vGVVnfVVNEOA3v1iY2WVixX9RJ5.K', 'user'),
 (6, 'Jana', 'Nováková', 'novakova@seznam.cz', '$2y$10$nsYn83KsMkTFROMBDSZaHOng2qNepAhGURjUCC7PqA8S4fVsLXdVO', 'user'),
 (9, 'Martinko', 'Klingáčik', 'martin@azet.cz', '$2y$10$LuGf0dFSeosbd9ZpLYZqqO94x7mPA0YSR.lZg3MSBqbhcsa7BQdJK', 'user'),
@@ -464,49 +451,49 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pre tabuľku `conferences`
 --
 ALTER TABLE `conferences`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT pre tabuľku `conference_has_rooms`
 --
 ALTER TABLE `conference_has_rooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT pre tabuľku `lectures`
 --
 ALTER TABLE `lectures`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT pre tabuľku `presentations`
 --
 ALTER TABLE `presentations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT pre tabuľku `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT pre tabuľku `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT pre tabuľku `selected_lectures`
 --
 ALTER TABLE `selected_lectures`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT pre tabuľku `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=194;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=148;
 
 --
 -- AUTO_INCREMENT pre tabuľku `users`

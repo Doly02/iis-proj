@@ -368,12 +368,11 @@ box-sizing: border-box;
     text-align: left;
     padding: 5px 10px;
     font-size: 14px;
-
 }
 
 .datagrid tr:last-child td {
     text-align: left;
-    background-color: #acbffc;
+    background-color: #ffffff;
 }
 
 
