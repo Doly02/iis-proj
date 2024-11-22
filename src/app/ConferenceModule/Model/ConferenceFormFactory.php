@@ -35,7 +35,6 @@ final class ConferenceFormFactory
 
         $form->addText('name', 'Name:')
             ->setRequired('Enter the conference name.')
-            ->addRule($form::MaxLength, 'Name can be at most 30 characters long.', 30)
             ->setHtmlAttribute('class', 'form-control');
 
         $form->addTextArea('description', 'Description:')
