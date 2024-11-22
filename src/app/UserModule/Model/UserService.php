@@ -104,6 +104,49 @@ final class UserService extends BaseService implements Authenticator
         }
     }
 
+    public function registrateUserReturnId(ArrayHash $data, string $role): int
+    {
+        $errorMessage = 'During the creation of an account, an error occurred.';
+        $this->database->beginTransaction();
+
+        if (Role::USER !== $role || Role::ADMIN === $role) {
+            throw new Exception($errorMessage);
+        }
+
+        try {
+            /* Creation Instance of Password For Hash Function */
+            $passwords = new Passwords();
+
+            Debugger::log('Trying to insert user with email: ' . $data->email);
+
+            /* Data Insertion - one insert for all data */
+            $user = $this->getTable()->insert([
+                'name' => $data->name,
+                'surname' => $data->lastName,
+                'email' => $data->email,
+                'account_type' => $role,
+                'password' => $passwords->hash($data->password)
+            ]);
+
+            if (!$user instanceof ActiveRow) {
+                $this->database->rollBack();
+                throw new Exception($errorMessage);
+            }
+
+            $this->database->commit();
+
+            // Return the ID of the newly created user
+            return $user->id;
+
+        } catch (\Nette\Database\UniqueConstraintViolationException $e) {
+            $this->database->rollBack();
+            throw new Exception('User with this email already exists: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            $this->database->rollBack();
+            throw new Exception($errorMessage . ' ' . $e->getMessage());
+        }
+    }
+
     public function addAdmin(ArrayHash $data) : void
     {
         try {

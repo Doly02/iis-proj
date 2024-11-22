@@ -125,6 +125,7 @@ final class ReserveNonRegisteredControl extends Control
     {
         try {
             $isPaid = $values->paymentMethod === 'online' ? 1 : 0;
+            $userId = null;
 
             if ($values->register) {
                 $registrationData = [
@@ -134,7 +135,7 @@ final class ReserveNonRegisteredControl extends Control
                     'password' => $values->password,
                 ];
 
-                $this->_userService->registrateUser(
+                $userId = $this->_userService->registrateUserReturnId(
                     \Nette\Utils\ArrayHash::from($registrationData),
                     \App\UserModule\Enums\Role::USER
                 );
@@ -146,7 +147,7 @@ final class ReserveNonRegisteredControl extends Control
                 $values->email,
                 $values->tickets,
                 $this->_conferenceId,
-                null,
+                $userId,
                 $isPaid
             );
 

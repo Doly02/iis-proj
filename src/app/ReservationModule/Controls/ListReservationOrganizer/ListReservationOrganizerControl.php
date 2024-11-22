@@ -36,16 +36,13 @@ final class ListReservationOrganizerControl extends Control
     {
         $grid = $this->_dataGridControlFactory->create($this->_reservationService);
 
-        // Získejte ID konference z parametru
         $conferenceId = $this->getPresenter()->getParameter('conferenceId');
 
-        // Načtěte rezervace pro danou konferenci
         $reservations = $this->_reservationService->getReservationsByConferenceId((int)$conferenceId);
 
         $grid->setDataSource($reservations);
         $grid->setPagination(false);
-
-        // Sloupce datagridu
+        
         $grid->addColumnText('customer_name', 'Customer Name')
             ->setRenderer(function ($item) {
                 return $item->first_name . ' ' . $item->last_name;
