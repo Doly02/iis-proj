@@ -15,6 +15,7 @@ final class RoomEditPresenter extends SecurePresenter
     private RoomService $_roomService;
     private IEditRoomControlFactory $editRoomControlFactory;
     private ?ActiveRow $room = null;
+    private ?int $roomId = null; // Uložené ID místnosti
 
     public function __construct(
         RoomService $roomService,
@@ -27,7 +28,17 @@ final class RoomEditPresenter extends SecurePresenter
 
     public function actionEdit(int $id): void
     {
+
+        $this->roomId = $id;
+
+        // Validation
+        if ($id <= 0) {
+            throw new BadRequestException('Invalid room ID.');
+        }
+
+        // Load Room From DB
         $this->room = $this->_roomService->getTable()->get($id);
+        \Tracy\Debugger::barDump($this->room, 'Room Fetched in actionEdit');
 
         if (!$this->room) {
             throw new BadRequestException('Room not found.');
@@ -36,30 +47,29 @@ final class RoomEditPresenter extends SecurePresenter
 
     protected function createComponentEditRoom(): EditRoomControl
     {
-        $control = $this->editRoomControlFactory->create();
-        if ($this->room) {
-            $control->setRoomId($this->room->id);
-        }
-        return $control;
-    }
+        // Load Room ID From URL or POST data
+        $id = $this->getParameter('id');
 
-    public function handleEditRoom(Form $form, \stdClass $values): void
-    {
-        if ($this->roomId === null || !$this->room) {
-            $this->presenter->flashMessage('Room not found.', 'error');
-            $this->presenter->redirect('this');
-            return;
+        if ($id === null) {
+            // If Post Data, Load Value From Form
+            $post = $this->getHttpRequest()->getPost();
+            if (isset($post['id'])) {
+                $id = (int)$post['id'];
+            }
         }
 
-        $this->_roomService->updateRoom($this->roomId, [
-            'name' => $values->name,
-            'capacity' => $values->capacity,
-        ]);
+        if (!$this->room && $id) {
+            $this->room = $this->_roomService->getTable()->get($id);
+            \Tracy\Debugger::barDump($this->room, 'Room Fetched in createComponentEditRoom');
+        }
 
-        $this->presenter->flashMessage('Room updated successfully.', 'success');
-        $this->presenter->redirect('RoomList:default');
+        if (!$this->room) {
+            throw new BadRequestException('Room not found.');
+        }
+
+        // Create Component EditRoomControl With Actual ID
+        return $this->editRoomControlFactory->create($this->room->id);
     }
-
 
     public function renderEdit(): void
     {

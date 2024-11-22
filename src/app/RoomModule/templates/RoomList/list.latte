@@ -16,12 +16,6 @@
 
 {block content}
 
-    {if $flashes}
-        {foreach $flashes as $flash}
-            <div class="flash {$flash->type}">{$flash->message}</div>
-        {/foreach}
-    {/if}
-
     <div class="btn-group-inline">
         <div class="wide-form">
             {control listRoom}

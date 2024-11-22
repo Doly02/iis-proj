@@ -80,7 +80,7 @@ final class LoginControl extends Control
                 $this->getPresenter()->restoreRequest($this->backLink);
             }
 
-            $this->getPresenter()->redirect(':CommonModule:Home:default');
+            $this->getPresenter()->redirect(':ConferenceModule:ConferenceList:list');
         }
         catch (AuthenticationException $e)
         {

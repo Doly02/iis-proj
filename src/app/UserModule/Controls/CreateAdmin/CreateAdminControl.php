@@ -60,7 +60,7 @@ final class CreateAdminControl extends Control
         if (null !== $presenter)
         {
             $presenter->flashMessage('Registration Successfully Performed!', 'success');
-            $presenter->redirect(':CommonModule:Home:default');
+            $presenter->redirect(':ConferenceModule:ConferenceList:list');
         }
     }
 

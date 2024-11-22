@@ -9,64 +9,62 @@ use Nette\Database\Table\ActiveRow;
 final class EditRoomControl extends Control
 {
     private RoomService $_roomService;
-    private ?int $roomId = null;
-    private ?ActiveRow $room = null;
+    private int $roomId;
+    private ActiveRow $room;
 
-    public function __construct(RoomService $roomService)
+    public function __construct(RoomService $roomService, int $roomId)
     {
         $this->_roomService = $roomService;
-    }
-
-    public function setRoomId(int $roomId): void
-    {
         $this->roomId = $roomId;
+
+        $this->room = $this->_roomService->getTable()->get($roomId);
+
+        if (!$this->room) {
+            throw new \Nette\Application\BadRequestException("Room with ID {$roomId} not found.");
+        }
     }
 
     protected function createComponentEditRoom(): Form
     {
-        if ($this->roomId !== null) {
-            $this->room = $this->_roomService->getTable()->get($this->roomId);
-            if (!$this->room) {
-                $this->presenter->flashMessage('Room not found.', 'error');
-                $this->presenter->redirect('RoomList:default');
-            }
-        }
-
         $form = new Form;
+
         $form->addText('name', 'Room Name:')
             ->setRequired('Please enter the room name.')
-            ->setDefaultValue($this->room ? $this->room->name : '');
+            ->setDefaultValue($this->room->name);
 
         $form->addInteger('capacity', 'Capacity:')
             ->setRequired('Please enter the room capacity.')
-            ->setDefaultValue($this->room ? $this->room->capacity : '')
+            ->setDefaultValue($this->room->capacity)
             ->addRule($form::MIN, 'Capacity must be at least 1', 1);
+
+        // Hidden ID
+        $form->addHidden('id', (string)$this->roomId);
 
         $form->addSubmit('save', 'Save Changes');
         $form->onSuccess[] = [$this, 'handleEditRoom'];
+
         return $form;
     }
 
     public function handleEditRoom(Form $form, \stdClass $values): void
     {
-        if ($this->roomId === null || !$this->room) {
-            $this->presenter->flashMessage('Room not found.', 'error');
-            $this->presenter->redirect('this');
-            return;
+        $room = $this->_roomService->getTable()->get($values->id);
+        if (!$room) {
+            throw new \Nette\Application\BadRequestException("Room with ID {$values->id} not found.");
         }
 
-        $this->_roomService->updateRoom($this->roomId, [
+        $this->_roomService->updateRoom($values->id, [
             'name' => $values->name,
             'capacity' => $values->capacity,
         ]);
 
         $this->presenter->flashMessage('Room updated successfully.', 'success');
-        $this->presenter->redirect('RoomList:default');
+        $this->presenter->redirect(':RoomModule:RoomList:list');
     }
 
     public function render(): void
     {
-        $this->template->setFile(__DIR__ . '/../../templates/RoomEdit//editRoom.latte');
+        $this->template->setFile(__DIR__ . '/../../templates/RoomEdit/editRoom.latte');
         $this->template->render();
     }
 }

@@ -8,5 +8,5 @@ use Nette\Database\Table\ActiveRow;
 
 interface IEditRoomControlFactory
 {
-    public function create(): EditRoomControl;
+    public function create(int $roomId): EditRoomControl;
 }
