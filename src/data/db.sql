@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hostiteľ: 127.0.0.1
--- Čas generovania: Pi 22.Nov 2024, 16:37
+-- Čas generovania: Pi 22.Nov 2024, 18:26
 -- Verzia serveru: 10.4.32-MariaDB
 -- Verzia PHP: 8.2.12
 
@@ -44,11 +44,11 @@ CREATE TABLE `conferences` (
 --
 
 INSERT INTO `conferences` (`id`, `name`, `area_of_interest`, `description`, `start_time`, `end_time`, `price`, `capacity`, `organiser_id`) VALUES
-(6, 'Kybernetická bezpečnost v digitálním věku', 'Kybernetická bezpečnost, ochrana dat', 'Konference zaměřená na aktuální výzvy v oblasti kybernetické bezpečnosti, ochrany soukromí a obrany proti kybernetickým útokům. Součástí programu budou případy z praxe, diskuse o nových bezpečnostních technologiích a doporučení pro firmy i jednotlivce.', '2024-11-12 10:00:00', '2024-11-12 17:00:00', 180, 18, 6),
-(7, 'Konference o umělé inteligenci', 'Umělá inteligence, strojové učení', 'Na této konferenci budou odborníci z celého světa prezentovat nové metody a výzkumy v oblasti umělé inteligence, včetně praktických aplikací strojového učení a etických otázek.', '2024-11-09 09:00:00', '2024-11-09 17:00:00', 150, 12, 5),
-(8, 'Technologie ve zdravotnictví', 'Digitální zdravotnictví, biotechnologie', 'Konference zaměřená na technologické inovace ve zdravotnictví, od umělé inteligence v diagnostice po nejnovější biotechnologické pokroky.', '2024-11-15 10:00:00', '2024-11-15 18:00:00', 195, 16, 5),
-(9, 'Udržitelná energie a životní prostředí', 'Obnovitelné zdroje, klimatické změny', 'Diskuse a přednášky o udržitelných energetických řešeních a způsobech, jak bojovat proti klimatickým změnám, s důrazem na inovace a environmentální politiku.', '2024-11-05 08:30:00', '2024-11-09 16:30:00', 200, 10, 6),
-(10, 'Moderní trendy v softwarovém inženýrství', 'Vývoj softwaru, DevOps', 'Praktické workshopy a přednášky o moderních praktikách vývoje softwaru, včetně mikroservisních architektur, cloudových řešení a automatizace v DevOps.', '2024-11-12 10:00:00', '2024-11-12 17:00:00', 195, 10, 6);
+(6, 'Kybernetická bezpečnost v digitálním věku', 'Kybernetická bezpečnost, ochrana dat', 'Konference zaměřená na aktuální výzvy v oblasti kybernetické bezpečnosti, ochrany soukromí a obrany proti kybernetickým útokům. Součástí programu budou případy z praxe, diskuse o nových bezpečnostních technologiích a doporučení pro firmy i jednotlivce.', '2024-12-12 10:00:00', '2024-12-12 17:00:00', 180, 18, 6),
+(7, 'Konference o umělé inteligenci', 'Umělá inteligence, strojové učení', 'Na této konferenci budou odborníci z celého světa prezentovat nové metody a výzkumy v oblasti umělé inteligence, včetně praktických aplikací strojového učení a etických otázek.', '2024-12-09 09:00:00', '2024-12-09 17:00:00', 150, 12, 5),
+(8, 'Technologie ve zdravotnictví', 'Digitální zdravotnictví, biotechnologie', 'Konference zaměřená na technologické inovace ve zdravotnictví, od umělé inteligence v diagnostice po nejnovější biotechnologické pokroky.', '2024-12-15 10:00:00', '2024-12-15 18:00:00', 195, 16, 5),
+(9, 'Udržitelná energie a životní prostředí', 'Obnovitelné zdroje, klimatické změny', 'Diskuse a přednášky o udržitelných energetických řešeních a způsobech, jak bojovat proti klimatickým změnám, s důrazem na inovace a environmentální politiku.', '2024-12-05 08:30:00', '2024-12-05 20:30:00', 200, 10, 6),
+(10, 'Moderní trendy v softwarovém inženýrství', 'Vývoj softwaru, DevOps', 'Praktické workshopy a přednášky o moderních praktikách vývoje softwaru, včetně mikroservisních architektur, cloudových řešení a automatizace v DevOps.', '2024-12-12 10:00:00', '2024-12-12 17:00:00', 195, 10, 6);
 
 -- --------------------------------------------------------
 
@@ -69,14 +69,14 @@ CREATE TABLE `conference_has_rooms` (
 --
 
 INSERT INTO `conference_has_rooms` (`id`, `conference_id`, `room_id`, `booking_start`, `booking_end`) VALUES
-(10, 6, 15, '2024-11-12 10:00:00', '2024-11-12 17:00:00'),
-(11, 6, 19, '2024-11-12 10:00:00', '2024-11-12 17:00:00'),
-(12, 7, 20, '2024-11-09 09:00:00', '2024-11-09 17:00:00'),
-(13, 9, 16, '2024-11-05 08:30:00', '2024-11-09 16:30:00'),
-(14, 8, 16, '2024-11-15 10:00:00', '2024-11-15 18:00:00'),
-(15, 8, 18, '2024-11-15 10:00:00', '2024-11-15 18:00:00'),
-(16, 10, 14, '2024-11-12 10:00:00', '2024-11-12 17:00:00'),
-(17, 10, 17, '2024-11-12 10:00:00', '2024-11-12 17:00:00');
+(10, 6, 15, '2024-12-12 10:00:00', '2024-12-12 17:00:00'),
+(11, 6, 19, '2024-12-12 10:00:00', '2024-12-12 17:00:00'),
+(12, 7, 20, '2024-12-09 09:00:00', '2024-12-09 17:00:00'),
+(13, 9, 16, '2024-12-05 08:30:00', '2024-12-05 20:30:00'),
+(14, 8, 16, '2024-12-15 10:00:00', '2024-12-15 18:00:00'),
+(15, 8, 18, '2024-12-15 10:00:00', '2024-12-15 18:00:00'),
+(16, 10, 14, '2024-12-12 10:00:00', '2024-12-12 17:00:00'),
+(17, 10, 17, '2024-12-12 10:00:00', '2024-12-12 17:00:00');
 
 -- --------------------------------------------------------
 
@@ -96,26 +96,26 @@ CREATE TABLE `lectures` (
 --
 
 INSERT INTO `lectures` (`id`, `id_conference_has_rooms`, `start_time`, `end_time`) VALUES
-(28, 12, '2024-11-09 09:00:00', '2024-11-09 12:00:00'),
-(29, 12, '2024-11-09 13:00:00', '2024-11-09 14:30:00'),
-(30, 12, '2024-11-09 14:45:00', '2024-11-09 16:45:00'),
-(31, 14, '2024-11-15 10:00:00', '2024-11-15 14:00:00'),
-(32, 14, '2024-11-15 15:00:00', '2024-11-15 18:00:00'),
-(33, 15, '2024-11-15 11:30:00', '2024-11-15 14:30:00'),
-(34, 15, '2024-11-15 14:30:00', '2024-11-15 15:30:00'),
-(35, 15, '2024-11-15 16:15:00', '2024-11-15 17:45:00'),
-(36, 10, '2024-11-12 10:00:00', '2024-11-12 12:00:00'),
-(37, 10, '2024-11-12 12:30:00', '2024-11-12 14:00:00'),
-(38, 10, '2024-11-12 14:00:00', '2024-11-12 17:00:00'),
-(39, 11, '2024-11-12 11:10:00', '2024-11-12 16:10:00'),
-(40, 11, '2024-11-12 16:15:00', '2024-11-12 17:00:00'),
-(41, 13, '2024-11-09 08:45:00', '2024-11-09 10:45:00'),
-(42, 13, '2024-11-09 13:40:00', '2024-11-09 15:40:00'),
-(43, 16, '2024-11-12 10:00:00', '2024-11-12 13:00:00'),
-(44, 16, '2024-11-12 14:00:00', '2024-11-12 17:00:00'),
-(45, 17, '2024-11-12 10:45:00', '2024-11-12 11:45:00'),
-(46, 17, '2024-11-12 12:00:00', '2024-11-12 14:00:00'),
-(47, 17, '2024-11-12 15:00:00', '2024-11-12 17:00:00');
+(28, 12, '2024-12-09 09:00:00', '2024-12-09 12:00:00'),
+(29, 12, '2024-12-09 13:00:00', '2024-12-09 14:30:00'),
+(30, 12, '2024-12-09 14:45:00', '2024-12-09 16:45:00'),
+(31, 14, '2024-12-15 10:00:00', '2024-12-15 14:00:00'),
+(32, 14, '2024-12-15 15:00:00', '2024-12-15 18:00:00'),
+(33, 15, '2024-12-15 11:30:00', '2024-12-15 14:30:00'),
+(34, 15, '2024-12-15 14:30:00', '2024-12-15 15:30:00'),
+(35, 15, '2024-12-15 16:15:00', '2024-12-15 17:45:00'),
+(36, 10, '2024-12-12 10:00:00', '2024-12-12 12:00:00'),
+(37, 10, '2024-12-12 12:30:00', '2024-12-12 14:00:00'),
+(38, 10, '2024-12-12 14:00:00', '2024-12-12 17:00:00'),
+(39, 11, '2024-12-12 11:10:00', '2024-12-12 16:10:00'),
+(40, 11, '2024-12-12 16:15:00', '2024-12-12 17:00:00'),
+(41, 13, '2024-12-05 08:45:00', '2024-12-05 10:45:00'),
+(42, 13, '2024-12-05 13:40:00', '2024-12-05 15:40:00'),
+(43, 16, '2024-12-12 10:00:00', '2024-12-12 13:00:00'),
+(44, 16, '2024-12-12 14:00:00', '2024-12-12 17:00:00'),
+(45, 17, '2024-12-12 10:45:00', '2024-12-12 11:45:00'),
+(46, 17, '2024-12-12 12:00:00', '2024-12-12 13:00:00'),
+(47, 17, '2024-12-12 15:00:00', '2024-12-12 17:00:00');
 
 -- --------------------------------------------------------
 
@@ -133,6 +133,30 @@ CREATE TABLE `presentations` (
   `lecture_id` int(11) DEFAULT NULL,
   `conference_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Sťahujem dáta pre tabuľku `presentations`
+--
+
+INSERT INTO `presentations` (`id`, `name`, `description`, `state`, `attachment`, `lecturer_id`, `lecture_id`, `conference_id`) VALUES
+(20, 'Základy kybernetické bezpečnosti: Ochrana v digitálním světě', 'Tato přednáška se zaměřuje na základní principy kybernetické bezpečnosti a na význam ochrany digitálních zařízení a dat. Probereme hrozby, jako jsou malware, phishing nebo ransomware, a způsoby, jak mohou jednotlivci i organizace zajistit svou digitální bezpečnost. Součástí přednášky bude přehled bezpečnostních technik, nástrojů a osvědčených postupů.', 'approved', 'kyber-prirucka.pdf', 5, 36, 6),
+(21, 'Agilní metodiky v moderním softwarovém inženýrství', 'Přednáška představí aktuální trendy v používání agilních metodik při vývoji softwaru. Zaměříme se na klíčové principy agilního přístupu, jeho přínosy a výzvy v současných projektech. Probereme, jak efektivně aplikovat agilní techniky (Scrum, Kanban, SAFe) v různých prostředích – od malých startupů po velké korporace. Součástí přednášky bude i diskuse o integraci agilního vývoje s DevOps přístupy pro zajištění kontinuálního dodávání hodnoty.', 'denied', 'metodiky-pruvodce.pdf', 5, NULL, 10),
+(32, 'Základy kybernetické bezpečnosti', 'Přednáška zaměřená na klíčové principy ochrany dat a prevence kybernetických útoků.', 'approved', 'zaklady_kyberneticke_bezpecnosti.pdf', 9, 39, 6),
+(33, 'Pokročilé hrozby a obrana', 'Analýza moderních kybernetických hrozeb, včetně ransomwaru a phishingu, a jejich mitigace.', 'waiting', 'pokrocile_hrozby_a_obrana.pdf', 9, NULL, 6),
+(34, 'Strojové učení v praxi', 'Praktické příklady využití strojového učení v různých průmyslových odvětvích.', 'approved', 'strojove_uceni_v_praxi.pdf', 9, 28, 7),
+(35, 'Etika v umělé inteligenci', 'Diskuse o etických otázkách spojených s vývojem a nasazením AI technologií.', 'denied', 'etika_v_umele_inteligenci.pdf', 9, NULL, 7),
+(36, 'Telemedicína a její budoucnost', 'Jak moderní technologie mění přístup k poskytování zdravotní péče.', 'waiting', 'telemedicina_a_jeji_budoucnost.pdf', 9, NULL, 8),
+(37, 'Biotechnologie v personalizované medicíně', 'Přehled pokroků v biotechnologiích a jejich aplikace v personalizované léčbě.', 'approved', 'biotechnologie_v_personalizovane_medicine.pdf', 9, 32, 8),
+(38, 'Obnovitelné zdroje v městské infrastruktuře', 'Jak lze využít obnovitelné zdroje v moderním urbanistickém prostředí.', 'approved', 'obnovitelne_zdroje_v_mestske_infrastrukture.pdf', 9, 41, 9),
+(39, 'Klimatické změny a energetická politika', 'Analýza dopadů klimatických změn na globální a lokální energetiku.', 'approved', 'klimaticke_zmeny_a_energeticka_politika.pdf', 9, 42, 9),
+(40, 'DevOps v agilním prostředí', 'Propojení agilních metodik s DevOps přístupy pro efektivnější vývoj softwaru.', 'waiting', 'devops_v_agilnim_prostredi.pdf', 9, NULL, 10),
+(41, 'Microservices a jejich implementace', 'Přednáška o výhodách, výzvách a nejlepších postupech při implementaci mikroservisní architektury.', 'approved', 'microservices_a_jejich_implementace.pdf', 9, 43, 10),
+(42, 'Ochrana dat ve veřejných sítích', 'Praktické tipy a nástroje pro zabezpečení citlivých dat při používání veřejných WiFi sítí.', 'approved', 'ochrana_dat_ve_verejnych_sitich.pdf', 10, 38, 6),
+(43, 'Budoucnost AI ve zdravotnictví', 'Diskuse o možnostech umělé inteligence v diagnostice a léčbě pacientů.', 'approved', 'budoucnost_ai_ve_zdravotnictvi.pdf', 10, 30, 7),
+(44, 'IoT zařízení v medicíně', 'Jak internet věcí přispívá k efektivnější zdravotní péči a monitorování pacientů.', 'waiting', 'iot_zarizeni_v_medicine.pdf', 10, NULL, 8),
+(45, 'Solární technologie pro městské oblasti', 'Možnosti využití solární energie v městském plánování a infrastruktuře.', 'denied', 'solarni_technologie_pro_mestske_oblasti.pdf', 10, NULL, 9),
+(46, 'Automatizace testování v CI/CD pipeline', 'Přehled technik a nástrojů pro efektivní automatizaci testování v moderním vývoji softwaru.', 'approved', 'automatizace_testovani_v_ci_cd.pdf', 10, 47, 10),
+(47, 'Virtuální realita a augmentovaná realita ve zdravotnictve', 'Přednáška se zaměří na využití moderních technologií, jako je virtuální a augmentovaná realita, v lékařské praxi. Diskutovat budeme o jejich aplikacích v oblasti chirurgického tréninku, rehabilitace, léčby chronické bolesti a vzdělávání zdravotnického personálu. Součástí bude ukázka nejnovějších inovací a případových studií z reálného prostředí.', 'approved', '', 5, 34, 8);
 
 -- --------------------------------------------------------
 
@@ -171,7 +195,8 @@ INSERT INTO `reservations` (`id`, `created_date`, `created_time`, `price_to_pay`
 (36, '2024-11-03', '22:38:33', 195, 1, 6, 8, 'Jana', 'Nováková', 'novakova@seznam.cz', 1),
 (37, '2024-11-03', '22:38:41', 390, 1, 6, 8, 'Jana', 'Nováková', 'novakova@seznam.cz', 2),
 (38, '2024-11-03', '22:38:49', 150, 0, 6, 7, 'Jana', 'Nováková', 'novakova@seznam.cz', 1),
-(39, '2024-11-22', '00:06:37', 780, 0, 9, 8, 'Martinko', 'Klingáčik', 'martin@azet.cz', 4);
+(39, '2024-11-22', '00:06:37', 780, 0, 9, 8, 'Martinko', 'Klingáčik', 'martin@azet.cz', 4),
+(40, '2024-11-22', '18:14:42', 2000, 0, 10, 9, 'Hana', 'Gregorová', 'hana1@gmail.com', 10);
 
 -- --------------------------------------------------------
 
@@ -248,14 +273,16 @@ INSERT INTO `selected_lectures` (`id`, `id_lecture`, `id_user`, `is_selected`) V
 (29, 38, 10, 0),
 (30, 39, 10, 0),
 (31, 40, 10, 1),
-(32, 28, 10, 0),
+(32, 28, 10, 1),
 (33, 29, 10, 1),
-(34, 30, 10, 1),
+(34, 30, 10, 0),
 (35, 31, 10, 0),
-(36, 32, 10, 0),
+(36, 32, 10, 1),
 (37, 33, 10, 1),
-(38, 34, 10, 1),
-(39, 35, 10, 1);
+(38, 34, 10, 0),
+(39, 35, 10, 0),
+(40, 41, 10, 1),
+(41, 42, 10, 0);
 
 -- --------------------------------------------------------
 
@@ -306,16 +333,16 @@ INSERT INTO `tickets` (`id`, `price`, `code`, `conference_id`, `reservation_id`)
 (99, 150, 'T4RC8BK7M1', 7, NULL),
 (100, 150, 'T3CRUL5WG3', 7, NULL),
 (101, 150, '72CXAFGQI6', 7, NULL),
-(102, 200, 'AG36LBBVQ0', 9, NULL),
-(103, 200, 'WMT82XOBHM', 9, NULL),
-(104, 200, 'BZPN98DQJS', 9, NULL),
-(105, 200, '34NS1TLL5J', 9, NULL),
-(106, 200, 'PXHVEAKPT0', 9, NULL),
-(107, 200, '6TAL8IL4XA', 9, NULL),
-(108, 200, 'WWD5N2UG5S', 9, NULL),
-(109, 200, 'KIMHBDLONB', 9, NULL),
-(110, 200, 'XMOM9JG1U6', 9, NULL),
-(111, 200, 'JGM1SS4LHF', 9, NULL),
+(102, 200, 'AG36LBBVQ0', 9, 40),
+(103, 200, 'WMT82XOBHM', 9, 40),
+(104, 200, 'BZPN98DQJS', 9, 40),
+(105, 200, '34NS1TLL5J', 9, 40),
+(106, 200, 'PXHVEAKPT0', 9, 40),
+(107, 200, '6TAL8IL4XA', 9, 40),
+(108, 200, 'WWD5N2UG5S', 9, 40),
+(109, 200, 'KIMHBDLONB', 9, 40),
+(110, 200, 'XMOM9JG1U6', 9, 40),
+(111, 200, 'JGM1SS4LHF', 9, 40),
 (112, 195, 'ZCU68DGHBM', 8, 28),
 (113, 195, 'U3F5GUYGLU', 8, 28),
 (114, 195, '3H48ZUZB7E', 8, 28),
@@ -469,13 +496,13 @@ ALTER TABLE `lectures`
 -- AUTO_INCREMENT pre tabuľku `presentations`
 --
 ALTER TABLE `presentations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT pre tabuľku `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT pre tabuľku `rooms`
@@ -487,7 +514,7 @@ ALTER TABLE `rooms`
 -- AUTO_INCREMENT pre tabuľku `selected_lectures`
 --
 ALTER TABLE `selected_lectures`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT pre tabuľku `tickets`

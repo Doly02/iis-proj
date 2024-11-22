@@ -65,7 +65,7 @@ final class PresentationAddPresenter extends BasePresenter
 
         $form->addText('name', 'Name:')
             ->setRequired('Enter the presentation name.')
-            ->addRule($form::MaxLength, 'Name can be at most 30 characters long.', 30);
+            ->addRule($form::MaxLength, 'Name can be at most 100 characters long.', 100);
 
         $form->addTextArea('description', 'Description:');
         $form->addTextArea('attachment', 'Attachment:');
