@@ -46,7 +46,7 @@
 <table>
     <tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
     <tr><td>admin@local.cz</td><td>test</td><td>Administrátor</td></tr>
-    <tr><td>novakova@seznam.c</td><td>test</td><td>Registrovaný uživatel</td></tr>
+    <tr><td>novakova@seznam.cz</td><td>test</td><td>Registrovaný uživatel</td></tr>
 </table>
 
 <p>
@@ -61,7 +61,10 @@
 <h2>Diagram případů užití</h2>
 <p>
     V aplikaci je implementován následný diagram případu užití, vycházející z definice zadání.
-    TODO: Vygenerovat diagram!
+    V systému se nachází více rolí - neregistrovaný uživatel, registrovaný uživatel, pořadatel, přednášející, návštěvník 
+    a administrátor, přičemž pořadatel, přednášející, návštěvník a administrátor jsou role dědící vlastnosti od registrovaného uživatele.
+    Administrátor má práva všech ostatních rolí, tzn. může také vytvářet konference, přídávat k nim přednášky,... a navíc 
+    může spravovat uživatele, vytvářet/upravovat místnosti a vytvářet další administrátory.
 </p>
 
 <img src="doc/use-case-diagram/use-case-iis-proj.png" alt="Diagram případů užití" width="1200">
