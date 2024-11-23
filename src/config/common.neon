@@ -11,6 +11,7 @@ application:
 	    ReservationModule: App\ReservationModule\Presenters\*Presenter
 	    PresentationModule: App\PresentationModule\Presenters\*Presenter
 	    LectureModule: App\LectureModule\Presenters\*Presenter
+	    Error: App\UI\Error\**Presenter
 
 database:
 	dsn: 'mysql:host=127.0.0.1;dbname=iis'
