@@ -113,7 +113,7 @@ final class AddRoomToConferenceControl extends Control
 
         if (null !== $presenter && $err !== 1) {
             $this->flashMessage('Rooms added to conference successfully.', 'success');
-            $presenter->redirect(':ConferenceModule:ConferenceDetail:default', ['id' => $this->conferenceId]);
+            $presenter->redirect(':ConferenceModule:ConferenceCreatorDetail:defaultOrganizer', ['id' => $this->conferenceId]);
         }
 
     }

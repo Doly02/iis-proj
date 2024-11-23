@@ -21,17 +21,20 @@ final class ConferenceFormFactory
         $this->roomService = $roomService;
     }
 
-    public function createConferenceForm(int $conferenceId = null) : Form
+    public function createConferenceForm(int $conferenceId = null): Form
     {
         $form = new Form;
 
         $conference = null;
+        $hasReservations = false;
+
         if ($conferenceId !== null) {
             $conference = $this->conferenceService->fetchById($conferenceId); // Replace with your method to get conference data by ID
+            $hasReservations = $this->conferenceService->getReservationsCount($conferenceId) > 0;
         }
+
         // ID seems to reset after send
         $form->addHidden('conferenceId', $conferenceId);
-
 
         $form->addText('name', 'Name:')
             ->setRequired('Enter the conference name.')
@@ -45,45 +48,61 @@ final class ConferenceFormFactory
             ->setRequired('Enter an area of interest for the conference.')
             ->setHtmlAttribute('class', 'form-control');
 
-        // User-friendly selection of date and time
-        $form->addDateTime('start_time', 'Conference start:')
-            ->setRequired('Enter the start date.')
-            ->setHtmlAttribute('class', 'form-control');
 
-        $form->addDateTime('end_time', 'Conference end:')
-            ->setRequired('Enter the end date.')
-            ->setHtmlAttribute('class', 'form-control');
+        if ($hasReservations) {
+            $form->addText('start_time', 'Conference start:')
+                ->setHtmlAttribute('class', 'form-control')
+                ->setHtmlAttribute('readonly', true);
 
-        $form->addText('price', 'Price:')
-            ->setRequired('Enter the price.')
-            ->addRule($form::Float, 'Price must be a number.')
-            ->setHtmlAttribute('class', 'form-control');
+            $form->addText('end_time', 'Conference end:')
+                ->setHtmlAttribute('class', 'form-control')
+                ->setHtmlAttribute('readonly', true);
+
+            $form->addText('price', 'Price:')
+                ->setHtmlAttribute('class', 'form-control')
+                ->setHtmlAttribute('readonly', true);
+        } else {
+            // Editable fields for conferences without reservations
+            $form->addDateTime('start_time', 'Conference start:')
+                ->setRequired('Enter the start date.')
+                ->setHtmlAttribute('class', 'form-control');
+
+            $form->addDateTime('end_time', 'Conference end:')
+                ->setRequired('Enter the end date.')
+                ->setHtmlAttribute('class', 'form-control');
+
+            $form->addText('price', 'Price:')
+                ->setRequired('Enter the price.')
+                ->addRule($form::Float, 'Price must be a number.')
+                ->setHtmlAttribute('class', 'form-control');
+        }
 
         $form->addSubmit('send', 'Send')
             ->setHtmlAttribute('class', 'btn btn-primary');
 
         // Validating time
-        $form->onValidate[] = function (Form $form) {
+        $form->onValidate[] = function (Form $form) use ($hasReservations) {
             $values = $form->getValues();
 
-            // convert DateTimeImmutable to a string
-            $startDateTime = $values->start_time;
-            $endDateTime = $values->end_time;
+            if (!$hasReservations) {
+                // Validate only if fields are editable
+                $startDateTime = $values->start_time;
+                $endDateTime = $values->end_time;
+                $price = $values->price;
 
-            $price = $values->price;
+                // Check if start time is not before end time
+                if ($startDateTime >= $endDateTime) {
+                    $form->addError('The end time must be after the start time.');
+                }
 
-            // Check if start time is not before end time
-            if ($startDateTime >= $endDateTime) {
-                $form->addError('The end time must be after the start time.');
-            }
-
-            // Check price
-            if ($price <= 0) {
-                $form->addError('Price cannot be negative.');
+                // Check price
+                if ($price <= 0) {
+                    $form->addError('Price cannot be negative.');
+                }
             }
         };
 
-        // for edit
+        // Set default values for editing
         if ($conference) {
             $form->setDefaults([
                 'name' => $conference->name,
@@ -97,6 +116,7 @@ final class ConferenceFormFactory
 
         return $form;
     }
+
 
     public function createAddRoomsToConferenceForm(\DateTimeImmutable $allowedStartTime, \DateTimeImmutable $allowedEndTime) : Form
     {

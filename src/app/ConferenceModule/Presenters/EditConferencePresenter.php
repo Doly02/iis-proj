@@ -40,8 +40,8 @@ final class EditConferencePresenter extends BasePresenter
             $this->flashMessage('Error deleting conference: ' . $e->getMessage(), 'error');
         }
 
-        // Redirect to the list of conferences
-        $this->redirect(':ConferenceModule:ConferenceList:list');
+        // Redirect to the creator list of conferences
+        $this->redirect(':ConferenceModule:ConferenceListCreator:list');
     }
 
 }

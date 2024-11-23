@@ -45,8 +45,7 @@ final class EditConferenceControl extends Control
         \Tracy\Debugger::barDump($conferenceId, 'Conference ID in Control');
     }
 
-    // Creates Add Conference Form
-    protected function createComponentEditConferenceForm() : \Nette\Application\UI\Form
+    protected function createComponentEditConferenceForm(): \Nette\Application\UI\Form
     {
         $form = $this->conferenceFormFactory->createConferenceForm($this->conferenceId);
         $form->onSuccess[] = [$this, 'editConferenceFormSucceeded'];
@@ -61,7 +60,13 @@ final class EditConferenceControl extends Control
         \Tracy\Debugger::barDump($conferenceId, 'Conference ID in Success Handler');
 
         try {
-            // Insert the conference data into the database
+            $originalConference = $this->conferenceService->getConferenceById($conferenceId);
+
+            if ($originalConference->start_time !== $values->start_time || $originalConference->end_time !== $values->end_time) {
+                $this->conferenceService->deleteLecturesByConferenceId($conferenceId);
+                $this->conferenceService->deleteConferenceRoomsByConferenceId($conferenceId);
+            }
+
             $this->conferenceService->updateConference($conferenceId, [
                 'name' => $values->name,
                 'description' => $values->description,
@@ -69,19 +74,18 @@ final class EditConferenceControl extends Control
                 'start_time' => $values->start_time,
                 'end_time' => $values->end_time,
                 'price' => $values->price,
+                'capacity' => 0
             ]);
 
         } catch (\Exception $e) {
             $err = 1;
-            $form->addError('An error occurred while adding the conference: ' . $e->getMessage());
-        }
-        // TODO commit changes after successful add conference
-
-        if (null !== $presenter && $err !== 1)
-        {
-            $this->flashMessage('Conference added successfully.', 'success');
-            $presenter->redirect(':ConferenceModule:ConferenceList:list');
+            $form->addError('An error occurred while editing the conference: ' . $e->getMessage());
         }
 
+        if (null !== $presenter && $err !== 1) {
+            $this->flashMessage('Conference updated successfully.', 'success');
+            $presenter->redirect(':ConferenceModule:ConferenceListCreator:list');
+        }
     }
+
 }

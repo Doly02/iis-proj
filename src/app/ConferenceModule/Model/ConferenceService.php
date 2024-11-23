@@ -52,12 +52,81 @@ final class ConferenceService extends BaseService
             ->update($data);
     }
 
+    public function getReservationsCount(int $conferenceId): int
+    {
+        return $this->database->table('reservations')
+            ->where('conference_id', $conferenceId)
+            ->count('*');
+    }
+
+    public function hasLectures(int $conferenceId): bool
+    {
+        $conferenceHasRoomsIds = $this->database->table('conference_has_rooms')
+            ->where('conference_id', $conferenceId)
+            ->fetchPairs('id', 'id');
+
+        return $this->database->table('lectures')
+                ->where('id_conference_has_rooms', $conferenceHasRoomsIds)
+                ->count('*') > 0;
+    }
+
+
+    public function hasRooms(int $conferenceId): bool
+    {
+        return $this->database->table('conference_has_rooms')
+                ->where('conference_id', $conferenceId)
+                ->count('*') > 0;
+    }
+
+
+    public function deleteLecturesByConferenceId(int $conferenceId): void
+    {
+        $conferenceHasRoomsIds = $this->database->table('conference_has_rooms')
+            ->where('conference_id', $conferenceId)
+            ->fetchPairs('id', 'id');
+
+        $this->database->table('lectures')
+            ->where('id_conference_has_rooms', $conferenceHasRoomsIds)
+            ->delete();
+    }
+
+
+    public function deleteConferenceRoomsByConferenceId(int $conferenceId): void
+    {
+        $this->database->table('conference_has_rooms')
+            ->where('conference_id', $conferenceId)
+            ->delete();
+    }
+
+
+
     public function deleteConferenceById(int $id): void
     {
+        $reservations = $this->database->table('reservations')
+            ->where('conference_id', $id)
+            ->count('*');
+
+        if ($reservations > 0) {
+            throw new \Exception('The conference cannot be deleted because it has existing reservations.');
+        }
+
+        $conferenceHasRooms = $this->database->table('conference_has_rooms')
+            ->where('conference_id', $id);
+
+        foreach ($conferenceHasRooms as $room) {
+            $this->database->table('lectures')
+                ->where('id_conference_has_rooms', $room->id)
+                ->delete();
+        }
+
+        $conferenceHasRooms->delete();
+
         $this->database->table('conferences')
             ->where('id', $id)
             ->delete();
     }
+
+
 
     public function getOccupiedCapacity(): array
     {
@@ -90,12 +159,10 @@ final class ConferenceService extends BaseService
 
     public function getConferencesWithCapacityByOrganiser(int $organiserId): array
     {
-        // Získanie konferencií pre organizátora
         $conferences = $this->database->table('conferences')
             ->where('organiser_id', $organiserId)
             ->fetchAll();
 
-        // Získanie obsadených kapacít
         $occupiedCapacities = $this->getOccupiedCapacity();
 
         $result = [];
