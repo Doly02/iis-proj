@@ -18,6 +18,11 @@
             </a>
         </li>
         <li class="nav-sideitem">
+            <li class="nav-sideitem {$presenter->isLinkCurrent(':ConferenceModule:ConferenceListAdmin:list') ? 'active' : ''}">
+                <a class="nav-sidelink" href="{plink :ConferenceModule:ConferenceListAdmin:list}">Conferences (ADMN)</a>
+            </li>
+        </li>
+        <li class="nav-sideitem">
             <a class="nav-sidelink" href="{plink :UserModule:UserList:list}">
                 Manage users
             </a>

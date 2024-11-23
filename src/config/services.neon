@@ -22,6 +22,7 @@ services:
 	- App\ConferenceModule\Controls\AddRoomToConference\IAddRoomToConferenceControlFactory
 	- App\ConferenceModule\Controls\ListConference\IListConferenceControlFactory
 	- App\ConferenceModule\Controls\ListConferenceUser\IListConferenceUserControlFactory
+	- App\ConferenceModule\Controls\ListConferenceAdmin\IListConferenceAdminControlFactory
 	- App\ConferenceModule\Controls\ListConferenceCreator\IListConferenceCreatorControlFactory
 	- App\RoomModule\Controls\AddRoom\IAddRoomControlFactory
 	- App\ReservationModule\Controls\ReserveNonRegistered\IReserveNonRegisteredControlFactory

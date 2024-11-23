@@ -16,6 +16,8 @@ final class RouterFactory
     {
         $router = new \Nette\Application\Routers\RouteList();
 
+        $router->addRoute('conference/a-conference-list/list', ':ConferenceModule:ConferenceListAdmin:list');
+
         $router->addRoute('conference/conference-list/list', ':ConferenceModule:ConferenceList:list');
 
         $router->addRoute('conference/conference-list-user/list', ':ConferenceModule:ConferenceListUser:list');
