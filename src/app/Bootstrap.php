@@ -9,8 +9,12 @@ require __DIR__ . '/../vendor/autoload.php';
 $configurator = new Configurator;
 
 // Enable Tracy debugger (set to false or remove in production)
-$configurator->setDebugMode(true);
+$configurator->setDebugMode(false);
 $configurator->enableTracy(__DIR__ . '/../log');
+
+error_reporting(E_ALL);
+ini_set('display_errors', '0');
+ini_set('log_errors', '1');
 
 // Set the temporary directory for cache and other temporary files
 $configurator->setTempDirectory(__DIR__ . '/../temp');

@@ -34,8 +34,11 @@ final class ListRoomControl extends Control
     {
         $grid = $this->_dataGridControlFactory->create($this->_roomService);
 
+        $grid->setRefreshUrl(false);
         $grid->setAutoSubmit(false);
+        $grid->setRememberState(false);
 
+        $grid->setDefaultPerPage(20);
         $grid->setPagination(false);
         $grid->addColumnText('name', 'Room Name:')
             ->setSortable()
