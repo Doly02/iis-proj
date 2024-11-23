@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\ConferenceModule\Presenters;
 
-use App\CommonModule\Presenters\BasePresenter;
+use App\CommonModule\Presenters\SecurePresenter;
 use App\ConferenceModule\Controls\ListConferenceCreator\ListConferenceCreatorControl;
 use App\ConferenceModule\Controls\ListConferenceCreator\IListConferenceCreatorControlFactory;
 
-final class ConferenceListCreatorPresenter extends BasePresenter
+final class ConferenceListCreatorPresenter extends SecurePresenter
 {
     private IListConferenceCreatorControlFactory $listConferenceCreatorControlFactory;
 

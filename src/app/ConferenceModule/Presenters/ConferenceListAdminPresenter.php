@@ -9,7 +9,7 @@ use App\ConferenceModule\Controls\ListConference\ListConferenceControl;
 use App\ConferenceModule\Controls\ListConferenceAdmin\IListConferenceAdminControlFactory;
 use App\ConferenceModule\Controls\ListConferenceAdmin\ListConferenceAdminControl;
 
-final class ConferenceListAdminPresenter extends BasePresenter
+final class ConferenceListAdminPresenter extends SecurePresenter
 {
     private IListConferenceAdminControlFactory $listConferenceAdminControlFactory;
 
@@ -21,6 +21,10 @@ final class ConferenceListAdminPresenter extends BasePresenter
 
     protected function createComponentConferenceAdminGrid(): ListConferenceAdminControl
     {
+        if (!$this->user->isLoggedIn() || $this->template->accountType !== 'admn') {
+            $this->flashMessage('You do not have permission.', 'error');
+            $this->redirect(':ConferenceModule:ConferenceList:list');
+        }
         return $this->listConferenceAdminControlFactory->create();
     }
 
