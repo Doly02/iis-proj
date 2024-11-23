@@ -1,6 +1,14 @@
 {default $title = 'Edit conference' }
 <h1>Edit conference</h1>
 
+<p class="alert alert-warning">
+    The start date, end date, and price cannot be changed if the conference already has reservations.
+</p>
+<p class="alert alert-warning">
+    If the conference does not have reservations but has associated rooms or lectures, changing the start or end date will delete all associated lectures and rooms.
+</p>
+
+
 {block content}
     {control editConferenceForm}
 

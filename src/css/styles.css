@@ -599,3 +599,28 @@ box-sizing: border-box;
     border: none;
     box-shadow: none;
 }
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.alert-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.alert-warning h1,
+.alert-warning p {
+    margin: 0;
+}
+
+.alert-warning p {
+    font-weight: bold;
+}
