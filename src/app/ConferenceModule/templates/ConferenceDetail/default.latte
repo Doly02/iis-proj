@@ -14,6 +14,15 @@
         {if $occupiedCapacity == $conference->capacity}
             <p style="color: #dc0000; font-weight: bold;">The capacity of the conference is full</p>
         {/if}
+
+        <p><strong>Rooms: </strong>
+            {if $roomNames}
+                {$roomNames|implode: ', '}
+            {else}
+                No rooms booked.
+            {/if}
+        </p>
+
     </div>
 
 <br>

@@ -38,6 +38,9 @@ final class ConferenceDetailPresenter extends BasePresenter
         $this->template->start_time_formatted = $start_time_formatted;
         $this->template->end_time_formatted = $end_time_formatted;
 
+        // Room names
+        $this->template->roomNames = $this->conferenceService->getRoomNamesByConferenceId($id);
+
         $occupiedCapacity = $this->conferenceService->getOccupiedCapacity()[$conference->id] ?? 0;
         $this->template->occupiedCapacity = $occupiedCapacity;
     }

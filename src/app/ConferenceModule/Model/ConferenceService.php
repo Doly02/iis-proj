@@ -182,6 +182,19 @@ final class ConferenceService extends BaseService
         return $result;
     }
 
+    public function getRoomNamesByConferenceId(int $conferenceId): array
+    {
+        $roomIds = $this->database->table('conference_has_rooms')
+            ->where('conference_id', $conferenceId)
+            ->fetchPairs(null, 'room_id');
 
+        if (empty($roomIds)) {
+            return [];
+        }
+
+        return $this->database->table('rooms')
+            ->where('id', $roomIds)
+            ->fetchPairs('id', 'name');
+    }
 
 }
