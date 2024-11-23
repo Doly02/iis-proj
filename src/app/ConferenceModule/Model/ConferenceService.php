@@ -197,4 +197,12 @@ final class ConferenceService extends BaseService
             ->fetchPairs('id', 'name');
     }
 
+    public function hasUserReservedConference(int $userId, int $conferenceId): bool
+    {
+        return $this->database->table('reservations')
+                ->where('customer_id', $userId)
+                ->where('conference_id', $conferenceId)
+                ->count('*') > 0;
+    }
+
 }

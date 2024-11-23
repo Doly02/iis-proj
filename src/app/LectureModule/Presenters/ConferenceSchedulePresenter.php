@@ -50,6 +50,10 @@ class ConferenceSchedulePresenter extends SecurePresenter
         $this->template->yItems = $yItems;
         $this->template->scheduleItems = $scheduleItems;
 
+        $this->template->isCreator = false;
+        if($this->user->getId())
+            $this->template->isCreator = $conference->organiser_id == $this->user->getId();
+
     }
 
     protected function createComponentSchedule(): ConferenceScheduleControl
