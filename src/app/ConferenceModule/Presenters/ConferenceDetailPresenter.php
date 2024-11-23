@@ -42,9 +42,10 @@ final class ConferenceDetailPresenter extends BasePresenter
         $this->template->roomNames = $this->conferenceService->getRoomNamesByConferenceId($id);
 
         // Is customer
-        $this->template->isCustomer = false;
+
+        $this->template->isCustomer = 0;
         if($this->user->getId())
-            $this->template->isCustomer = $this->conferenceService->hasUserReservedConference($id, $this->user->getId());
+            $this->template->isCustomer = $this->conferenceService->hasUserReservedConference($this->user->getId(), $id);
 
         $occupiedCapacity = $this->conferenceService->getOccupiedCapacity()[$conference->id] ?? 0;
         $this->template->occupiedCapacity = $occupiedCapacity;
