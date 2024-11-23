@@ -19,11 +19,6 @@ final class LectureDetailPresenter extends SecurePresenter
     {
         $userId = $this->getUser()->getId();
 
-        if (!$userId) {
-            $this->flashMessage('You need to be logged in to view this page.', 'error');
-            $this->redirect(':UserModule:Auth:signIn');
-        }
-
         $conferenceId = $this->_lectureService->getConferenceByLectureId($lectureId);
         $conference = $this->_lectureService->getConferenceById($conferenceId);
         $organiserId = $conference->organiser_id;

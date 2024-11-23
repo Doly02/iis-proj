@@ -20,21 +20,13 @@
                                 {foreach $scheduleItems as $scheduleItem}
                                     {if !$rendered && $scheduleItem['start'] == $yTime && $scheduleItem['room'] == $xItem}
                                         <td rowspan="{$scheduleItem['rowspan']}" class="card-body">
-                                            {if $isCreator}
-                                                <a href="{plink :LectureModule:LectureDetail:default, $scheduleItem['id']}" class="lecture-link">
-                                                    {if $scheduleItem['name']}
-                                                        {$scheduleItem['name']}
-                                                    {else}
-                                                        Detail
-                                                    {/if}
-                                                </a>
-                                            {else}
+                                            <a href="{plink :LectureModule:LectureDetail:default, $scheduleItem['id']}" class="lecture-link">
                                                 {if $scheduleItem['name']}
                                                     {$scheduleItem['name']}
                                                 {else}
-                                                    No presentation yet
+                                                    Detail
                                                 {/if}
-                                            {/if}
+                                            </a>
                                             {if $scheduleItem['lecturer']}
                                                 <p class="card-name m-0"><em>{$scheduleItem['lecturer']}</em></p>
                                             {/if}
