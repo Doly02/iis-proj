@@ -59,9 +59,12 @@ database:
   <em>Content of WWW directory</em>
 </p>
 
+
 8. The content of the `WWW/app` folder on the server should look like this:
 
 <p align="center">
   <img src="doc/obsah-app.png" alt="Content of WWW directory/app" width="550"/><br>
   <em>Content of WWW/app directory</em>
 </p>
+
+- **Note**: The WWW directory must be set with sufficient rights! set the rights: chmod -R o=rX,g= ~/WWW (i.e. read and pass rights for all, but disabled write, no rights for the group). For more information see [FIT: Frequently Asked Questions](https://www.fit.vut.cz/units/cvt/faq/.cs)
