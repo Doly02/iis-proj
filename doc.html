@@ -505,12 +505,12 @@
     <li>spustťe v XAMPP Apache server a MySQL</li>
     <li>V prohlížeči otevře stránku http://localhost/phpmyadmin/index.php klikněte na tlačitko New, které umožňuje vytvořit novou databázi</li>
     <li>nově vytvořenou databázi pojmenujte "iis" a poté naimportujte schéma ze složky "...\iis-proj\src\data\db.sql"</li>
-    <li>otevřete klasický Windows terminál a spusťte lokální php server ve složce "...\iis-proj\src\" pomocí příkazu: php -S localhost:8000 -t www</li>
+    <li>otevřete klasický Windows terminál a spusťte lokální php server ve složce "...\iis-proj\src\" pomocí příkazu: <code>php -S localhost:8000 -t www</code></li>
     <li>následně do prohlížeče zadejte URL: http://localhost:8000/</li>
 </ul>
 
 <li>
-    Aplikace byla testována na PHP8.2 s využitím programu XAMPP (spouštející Apache Server a MySQL) s využitím PHP serveru (viz. výše - php -S localhost:8000 -t www).
+    Aplikace byla testována na PHP8.2 s využitím programu XAMPP (spouštející Apache Server a MySQL) s využitím PHP serveru (viz. výše - <code>php -S localhost:8000 -t www</code>).
 </li>
 <h3>Instalace na server</h3>
 <h4>Požadavky</h4>
@@ -530,7 +530,13 @@
         </ul>
     <li>nahrajte obsah složky src na server do webového adresáře</li>
     <li>spusťte příkaz composer install</li>
-    <li>nyní je aplikace dostupná z dané URL, na Evě v našem případě: https://www.stud.fit.vutbr.cz/~xzahra33/IIS/</li>
+    <li>nyní je aplikace dostupná z dané URL na serveru Eva - v našem případě: https://www.stud.fit.vutbr.cz/~xzahra33/IIS/</li>
+
+    <li>obsah složky <code>WWW</code> na serveru by měl vypadat následujícím způsobem:</li>
+    <img src="doc/obsah-www.png" alt="Schéma relační databáze" width="600">
+
+    <li>obsah složky <code>WWW/app</code> na serveru by měl vypadat následujícím způsobem:</li>
+    <img src="doc/obsah-app.png" alt="Schéma relační databáze" width="600">
 </ul>
 
 <h2>Známé problémy</h2>
