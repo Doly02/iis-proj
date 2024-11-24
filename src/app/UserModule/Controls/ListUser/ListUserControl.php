@@ -59,12 +59,14 @@ final class ListUserControl extends Control
             ->setClass('btn btn-primary btn-inline')
             ->setTitle('Edit User');
 
-        $grid->addAction('delete', 'Delete', ':UserModule:UserList:delete')
-            ->setIcon('trash')
+        $grid->addAction('delete', '', 'delete!', ['userId' => 'id'])
+        ->setTitle('Delete')
             ->setClass('btn btn-danger btn-inline')
+            ->setIcon('trash')
             ->setConfirmation(
-                new StringConfirmation('Are you sure you want to delete the user "%s"?', 'email')
+                new StringConfirmation('Do you really want to delete the user "%s"?', 'name')
             );
+
 
         return $grid;
     }
