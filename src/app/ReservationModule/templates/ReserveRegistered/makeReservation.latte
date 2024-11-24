@@ -1,0 +1,61 @@
+{default $title = 'Ticket Reservation'}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{$basePath}/css/styles.css">
+    <title>{$title}</title>
+</head>
+<body>
+
+<div class="form-group">
+    {control reserveRegisteredForm}
+</div>
+
+<script>
+    let currentTickets = 1;
+
+    function adjustTicketCount(change) {
+        const ticketInput = document.getElementById('ticket-quantity');
+        currentTickets = parseInt(ticketInput.value) || 1;
+
+        currentTickets += change;
+        if (currentTickets < 1) {
+            currentTickets = 1;
+        }
+
+        ticketInput.value = currentTickets;
+        updateTotalPrice();
+    }
+
+    function updateTotalPrice() {
+        const ticketPrice = {$ticketPrice}; // From DB
+        let totalPriceElement = document.getElementById('total-price');
+
+        if (!totalPriceElement) {
+            const priceInfoDiv = document.createElement('div');
+            priceInfoDiv.className = 'price-info';
+            priceInfoDiv.innerHTML = '<p>Total Price: <span id="total-price"></span> Kč</p>';
+            document.body.appendChild(priceInfoDiv);
+            totalPriceElement = document.getElementById('total-price');
+        }
+
+        const totalPrice = currentTickets * ticketPrice;
+        totalPriceElement.textContent = totalPrice;
+    }
+
+    // Give Event For Recalculation of Price If Value Changes in Input
+    document.addEventListener('DOMContentLoaded', () => {
+        const ticketInput = document.getElementById('ticket-quantity');
+        ticketInput.addEventListener('input', () => {
+            currentTickets = parseInt(ticketInput.value) || 1; // Actualize currentTickets
+            updateTotalPrice();
+        });
+        updateTotalPrice();
+    });
+</script>
+
+</body>
+</html>

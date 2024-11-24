@@ -1,0 +1,31 @@
+{default $title = 'Homepage'}
+
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>{$title|noescape}</title>
+    <link rel="stylesheet" href="{$basePath}/css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    {block content}
+
+        <p>
+            <a href="{plink :UserModule:Authentication:signIn}">Sign In</a> <br>
+            <a href="{plink :ConferenceModule:ConferenceList:list}">List of conferences</a> <br>
+            <a href="{plink :ConferenceModule:ConferenceAdd:add}">Add conference</a> <br>
+            <a href="{plink :RoomModule:RoomAdd:addRoom}">Add room</a> <br>
+
+            <a href="{plink :ReservationModule:ReservationList:list}">Reservation list</a>
+        </p>
+
+        {if $user->isLoggedIn()}
+            <p>
+                <a href="{plink :UserModule:UserDetail:default, userId => $user->id}" class="btn btn-primary">View Your Information</a> <br><br>
+                <a href="{plink :ConferenceModule:ConferenceListCreator:list, userId => $user->id}" class="btn btn-primary">View Your Conferences</a>
+            </p>
+        {/if}
+    {/block}
+</body>
+</html>

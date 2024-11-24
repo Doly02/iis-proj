@@ -1,0 +1,16 @@
+{default $title = 'Conference schedule'}
+
+{block content}
+    <h2> {$conference->name} - schedule</h2>
+
+    {if $isCreator}
+    <br>
+    <a href="{link :LectureModule:AddNewLecture:default, conferenceId => $conference->id}" class="btn btn-primary">
+        Add new lecture
+    </a>
+    <br>
+    {/if}
+
+    {control schedule}
+{/block}
+

@@ -1,0 +1,23 @@
+{default $title = 'Presentation detail'}
+
+
+{block content}
+
+    <h2>{$presentation->name}</h2>
+    <strong>Description:</strong> {$presentation->description}<br>
+    <strong>Attachment:</strong> {$presentation->attachment}<br>
+    <strong>State:</strong> {$presentation->state}<br><br>
+
+    <div class="btn-group-inline">
+    <a href="{link ':PresentationModule:PresentationAdd:edit', id => $presentation->conference_id, presentationId => $presentationId}" class="btn btn-primary">
+        Edit
+    </a> <br><br>
+
+    <a href="{link ':PresentationModule:PresentationEdit:delete', id => $presentationId}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this presentation?');">
+        Delete
+    </a> <br><br>
+    </div>
+
+
+
+{/block}

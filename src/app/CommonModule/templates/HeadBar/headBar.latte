@@ -1,0 +1,14 @@
+<nav class="navbar">
+    <div class="nav-container">
+
+        <ul class="navbar-nav">
+            {if $user->isLoggedIn()}
+                {include snippets/profileAndSignOutLinks.latte}
+            {else}
+                {include snippets/signInAndRegistration.latte}
+            {/if}
+        </ul>
+
+    </div>
+</nav>
+

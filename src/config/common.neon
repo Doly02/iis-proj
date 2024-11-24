@@ -1,0 +1,66 @@
+application:
+	errorPresenter:
+		4xx: Error:Error4xx
+		5xx: Error:Error5xx
+	mapping:
+	    CommonModule: App\CommonModule\Presenters\*Presenter
+	    UserModule: App\UserModule\Presenters\*Presenter
+	    TicketModule: App\TicketModule\Presenters\*Presenter
+	    ConferenceModule: App\ConferenceModule\Presenters\*Presenter
+	    RoomModule: App\RoomModule\Presenters\*Presenter
+	    ReservationModule: App\ReservationModule\Presenters\*Presenter
+	    PresentationModule: App\PresentationModule\Presenters\*Presenter
+	    LectureModule: App\LectureModule\Presenters\*Presenter
+	    Error: App\UI\Error\**Presenter
+	    Error4xx: App\UI\Error\Error4xx\*Presenter
+	    Error5xx: App\UI\Error\Error5xx\*Presenter
+
+database:
+	dsn: 'mysql:host=127.0.0.1;dbname=iis'
+	user: 'root'
+	password: ''
+
+
+latte:
+	strictTypes: yes
+	strictParsing: yes
+	extensions:
+		- App\UI\Accessory\LatteExtension
+
+parameters:
+    appDir: %appDir%
+    debugMode: false
+    productionMode: true
+
+    roles:
+        guest:
+            resources:
+                conference.conferencelist: [list]
+        user:
+            resources:
+                usermodule.user: [edit, view]
+                user.profile: []
+                conference.conference: [list, default]
+                presentation.presentation: [list, default]
+                ticket.ticket: [default]
+                reservationmodule.reserveregistered: [view, makeReservation]
+                conferencemodule.conferenceadd: [add, default]
+                reservationmodule.reservationlist: [list]
+        admin:
+            resources:
+                user.user: []
+                reservationmodule.reserveregistered: [view, makeReservation]
+                conferencemodule.conferenceadd: [add, default]
+                reservationmodule.reservationlist: [list]
+
+    publicPages:
+        - UserModule:Authentication:signIn
+        - ReservationModule:ReserveNonRegistered:makeReservation
+
+di:
+	export:
+		parameters: no
+		tags: no
+
+http:
+	cookieSecure: auto

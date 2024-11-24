@@ -1,0 +1,81 @@
+@startuml er
+
+entity "Konference" {
+    <<PK>> Id konference
+    ---
+    + Název
+    + Popis
+    + Oblast zájmu
+    + Datum a čas začátku
+    + Datum a čas konce
+    + Cena vstupního
+    - Celkova kapacita
+    - Voľná kapacita
+}
+
+entity "Prezentace" {
+    <<PK>> Id prezentace
+    ---
+    + Název
+    + Popis
+    + Stav - schválená/zamítnutá/čakající
+    + Příloha - foto/logo/poster
+}
+
+entity "Rezervace" {
+    <<PK>> Id rezervace
+    ---
+    - Dátum a čas vzniku
+    + Stav - provedená/zaplacená/
+             zamítnutá
+    + Cena na úhradu
+    + Jméno
+    + Příjmení
+    + E-mail
+
+}
+
+entity "Vstupenka" {
+    << weak >>
+    ---
+    <<PK>> Id vstupenky
+    <<CK>> Id konference
+    ---
+    - Cena vstupního
+}
+
+
+entity "Uživatel" {
+    <<PK>> Id uživatele
+    ---
+    + Jméno
+    + Příjmení
+    + E-mail
+    + Heslo
+}
+
+entity "Místnost" {
+    <<PK>> Id místnosti
+    ---
+    + Název
+    + Kapacita
+}
+
+entity "se koná v" {
+    + Čas začátku
+    + Čas konce
+}
+
+"Konference" " 0..N " -- "se koná v"
+"Konference" " 1" -- "0..N   " "Vstupenka" : " ponúka << identif >>"
+"se koná v" -- "  1   " "Místnost"
+"se koná v" -- " 1..N  " "Prezentace"
+"Prezentace" " 0..N   " -- " 1..N   " "Uživatel" : "navrhuje / přednáší "
+"Konference" " 0..N " -- "1          " "Uživatel" : " zakládá "
+"Rezervace" " 0..N " -- "             1 " "Uživatel" : " vytvoří "
+"Rezervace" " 0..N     " -- "    1" "Konference" : "na     "
+"Vstupenka" " 1..N " -- "0..1  " "Rezervace" : "  rezervuje"
+"Místnost" " 0..N  "  -- "1 " "Uživatel" : " admin přidá"
+
+
+@enduml

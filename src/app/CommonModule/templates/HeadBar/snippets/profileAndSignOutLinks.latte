@@ -1,0 +1,13 @@
+<li class="nav-item {$presenter->isLinkCurrent(':UserModule:UserDetail:default') ? 'active' : ''}">
+    <a class="nav-link" href="{plink :UserModule:UserDetail:default}">My profile</a>
+</li>
+
+<li class="nav-item {$presenter->isLinkCurrent(':LectureModule:MySchedule:mySchedule') ? 'active' : ''}">
+    <a class="nav-link" href="{plink :LectureModule:MySchedule:mySchedule}">My schedule</a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link" href="{plink logout!}">
+        Logout <i class="fa fa-sign-out" aria-hidden="true"></i>
+    </a>
+</li>

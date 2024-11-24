@@ -1,0 +1,97 @@
+{default $title = 'Ticket Reservation'}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{$basePath}/css/styles.css">
+    <title>{$title}</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+{block content}
+
+<div class="form-group">
+    {control reserveNonRegisteredForm}
+</div>
+
+<div id="total-price-container"></div>
+
+<script>
+    let currentTickets = 1;
+
+    function adjustTicketCount(change) {
+        const ticketInput = document.getElementById('ticket-quantity');
+        currentTickets = parseInt(ticketInput.value) || 1;
+
+        currentTickets += change;
+        if (currentTickets < 1) {
+            currentTickets = 1;
+        }
+
+        ticketInput.value = currentTickets;
+        updateTotalPrice();
+    }
+
+    function updateTotalPrice() {
+        const ticketPrice = {$ticketPrice}; // From DB
+        const container = document.getElementById('total-price-container'); // Find Container For Total Price View
+
+        if (!container) {
+            console.error('Total price container not found!');
+            return;
+        }
+
+        let totalPriceElement = document.getElementById('total-price');
+
+        if (!totalPriceElement) {
+            const priceInfoDiv = document.createElement('div');
+            priceInfoDiv.className = 'price-info';
+            priceInfoDiv.innerHTML = '<p>Total Price: <span id="total-price"></span> Kč</p>';
+            container.appendChild(priceInfoDiv); // Add To Container
+            totalPriceElement = document.getElementById('total-price');
+        }
+
+        const totalPrice = currentTickets * ticketPrice;
+        totalPriceElement.textContent = totalPrice;
+    }
+
+    // Give Event For Recalculation of Price If Value Changes in Input
+    document.addEventListener('DOMContentLoaded', () => {
+        const ticketInput = document.getElementById('ticket-quantity');
+        ticketInput.addEventListener('input', () => {
+            currentTickets = parseInt(ticketInput.value) || 1; // Actualize currentTickets
+            updateTotalPrice();
+        });
+        updateTotalPrice();
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const registerCheckbox = document.getElementById('register-checkbox');
+        const passwordFields = document.querySelectorAll('.password-fields');
+
+        // Funkce pro skrytí/zobrazení polí hesel
+        function togglePasswordFields() {
+            passwordFields.forEach(field => {
+                field.classList.toggle('hidden', !registerCheckbox.checked);
+            });
+        }
+
+        // Initialization of State
+        togglePasswordFields();
+
+        // React To The Changes Of Checkbox
+        registerCheckbox.addEventListener('change', togglePasswordFields);
+    });
+</script>
+
+{/block}
+
+</body>
+</html>

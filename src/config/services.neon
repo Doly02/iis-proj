@@ -1,0 +1,58 @@
+services:
+	- App\Core\RouterFactory::createRouter
+	- App\CommonModule\Controls\Footer\IFooterControlFactory
+	- App\CommonModule\Controls\HeadBar\IHeadBarControlFactory
+	- App\CommonModule\Controls\SideBar\ISideBarControlFactory
+	- App\CommonModule\Controls\DataGrid\IDataGridControlFactory
+	- App\ConferenceModule\Model\ConferenceService
+	- App\RoomModule\Model\RoomService
+	- App\RoomModule\Controls\EditRoom\IEditRoomControlFactory
+	- App\RoomModule\Controls\ListRoom\IListRoomControlFactory
+	- App\PresentationModule\Model\PresentationService
+	- App\PresentationModule\Controls\AddPresentation\IAddPresentationControlFactory
+	- App\UserModule\Model\UserService
+	- App\UserModule\Controls\Register\IRegisterControlFactory
+	- App\UserModule\Controls\Login\ILoginControlFactory
+	- App\UserModule\Controls\EditUser\IEditUserControlFactory
+	- App\UserModule\Controls\CreateAdmin\ICreateAdminControlFactory
+	- App\UserModule\Controls\ListUser\IListUserControlFactory
+	- App\ConferenceHasRoomsModule\Model\ConferenceHasRoomsService
+	- App\ConferenceModule\Controls\AddConference\IAddConferenceControlFactory
+	- App\ConferenceModule\Controls\EditConference\IEditConferenceControlFactory
+	- App\ConferenceModule\Controls\AddRoomToConference\IAddRoomToConferenceControlFactory
+	- App\ConferenceModule\Controls\ListConference\IListConferenceControlFactory
+	- App\ConferenceModule\Controls\ListConferenceUser\IListConferenceUserControlFactory
+	- App\ConferenceModule\Controls\ListConferenceAdmin\IListConferenceAdminControlFactory
+	- App\ConferenceModule\Controls\ListConferenceCreator\IListConferenceCreatorControlFactory
+	- App\RoomModule\Controls\AddRoom\IAddRoomControlFactory
+	- App\ReservationModule\Controls\ReserveNonRegistered\IReserveNonRegisteredControlFactory
+	- App\ReservationModule\Controls\ReserveRegistered\IReserveRegisteredControlFactory
+	- App\ReservationModule\Controls\ListReservation\IListReservationControlFactory
+	- App\ReservationModule\Controls\ListReservationOrganizer\IListReservationOrganizerControlFactory
+	- App\ReservationModule\Model\ReservationService
+	- App\TicketModule\Model\TicketService
+	- App\UserModule\Presenters\AuthenticationPresenter
+	- App\LectureModule\Controls\ConferenceSchedule\IConferenceScheduleControlFactory
+	- App\LectureModule\Controls\LecturerSchedule\ILecturerScheduleControlFactory
+	- App\LectureModule\Controls\PersonalSchedule\IPersonalScheduleControlFactory
+	- App\LectureModule\Controls\MySchedule\IMyScheduleControlFactory
+	- App\LectureModule\Controls\PersonalScheduleView\IPersonalScheduleViewControlFactory
+	- App\LectureModule\Controls\AddNewLecture\INewLectureFormControlFactory
+	- App\LectureModule\Controls\EditLecture\IEditLectureFormControlFactory
+	- App\LectureModule\Model\LectureService
+	- App\PresentationModule\Controls\ListPresentation\IListPresentationControlFactory
+	- App\PresentationModule\Controls\LecturerListPresentation\ILecturerListPresentationControlFactory
+
+	# Forms
+	- App\UserModule\Model\UserFormFactory
+	- App\ConferenceModule\Model\ConferenceFormFactory
+
+    #Authorizator
+	- App\UserModule\Model\AuthenticationFactory::create(%roles%, %appDir%)
+
+search:
+	-	in: %appDir%
+		classes:
+			- *Factory
+			- *Facade
+

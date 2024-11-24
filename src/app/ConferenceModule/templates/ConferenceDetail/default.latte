@@ -1,0 +1,56 @@
+{default $title = 'Conference detail'}
+
+{block content}
+    <h2>{$conference->name}</h2>
+
+    <div>
+        <p><strong>Area of interest:</strong> {$conference->area_of_interest}</p>
+        <p><strong>Description:</strong> {$conference->description}</p>
+        <p><strong>Start Time:</strong> {$start_time_formatted}</p>
+        <p><strong>End Time:</strong> {$end_time_formatted}</p>
+        <p><strong>Price:</strong> {$conference->price}</p>
+        <p><strong>Capacity:</strong> {$occupiedCapacity} / <strong>{$conference->capacity}</strong></p>
+
+        {if $occupiedCapacity == $conference->capacity}
+            <p style="color: #dc0000; font-weight: bold;">The capacity of the conference is full</p>
+        {/if}
+
+        <p><strong>Rooms: </strong>
+            {if $roomNames}
+                {$roomNames|implode: ', '}
+            {else}
+                No rooms booked.
+            {/if}
+        </p>
+
+    </div>
+
+<br>
+<div class="btn-group-inline">
+    {if $user->isLoggedIn()}
+        <a href="{link :ReservationModule:ReserveRegistered:makeReservation, id => $conference->id}" class="btn btn-primary">
+            Reserve tickets
+        </a>
+        <a href="{link :PresentationModule:PresentationAdd:add, id => $conference->id}" class="btn btn-primary">
+            Propose presentation
+        </a>
+        {if $isCustomer}
+        <a href="{link :LectureModule:PersonalScheduleView:personalScheduleView, id => $conference->id}" class="btn btn-primary">
+            Personal schedule
+        </a>
+        {else}
+        <a href="{link :LectureModule:ConferenceSchedule:schedule, id => $conference->id}" class="btn btn-primary">
+            Conference schedule
+        </a>
+        {/if}
+    {else}
+        <a href="{link :ReservationModule:ReserveNonRegistered:makeReservation, id => $conference->id}" class="btn btn-primary">
+            Reserve tickets
+        </a>
+        <a href="{link :LectureModule:ConferenceSchedule:schedule, id => $conference->id}" class="btn btn-primary">
+            Conference schedule
+        </a>
+    {/if}
+</div>
+
+{/block}

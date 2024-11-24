@@ -1,0 +1,536 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Projekt IIS</title>
+    <style type="text/css">
+        table { border-collapse: collapse; }
+        td, th { border: 1px solid black; padding: 0.3em 0.5em; text-align: left; }
+        dt { font-weight: bold; margin-top: 0.5em; }
+    </style>
+</head>
+<body>
+
+<!-- Zkontrolujte prosím nastavení kódování v hlavičce dokumentu
+     podle použitého editoru -->
+
+<h1>Konference</h1> <!-- nazev zadani -->
+
+<dl>
+    <dt>Autoři</dt>
+    <dd>Tomáš Dolák <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+        <a href="mailto:xdolak09@stud.fit.vutbr.cz">xdolak09@stud.fit.vutbr.cz</a> -
+        kapitán - struktura aplikace, návrh systému, přihlašování/registrace, správa uživatelů, bezpečnost,
+        rezervace lístků, potvrzení zaplacení lístků u platby na místě, administrátorské akce, dokumentace,
+        správa vytvořených rezervací daného uživatele, správa místností
+    </dd>
+    <dd>Monika Záhradníková <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+        <a href="mailto:xzahra33@stud.fit.vutbr.cz">xzahra33@stud.fit.vutbr.cz</a> -
+        člen - návrh systému, vytvoření seedů databáze, návrh seznamů pomocí komponenty Data Grid, CSS styly,
+        rozložení panelů a tlačítek, seznam konferencí, rozvrh konference, rozvrh přednášejícího, QA testování,
+        oprava zjištěných chyb, video návod
+    </dd>
+    <dd>Jan Křůmal <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+        <a href="mailto:xkruma01@stud.fit.vutbr.cz">xkruma01@stud.fit.vutbr.cz</a> -
+        člen - návrh systému, vytvoření databáze, zprovoznění aplikace na serveru, vytváření/potvrzení prezentací,
+        generování lístků, přidání místností ke konferenci, osobní rozvrh, oprava zjištěných chyb, vytváření konference,
+        seznam prezentací
+    </dd>
+
+    <br>
+    <dt>URL aplikace</dt>
+    <dd><a href="http://www.stud.fit.vutbr.cz/~xkruma01/">http://www.stud.fit.vutbr.cz/~xkruma01/</a></dd>
+    <dd>(pokud má aplikace více vstupních stránek, napište obdobně další URL)</dd>
+</dl>
+
+<br>
+<h2>Uživatelé systému pro testování</h2>
+<p>Uveďte prosím existující zástupce <strong>všech rolí uživatelů</strong>.</p>
+<table>
+    <tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
+    <tr><td>admin@local.cz</td><td>test</td><td>Administrátor</td></tr>
+    <tr><td>novakova@seznam.cz</td><td>test</td><td>Registrovaný uživatel</td></tr>
+    <tr><td>alojz11@seznam.cz</td><td>test</td><td>Registrovaný uživatel</td></tr>
+    <tr><td>martin@azet.cz</td><td>test</td><td>Registrovaný uživatel</td></tr>
+    <tr><td>hana1@gmail.com</td><td>test</td><td>Registrovaný uživatel</td></tr>
+</table>
+
+<p>
+    Uživatel <b>novakova@seznam.cz</b> má rezervovány lístky na konferenci <i>Konference o umělé inteligenci</i> a <i>Technologie ve zdravotnictví</i>. Zároveň tímto účtem (novakova@seznam.cz)
+    byly vytvořeny konference <i>Kybernetická bezpečnost v digitálním věku</i>, <i>Udržitelná energie a životní prostředí</i> a <i>Moderní trendy v softwarovém inženýrství</i>.
+    <br><br>
+    Pro nahlédnutí do systému z pohledu jiného registrovaného uživatele, lze využít účet <b>alojz11@seznam.cz</b> rovněž s heslem "test". Pod tímto účtem
+    byly vytvořeny konference <i>Technologie ve zdravotnictví</i> a <i>Konference o umělé inteligenci</i>. Uživatel také přednáší na konferencích <i>Kybernetická bezpečnost v digitálním věku</i>
+    a <i>Moderní trendy v softwarovém inženýrství</i>.
+    <br><br>
+    Dále tu máme dva registrované uživatele <b>martin@azet.cz</b> a <b>hana1@gmail.com</b>, kteří mají vytvořeno několik rezervací na různé konference. Zároveň poslali několik návrhů na
+    prezentace a tak se stali přednášejícími na přednáškách.
+</p>
+
+<h2>Diagram případů užití</h2>
+<p>
+    V aplikaci je implementován následný diagram případu užití, vycházející z definice zadání.
+    V systému se nachází více rolí - neregistrovaný uživatel, registrovaný uživatel, pořadatel, přednášející, návštěvník 
+    a administrátor, přičemž pořadatel, přednášející, návštěvník a administrátor jsou role dědící vlastnosti od registrovaného uživatele.
+    Administrátor má práva všech ostatních rolí, tzn. může také vytvářet konference, přídávat k nim přednášky,... a navíc 
+    může spravovat uživatele, vytvářet/upravovat místnosti a vytvářet další administrátory.
+</p>
+
+<img src="doc/use-case-diagram/use-case-iis-proj.png" alt="Diagram případů užití" width="1200">
+
+<h3>Video</h3>
+
+<p>Přiložte odkaz na komentované video demostrující použití informačního systému. Zaměřte se na případy užití definované zadáním (např. registrace uživatele, správa uživatelů a činnosti jednotlivých rolí). Video nahrajte například na VUT Google Drive, kde ho bude možné přímo spustit z odkazu.</p>
+
+<h2>Implementace</h2>
+<p>
+    Kód aplikace je rozdělen na logické celky zvané moduly, které jsou rozděleny do dalších podcelků. Modulem se v kontextu aplikace 
+    rozumí správa tabulky v databázi, tedy každá tabulka databáze má svůj vlastní modul. Mezi podčásti modulu obvykle patří
+    'Models' obsahující modely daného modulu, 'Presenters' obsahuje presentéry daného modulu, 'Controls' obsahujicí kontrolery jednotlivých presentéru, 
+    a 'templates' obsahuje šablony jednotlivých presentéru daného modulu. Zpravidla každý presentér má svůj vlastní kontroler a šablonu
+    (až na presentéry detailu, kde presentér pouze zobrazuje jednotlivé relace a nepotřebuje tedy kontrolér).
+</p>
+<ul>
+    <li><strong>src/</strong>
+        <ul>
+            <li><strong>CommonModule/</strong>
+                <em>- obsahuje základní definice, např. BasePresenter, SecurePresenter, BaseService</em>
+                <ul>
+                    <li><strong>Models/</strong>
+                        <ul>
+                            <li>
+                                BaseService.php <em>základní třída pro services ostatních modulů pracující s databázi</em>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Presenters/</strong>
+                        <ul>
+                            <li>
+                                BasePresenter.php <em>základní třída pro presentéry, které jsou dostupné i nepřihlášeným uživatelům</em>
+                            </li>
+                            <li>
+                                SecurePresenter.php <em>základní třída pro presentéry, které jsou zabezpečené a přístupné pouze přihlášeným uživatelům</em>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li><strong>Controls/</strong>
+                    <em>(obsahuje základní rozložení stránky - datagrid, footer, headbar, sidebar)</em>
+
+                    </li>
+                </ul>
+            </li>
+            <br>
+            <li><strong>UserModule/</strong>
+                <em>- obsahuje základní definice, např. BasePresenter, SecurePresenter, BaseService</em>
+                <ul>
+                    <li><strong>Models/</strong>
+                        <ul>
+                            <li>
+                                AuthenticationFactory.php <em>zajišťuje nastavení role uživatelů a jejich oprávnění</em>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>
+                                UserAuthenticator.php <em>implementuje rozhraní Authenticator, zajíšťující bezpečné přihlášení (porovnává hash hesla zadaný uživatelem s hashem v databázi)</em>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>
+                                UserFormFactory.php <em>vytváří formuláře pro registraci klasických uživatelů a administrátorů</em>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>
+                                UserService.php <em>zajišťuje operace s databázi, týkající se entity uživatel</em>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Presenters/</strong>
+                        <ul>
+                            <li>
+                                AuthenticationPresenter.php <em>presentér pro autentizaci uživatelů</em>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>
+                                RegisterPresenter.php <em>presentér pro registraci uživatelů</em>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>
+                                UserListPresenter.php <em>presentér pro admina, zobrazuje seznam všech uživatelů, implementuje odstranění/upravení uživatelů</em>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>
+                                UserPresenter.php <em>presentér pro uživatele, umožňuje úpravu účtu uživatele (změna hesla, jména, příjmení)</em>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>
+                                CreateAdminPresenter.php <em>presentér pro admina, umožňuje výtvářet další  administrátorské účty</em>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>templates/</strong>
+                        <em>- obsahuje šablony k jednotlivým presentérům.</em>
+                    </li>
+                    <li><strong>Controls/</strong>
+                        <em>- obsahuje kontroléry k jednotlivým presentérům</em>
+                    </li>
+                </ul>
+            </li>
+            <br>
+            <li><strong>ReservationModule/</strong>
+                <em>- implementuje logiku práce s rezervacemi uživatelů</em>
+                <ul>
+                    <li><strong>Models/</strong>
+                        <ul>
+                            <li>
+                                ReservationService.php <em>implementuje metody přidání, úpravy, odstranění reservací a další operace pracující s rezervacemi z databáze</em>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Presenters/</strong>
+                        <ul>
+                            <li>
+                                ReservationDetailPresenter.php <em>presentér pro zobrazovanání detailu rezervace</em>
+                            </li>
+                            <li>
+                                ReservationListAttendantPresenter.php <em>zobrazuje list rezervací pro účastníka konferencí TODO</em>
+                            </li>
+                            <li>
+                                ReservationListPresenter.php <em>zobrazuje list rezervací konferencí</em>
+                            </li>
+                            <li>
+                                ReserveNonRegisteredPresenter.php <em>umožňuje vytvořit rezervaci na danou konferenci pro neregistrovaného uživatele</em>
+                            </li>
+                            <li>
+                                ReserveRegisteredPresenter.php <em>umožňuje vytvořit rezervaci na danou konferenci pro registrovaného uživatele</em>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>templates/</strong>
+                        <em>- obsahuje šablony k jednotlivým presentérům.</em>
+                    </li>
+                    <li><strong>Controls/</strong>
+                        <em>- obsahuje kontroléry k jednotlivým presentérům</em>
+                    </li>
+                </ul>
+            </li>
+            <br>
+            <li><strong>PresentationModule/</strong>
+                <em>- implementuje logiku práce s prezentacemi od uživatelů k jednotlivým přednáškám</em>
+                <ul>
+                    <li><strong>Models/</strong>
+                        <ul>
+                            <li>
+                                PresentationService.php <em>implementuje metody přidání, úpravy, odstranění reservací a další operace pracující s rezervacemi z databáze</em>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Presenters/</strong>
+                        <ul>
+                            <li>
+                                PresentationAddPresenter.php <em>umožnuje uživatelům přidávat prezentace ke konferencím</em>
+                            </li>
+                            <li>
+                                PresentationDetailPresenter.php <em>umožnuje zobrazit prezentace konkrétní konference</em>
+                            </li>
+                            <li>
+                                PresentationEditPresenter.php <em>umožnuje upravovat prezentace</em>
+                            </li>
+                            <li>
+                                PresentationListPresenter.php <em>umožnuje zobrazit list prezentací k dané konferenci</em>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>templates/</strong>
+                    </li>
+                    <em>- obsahuje šablony k jednotlivým presentérům.</em>  
+                    <li><strong>Controls/</strong>
+                        <em>- obsahuje kontroléry k jednotlivým presentérům</em>
+                    </li>
+                </ul>
+            </li>
+            <br>
+            <li><strong>LectureModule/</strong>
+                <em>- implementuje logiku práce s přednáškami jednotlivých konferencí</em>
+                <ul>
+                    <li><strong>Models/</strong>
+                        <ul>
+                            <li>
+                                LectureService.php <em>implementuje metody přidání, úpravy, odstranění přednášek a další operace pracující s přednáškami z databáze</em>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Presenters/</strong>
+                        <ul>
+                            <li>
+                                AddNewLecturePresenter.php <em>slouží k přidávání nových přednášek v rámci konference</em>
+                            </li>
+                            <li>
+                                ConferenceSchedulePresenter.php <em>slouží k vytvoření rozvrhu přednášek v rámci konference</em>
+                            </li>
+                            <li>
+                                ConferenceSchedulePresenter.php <em>slouží k vytvoření detailu přednášky</em>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>templates/</strong>
+                        <em>- obsahuje šablony k jednotlivým presentérům.</em>
+                    </li>
+                    <li><strong>Controls/</strong>
+                        <em>- obsahuje kontroléry k jednotlivým presentérům</em>
+                    </li>
+                </ul>
+            </li>
+            <br>
+            <li><strong>ConferenceModule/</strong>
+                <em>- implementuje logiku práce s jednotlivými konferencemi</em>
+                <ul>
+                    <li><strong>Models/</strong>
+                        <ul>
+                            <li>
+                                ConferenceService.php <em>implementuje metody přidání, úpravy, odstranění konferencí a další operace pracující s konferencemi z databáze</em>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Presenters/</strong>
+                        <ul>
+                            <li>
+                                AddRoomToConferencePresenter.php <em>slouží k přiřazení místnosti ke konferenci</em>
+                            </li>
+                            <li>
+                                ConferenceAddPresenter.php <em>slouží k vytváření konference</em>
+                            </li>
+                            <li>
+                                ConferenceEditPresenter.php <em>slouží k úpravě konferencí</em>
+                            </li>
+                            <li>
+                                ConferenceDetailPresenter.php <em>slouží k vytvoření detailu konference</em>
+                            </li>
+                            <li>
+                                ConferenceListCreatorPresenter.php <em>slouží k vytvoření listu konferencí, které daný uživatel vytvořil</em>
+                            </li>
+                            <li>
+                                ConferenceListPresenter.php <em>slouží k vytvoření listu konferencí, implementováno i filtrování</em>
+                            </li>
+                            <li>
+                                ConferenceListUserPresenter.php <em>slouží k vytvoření listu konferencí, na které má uživatel rezervace</em>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>templates/</strong>
+                        <em>- obsahuje šablony k jednotlivým presentérům.</em>
+                    </li>
+                    <li><strong>Controls/</strong>
+                        <em>- obsahuje kontroléry k jednotlivým presentérům</em>
+                    </li>
+                </ul>
+            </li>
+            <br>
+            <li><strong>ConferenceHasRoomsModule/</strong>
+                <em>- implementuje vazby mezi jednotlými místnosti a konferencemi</em>
+                <ul>
+                    <li><strong>Models/</strong>
+                        <ul>
+                            <li>
+                                ConfereceHasRoomsService.php <em>implementuje metody pracující s vazební tabulkou (ConferenceHasRooms) mezi místnostmi a konferencemi</em>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <br>
+            <li><strong>RoomsModule/</strong>
+                <em>- implementuje logiku práce s místnostmi</em>
+                <ul>
+                    <li><strong>Models/</strong>
+                        <ul>
+                            <li>
+                                RoomsService.php <em>implementuje metody přidání, úpravy, odstranění místností v systému</em>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Presenters/</strong>
+                        <ul>
+                            <li>
+                                RoomAddPresenter.php <em>slouží k přidávání nových místností do systému</em>
+                            </li>
+                            <li>
+                                RoomEditPresenter.php <em>slouží k úpravě místností v systému</em>
+                            </li>
+                            <li>
+                                RoomListPresenter.php <em>slouží k zobrazení všech místností v systému</em>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Controls/</strong>
+                    <em>obsahuje logiku AddRoom, EditRoom a ListRoom</em>
+
+                    </li>
+                </ul>
+            </li>
+            <br>
+            <li><strong>UI/</strong>
+                <em>- standardní složka Nette webové aplikace</em>
+                <ul>
+                    <li><strong>Accessory/</strong>
+                        <ul>
+                            <li>
+                                LatteExtension.php
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Error/</strong>
+                        <ul>
+                            <li><strong>Error4xx/</strong>
+                            </li>
+                            <li><strong>Error5xx/</strong>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <br>
+            <li><strong>Core/</strong>
+                <em>- implementuje logiku routovani</em>
+                    <ul>
+                        <li>
+                            RouterFactory.php <em>implementuje logiku routování</em>
+                        </li>
+                    </ul>
+            </li>
+            <br>
+            <li><strong>css/</strong>
+                <em>- implementuje logiku routovani</em>
+                    <ul>
+                        <li>
+                            styles.css <em>obsahuje styly stránek</em>
+                        </li>
+                    </ul>
+            </li>
+            <br>
+            <li><strong>www/</strong>
+                <ul>
+                    <li>
+                        index.php
+                    </li>
+                </ul>
+            </li>
+            <br>
+            <li><strong>others/</strong>
+                <em>- obsahuje nezávislé komponenty</em>
+                    <ul>
+                        <li><strong>SSL/</strong>
+                            <ul>
+                                <li>
+                                    SslOperation.php <em>implementuje metody pro šifrování a dešifrování pomocí SSL.</em>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+            </li>
+            <br>
+            <li><strong>data/</strong>
+                <em>- obsahuje SQL databázový skript</em>
+                    <ul>
+                        <li><strong>SSL/</strong>
+                            <ul>
+                                <li>
+                                    db.sql
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+            </li>
+        </ul>
+    </li>
+    <li><strong>doc/</strong>
+        <em>- obsahuje dokumentační soubory</em>
+            <ul>
+                <li><strong>ERD-puml/</strong>
+                    <ul>
+                        <li>
+                            erd.puml
+                        </li>
+                    </ul>
+                </li>
+                <li><strong>use-case-diagram/</strong>
+                    <ul>
+                        <li>
+                            use-case.drawio
+                        </li>
+                    </ul>
+                </li>
+                <ul>
+                    <li>
+                        databaze.png
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        iis-databaze-struktura.png
+                    </li>
+                </ul>
+            </ul>
+    </li>
+</ul>
+
+<h3>Databáze</h3>
+
+<img src="doc/databaze.png" alt="Schéma relační databáze" width="1200">
+
+
+<h2>Instalace</h2>
+
+<h3>Instalace na lokální PC</h3>
+
+<h4>Požadavky</h4>
+<ul>
+    <li>Apache Server nebo Nginx, composer 2.8.1, MySQL nejlépe XAMPP s PHP verze 8.2</li>
+</ul>
+
+<h4>Postup</h4>
+<ul>
+    <li>uložte projekt do libovolné složky</li>
+    <li>spusťte příkaz composer install ve složce ...\iis-proj\src\</li>
+    <li>spustťe v XAMPP Apache server a MySQL</li>
+    <li>V prohlížeči otevře stránku http://localhost/phpmyadmin/index.php klikněte na tlačitko New, které umožňuje vytvořit novou databázi</li>
+    <li>nově vytvořenou databázi pojmenujte "iis" a poté naimportujte schéma ze složky "...\iis-proj\src\data\db.sql"</li>
+    <li>otevřete klasický Windows terminál a spusťte lokální php server ve složce "...\iis-proj\src\" pomocí příkazu: php -S localhost:8000 -t www</li>
+    <li>následně do prohlížeče zadejte URL: http://localhost:8000/</li>
+</ul>
+
+<li>
+    Aplikace byla testována na PHP8.2 s využitím programu XAMPP (spouštející Apache Server a MySQL) s využitím PHP serveru (viz. výše - php -S localhost:8000 -t www).
+</li>
+<h3>Instalace na server</h3>
+<h4>Požadavky</h4>
+<ul>
+    <li>Apache nebo Unix server, MySQL, composer 2.8.1, PHP verze 8.2
+</ul>
+<h4>Postup</h4>
+<ul>
+    <li>v phpmyadmin daného serveru vytvořte novou databázi</li>
+    <li>do databáze naimportujte schéma ze složky "...\iis-proj\src\data\db.sql" </li>
+    <li>upravte v ...\iis-proj\src\config\common.neon nastavení databáze, např. pro server Eva:<br>
+        database:</li>
+        <ul>
+            <li>dsn: 'mysql:unix_socket=/var/run/mysql/mysql.sock;dbname=DBNAME'</li>
+            <li>user: 'usename'</li>
+            <li>password: '******'</li>
+        </ul>
+    <li>nahrajte obsah složky src na server do webového adresáře</li>
+    <li>spusťte příkaz composer install</li>
+    <li>nyní je aplikace dostupná z dané URL, na Evě v našem případě: https://www.stud.fit.vutbr.cz/~xkruma01/</li>
+</ul>
+
+<h2>Známé problémy</h2>
+<p>Aplikace neobsahuje žádne problémy o kterých by autoři programu věděli a, které by vedly k nesplňění zadaní.</p>
+
+</body>
+</html>

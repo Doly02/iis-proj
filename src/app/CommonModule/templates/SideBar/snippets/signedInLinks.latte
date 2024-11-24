@@ -1,0 +1,55 @@
+<li class="nav-sideitem {$presenter->isLinkCurrent(':ConferenceModule:ConferenceList:list') ? 'active' : ''}">
+    <a class="nav-sidelink" href="{plink :ConferenceModule:ConferenceList:list}">
+        All conferences</a>
+</li>
+
+<li class="nav-sideitem">
+    <a class="nav-sidelink" href="{plink :ReservationModule:ReservationList:list}">
+        My reservations</a>
+</li>
+
+<li class="nav-sideitem">
+    <a class="nav-sidelink" href="{plink :ConferenceModule:ConferenceListUser:list, userId => $user->id}">
+        My reserved conferences</a>
+</li>
+
+
+<li class="sideBar-text" style="margin-top: 10px;">Organiser</li>
+<hr style="border: 1px solid white; width: 80%; margin: auto;">
+
+    <li class="nav-sideitem">
+        <a class="nav-sidelink" href="{plink :ConferenceModule:ConferenceAdd:add}">
+            Organize conference
+        </a>
+    </li>
+
+    <li class="nav-sideitem">
+        <a class="nav-sidelink" href="{plink :ConferenceModule:ConferenceListCreator:list}">
+            Manage conferences</a>
+    </li>
+
+    <li class="nav-sideitem">
+        <a class="nav-sidelink" href="{plink :PresentationModule:PresentationList:organizerList}">
+            Presentation proposals
+        </a>
+    </li>
+
+
+<li class="sideBar-text" style="margin-top: 20px;">Lecturer</li>
+<hr style="border: 1px solid white; width: 80%; margin: auto;">
+
+    <li class="nav-sideitem">
+        <a class="nav-sidelink" href="{plink :LectureModule:LecturerSchedule:lecturerSchedule}">
+            My lecture schedule
+        </a>
+    </li>
+
+    <li class="nav-sideitem">
+        <a class="nav-sidelink" href="{plink :PresentationModule:LecturerPresentationList:list}">
+            My presentations
+        </a>
+    </li>
+
+
+
+

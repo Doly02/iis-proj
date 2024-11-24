@@ -1,0 +1,12 @@
+{default $title = 'Edit conference' }
+<h1>Edit conference</h1>
+
+<p class="alert alert-warning">
+    The start date, end date and price cannot be changed if the conference already has associated reservations, rooms or lectures.
+</p>
+
+
+{block content}
+    {control editConferenceForm}
+
+{/block}

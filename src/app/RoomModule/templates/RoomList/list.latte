@@ -1,0 +1,12 @@
+{default $title = 'Rooms'}
+
+<a href="{plink :RoomModule:RoomAdd:addRoom}" class="btn btn-primary"> Add room</a>
+<br>
+
+{block content}
+    <div class="btn-group-inline">
+        <div class="wide-form">
+            {control listRoom}
+        </div>
+    </div>
+{/block}

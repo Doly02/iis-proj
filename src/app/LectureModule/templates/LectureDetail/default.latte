@@ -1,0 +1,30 @@
+{default $title = 'Lecture detail'}
+
+{block content}
+    <h1>Lecture Detail</h1>
+
+    <div>
+        <p><strong>Start Time:</strong> {$lectureData['start_time']|date:'d.m.Y H:i'}</p>
+        <p><strong>End Time:</strong> {$lectureData['end_time']|date:'d.m.Y H:i'}</p>
+        <p><strong>Room:</strong> {$lectureData['room']}</p>
+
+        <hr style="width: 50%; margin: 10px 0; border: 1px solid #ddd; text-align: left;">
+
+        <h2>{$lectureData['presentation']}</h2>
+        <p><strong>Lecturer:</strong> {$lectureData['lecturer']}</p>
+        <p><strong>Description:</strong> {$lectureData['description']}</p>
+    </div>
+
+
+    <div class="btn-group-inline">
+        {if ($userId === $organiserId)}
+            <a href="{plink :LectureModule:EditLecture:default, lectureId => $lectureData['id']}" class="btn">
+                Edit Lecture
+            </a>
+            <a href="{link :LectureModule:EditLecture:delete, lectureid => $lectureData['id']}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this lecture?');">
+                Delete Lecture
+            </a>
+        {/if}
+    </div>
+
+{/block}

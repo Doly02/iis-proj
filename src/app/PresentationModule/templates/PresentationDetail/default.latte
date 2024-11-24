@@ -1,0 +1,22 @@
+{default $title = 'Presentation detail'}
+
+
+{block content}
+
+    <h2>{$presentation->name}</h2>
+    <strong>Submitted by:</strong> {$lecturerInfo->name} {$lecturerInfo->surname}<br>
+    <strong>Description:</strong> {$presentation->description}<br>
+    <strong>Attachment:</strong> {$presentation->attachment}<br>
+    <strong>State:</strong> {$presentation->state}<br><br>
+
+    <a href="{link ':PresentationModule:PresentationEdit:approve', id => $presentationId, conferenceId => $conferenceId}" class="btn btn-primary">
+        Approve
+    </a> <br><br>
+
+    <a href="{link ':PresentationModule:PresentationEdit:deny', id => $presentationId, conferenceId => $conferenceId}" class="btn btn-primary">
+        Deny
+    </a> <br><br>
+
+
+
+{/block}
