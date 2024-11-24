@@ -67,11 +67,12 @@ final class UserService extends BaseService implements Authenticator
     public function registrateUser(ArrayHash $data, string $role) : void
     {
         $errorMessage = 'During Creation of An Account Was Error.';
+        $errMessage = 'During 1 Creation of An Account Was Error.';
         $this->database->beginTransaction();
 
-        if (Role::USER !== $role || Role::ADMIN === $role)
+        if (Role::USER !== $role && Role::ADMIN !== $role)
         {
-            throw new Exception($errorMessage);
+            throw new Exception($errMessage);
         }
         try
         {

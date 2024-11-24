@@ -39,6 +39,7 @@ parameters:
         user:
             resources:
                 usermodule.user: [edit, view]
+                usermodule.createdadmin: [add, edit, default]
                 user.profile: []
                 conference.conference: [list, default]
                 presentation.presentation: [list, default]

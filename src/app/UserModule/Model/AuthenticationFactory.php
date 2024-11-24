@@ -94,7 +94,7 @@ final class AuthenticationFactory
         /* Role Guest Does Not Have Access To Any Action */
         $permission->deny(self::ROLE_GUEST, '*', '*');
 
-
+        $permission->allow(self::ROLE_ADMIN, 'usermodule.createadmin', self::ACTION_ADD);
         foreach ($roles as $role => $roleData) {
             if (!$permission->hasRole($role)) {
                 $permission->addRole($role, $roleData['parent'] ?? null);
