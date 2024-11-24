@@ -60,12 +60,7 @@ final class EditConferenceControl extends Control
         \Tracy\Debugger::barDump($conferenceId, 'Conference ID in Success Handler');
 
         try {
-            $originalConference = $this->conferenceService->getConferenceById($conferenceId);
-
-            if ($originalConference->start_time !== $values->start_time || $originalConference->end_time !== $values->end_time) {
-                $this->conferenceService->deleteLecturesByConferenceId($conferenceId);
-                $this->conferenceService->deleteConferenceRoomsByConferenceId($conferenceId);
-            }
+            //$originalConference = $this->conferenceService->getConferenceById($conferenceId);
 
             $this->conferenceService->updateConference($conferenceId, [
                 'name' => $values->name,
@@ -74,7 +69,6 @@ final class EditConferenceControl extends Control
                 'start_time' => $values->start_time,
                 'end_time' => $values->end_time,
                 'price' => $values->price,
-                'capacity' => 0
             ]);
 
         } catch (\Exception $e) {

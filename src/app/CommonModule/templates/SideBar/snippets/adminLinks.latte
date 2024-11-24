@@ -4,22 +4,17 @@
         <hr style="border: 1px solid white; width: 80%; margin: auto;">
         <li class="nav-sideitem">
             <a class="nav-sidelink" href="{plink :RoomModule:RoomList:list}">
-                See rooms
-            </a>
-        </li>
-        <li class="nav-sideitem">
-            <a class="nav-sidelink" href="{plink :UserModule:CreateAdmin:default}">
-                Create admin
+                View rooms
             </a>
         </li>
         <li class="nav-sideitem {$presenter->isLinkCurrent(':ConferenceModule:ConferenceListAdmin:list') ? 'active' : ''}">
-                <a class="nav-sidelink" href="{plink :ConferenceModule:ConferenceListAdmin:list}">
-                    Conferences
-                </a>
+            <a class="nav-sidelink" href="{plink :ConferenceModule:ConferenceListAdmin:list}">
+                View conferences
+            </a>
         </li>
         <li class="nav-sideitem">
             <a class="nav-sidelink" href="{plink :UserModule:UserList:list}">
-                Manage users
+                View users
             </a>
         </li>
     {/if}

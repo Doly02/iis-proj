@@ -59,45 +59,24 @@ final class ConferenceService extends BaseService
             ->count('*');
     }
 
-    public function hasLectures(int $conferenceId): bool
-    {
-        $conferenceHasRoomsIds = $this->database->table('conference_has_rooms')
-            ->where('conference_id', $conferenceId)
-            ->fetchPairs('id', 'id');
-
-        return $this->database->table('lectures')
-                ->where('id_conference_has_rooms', $conferenceHasRoomsIds)
-                ->count('*') > 0;
-    }
-
-
-    public function hasRooms(int $conferenceId): bool
+    public function getRoomsCount(int $conferenceId): int
     {
         return $this->database->table('conference_has_rooms')
-                ->where('conference_id', $conferenceId)
-                ->count('*') > 0;
-    }
-
-
-    public function deleteLecturesByConferenceId(int $conferenceId): void
-    {
-        $conferenceHasRoomsIds = $this->database->table('conference_has_rooms')
             ->where('conference_id', $conferenceId)
-            ->fetchPairs('id', 'id');
-
-        $this->database->table('lectures')
-            ->where('id_conference_has_rooms', $conferenceHasRoomsIds)
-            ->delete();
+            ->count('*');
     }
 
-
-    public function deleteConferenceRoomsByConferenceId(int $conferenceId): void
+    public function getLecturesCount(int $conferenceId): int
     {
-        $this->database->table('conference_has_rooms')
-            ->where('conference_id', $conferenceId)
-            ->delete();
-    }
+        $sql = "
+        SELECT COUNT(*) AS lecture_count
+        FROM lectures l
+        JOIN conference_has_rooms chr ON l.id_conference_has_rooms = chr.id
+        WHERE chr.conference_id = ?
+    ";
 
+        return $this->database->query($sql, $conferenceId)->fetchField();
+    }
 
 
     public function deleteConferenceById(int $id): void
