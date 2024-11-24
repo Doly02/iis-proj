@@ -59,6 +59,7 @@ final class AuthenticationFactory
         // Adding a Special Placeholder Resource '*'
         $permission->addResource('*');
         $permission->addResource('usermodule.user');
+        $permission->addResource('usermodule.createadmin');
         $permission->addResource('reservationmodule.reservenonregistered');
         $permission->addResource('reservationmodule.reserveregistered');
         $permission->addResource('conferencemodule.conferenceadd');
