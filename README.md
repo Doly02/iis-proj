@@ -1,7 +1,7 @@
 # IIS Project: Information System for Conferences
-- Author: Tomáš Dolák, Monika Zahradníková, Jan Křůmal
-- Login: [xdolak09](https://www.vut.cz/lide/tomas-dolak-247220), xzahra33, xkruma1
-- Email: <xdolak09@stud.fit.vutbr.cz>, <xzahra33@stud.fit.vutbr.cz>, <xkruma01@stud.fit.vutbr.cz>
+- Authors: Tomáš Dolák, Monika Zahradníková, Jan Křůmal
+- Logins: [xdolak09](https://www.vut.cz/lide/tomas-dolak-247220), xzahra33, xkruma1
+- Emails: <xdolak09@stud.fit.vutbr.cz>, <xzahra33@stud.fit.vutbr.cz>, <xkruma01@stud.fit.vutbr.cz>
 
 The goal of this project in the subject Information System was to create a information system for conferences. The `README` contains a brief description of the project installation, for more information see `doc.html` in the root directory of the project, this documentation file in Czech describes the project in more detail.
 
