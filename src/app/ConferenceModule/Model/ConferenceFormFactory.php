@@ -26,14 +26,20 @@ final class ConferenceFormFactory
         $form = new Form;
 
         $conference = null;
-        $hasReservations = false;
+        $isReadOnly = false;
 
         if ($conferenceId !== null) {
-            $conference = $this->conferenceService->fetchById($conferenceId); // Replace with your method to get conference data by ID
+            $conference = $this->conferenceService->fetchById($conferenceId);
+
+            // Check if conference has reservations, rooms, or lectures
             $hasReservations = $this->conferenceService->getReservationsCount($conferenceId) > 0;
+            $hasRooms = $this->conferenceService->getRoomsCount($conferenceId) > 0;
+            $hasLectures = $this->conferenceService->getLecturesCount($conferenceId) > 0;
+
+            // Set read-only if any of these are true
+            $isReadOnly = $hasReservations || $hasRooms || $hasLectures;
         }
 
-        // ID seems to reset after send
         $form->addHidden('conferenceId', $conferenceId);
 
         $form->addText('name', 'Name:')
@@ -49,7 +55,7 @@ final class ConferenceFormFactory
             ->setHtmlAttribute('class', 'form-control');
 
 
-        if ($hasReservations) {
+        if ($isReadOnly) {
             $form->addText('start_time', 'Conference start:')
                 ->setHtmlAttribute('class', 'form-control')
                 ->setHtmlAttribute('readonly', true);
