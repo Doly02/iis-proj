@@ -67,4 +67,4 @@ database:
   <em>Content of WWW/app directory</em>
 </p>
 
-- **Note**: The WWW directory must be set with sufficient rights! set the rights: chmod -R o=rX,g= ~/WWW (i.e. read and pass rights for all, but disabled write, no rights for the group). For more information see [FIT: Frequently Asked Questions](https://www.fit.vut.cz/units/cvt/faq/.cs)
+- **Note**: The WWW directory (and index.phph) must be set with sufficient rights! set the rights: chmod -R o=rX,g= ~/WWW (i.e. read and pass rights for all, but disabled write, no rights for the group). For more information see [FIT: Frequently Asked Questions](https://www.fit.vut.cz/units/cvt/faq/.cs)
