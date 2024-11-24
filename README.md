@@ -1,5 +1,5 @@
 # IIS Project: Information System for Conferences
-- Author: Tomáš Dolák, Monika Zahradníková
+- Author: Tomáš Dolák, Monika Zahradníková, Jan Křůmal
 - Login: [xdolak09](https://www.vut.cz/lide/tomas-dolak-247220), xzahra33, xkruma1
 - Email: <xdolak09@stud.fit.vutbr.cz>, <xzahra33@stud.fit.vutbr.cz>, <xkruma01@stud.fit.vutbr.cz>
 
@@ -55,13 +55,13 @@ database:
 7. The content of the `WWW` folder on the server should look like this:
 
 <p align="center">
-  <img src="doc/obsah-www.png" alt="Content of WWW directory" width="450"/><br>
+  <img src="doc/obsah-www.png" alt="Content of WWW directory" width="550"/><br>
   <em>Content of WWW directory</em>
 </p>
 
 8. The content of the `WWW/app` folder on the server should look like this:
 
 <p align="center">
-  <img src="doc/obsah-app.png" alt="Content of WWW directory/app" width="450"/><br>
+  <img src="doc/obsah-app.png" alt="Content of WWW directory/app" width="550"/><br>
   <em>Content of WWW/app directory</em>
 </p>
